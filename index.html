@@ -61,9 +61,19 @@
 
 <!-- add click event to button after dom is ready -->
 <script type="text/javascript">
+	$(document).bind('pageinit', function() {
+		var state = document.readyState;
+		if(state == 'loaded' || state == 'comlete') {
+			alert('state: '+state);
+		}
+		
+		$('#showposition').click(showposition);
+	});
+	/*
 	$(document).delegate("#mainpage", "pageinit", function() {
 		$('#showposition').click(showposition);
 	});
+	*/
 </script>
 
 </head> 

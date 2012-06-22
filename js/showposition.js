@@ -1,21 +1,20 @@
 function showposition() {
+
 	// get users current position:
-	function onSuccess(position) {
-		$('#map').html('<p>Latitude: '+ position.coords.latitude +', Longitude: '+ position.coords.longitude +'</p>');
-	}
+	var success = function(position) {
+		//$('#map').html('<p>Latitude: '+ position.coords.latitude +', Longitude: '+ position.coords.longitude +'</p>');
+		$('#map').gmap().bind('init', function(position, status) {
+			if(status == 'OK') {
+				var clientPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				$('#map').gmap('addMarker', {'position': clientPosition, 'bounds': true});
+				// TODO: change button text depending on if map is shown or not:
+			}
+		});
+	};
 	
-	function onError(error) {
+	var error = function(error) {
 		$('#map').html('<p>Error code: '+ error.code +', error message: '+ error.message +'</p>');
-	}
+	};
 	
-	navigator.geolocation.getCurrentPosition(onSuccess, onError);
-	/*
-	$('#map').gmap('getCurrentPosition', function(position, status) {
-		if(status == 'OK') {
-			var clientPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-			$('#map').gmap('addMarker', {'position': clientPosition, 'bounds': true});
-			// TODO: change button text depending on if map is shown or not:
-		}
-	});
-	*/
+	navigator.geolocation.getCurrentPosition(success, error);
 }
