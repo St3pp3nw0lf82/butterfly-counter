@@ -2,7 +2,7 @@ function showposition() {
 
 	// get users current position:
 	var success = function(position) {
-		//$('#map').html('<p>Latitude: '+ position.coords.latitude +', Longitude: '+ position.coords.longitude +'</p>');
+		//$('#map').html('<p>Latitude: '+ position.coords.latitude +'</p><p>Longitude: '+ position.coords.longitude +'</p>');
 		$('#map').gmap().bind('init', function(position, status) {
 			if(status == 'OK') {
 				var clientPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
