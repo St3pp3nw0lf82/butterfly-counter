@@ -2,7 +2,8 @@ function showposition() {
 
 	// get users current position:
 	var success = function(position) {
-		//$('#map').html('<p>Latitude: '+ position.coords.latitude +'</p><p>Longitude: '+ position.coords.longitude +'</p>');
+		$('#map').html('<p>Latitude: '+ position.coords.latitude +'</p><p>Longitude: '+ position.coords.longitude +'</p>');
+		/*
 		$('#map').gmap().bind('init', function(position, status) {
 			if(status == 'OK') {
 				var clientPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -10,6 +11,7 @@ function showposition() {
 				// TODO: change button text depending on if map is shown or not:
 			}
 		});
+		*/
 	};
 	
 	var error = function(error) {
