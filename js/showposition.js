@@ -2,6 +2,7 @@ function showposition() {
 
 	// get users current position:
 	var success = function(position) {
+		alert('Success!');
 		$('#map').html('<p>Latitude: '+ position.coords.latitude +'</p><p>Longitude: '+ position.coords.longitude +'</p>');
 		/*
 		$('#map').gmap().bind('init', function(position, status) {
