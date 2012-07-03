@@ -2,8 +2,10 @@
 <html> 
 <head> 
 <title>The butterfly counter - a mobile version</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"> 
+-->
 <!-- ############################################
 ############# jquery mobile stylesheet ##########
 #################################################
@@ -18,8 +20,6 @@
 #################################################
 -->
 <link rel="stylesheet" href="css/style.css" />
-
-<script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
 <!--
 #################################################
 ############# jquery mobile #####################
@@ -42,6 +42,7 @@
 ###### google maps plugin for jquery mobile #####
 #################################################
 -->
+<script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
 <script type="text/javascript" src="js/jquerymobile/jquery.ui.map.full.min.js"></script>
 <script type="text/javascript" src="js/jquerymobile/jquery.ui.map.extensions.js"></script>
 
@@ -54,28 +55,77 @@
 
 <!-- add click event to button after dom is ready -->
 <script type="text/javascript">
-	$(document).bind('pageinit', function() {
-		$('#showposition').click(showposition);
+	/*
+	use this approach to bind special scripts to certain pages, e.g. the page with id='myPage'
+	$( document ).delegate("#myPage", "pageinit", function() {
+	  alert('A page with an ID of "aboutPage" was just created by jQuery Mobile!');
 	});
+	*/
 </script>
 
 </head> 
-<body> 
-<!-- page -->
-<div data-role="page" id="mainpage">
+<body>
+<!-- TODO: use data-rel="dialog", data-transition="pop" to produce popup-dialog for the found old sightings
+process -->
+<!-- first page: choose butterflies -->
+<div data-role="page" id="choose_butterfly" data-title="The butterfly counter - Choose butterflies">
 	<!-- header -->
 	<div data-role="header">
 		<h1>Mobile butterfly counter</h1>
 	</div>
 	<!-- content -->
 	<div id="content" data-role="content">	
-		<h2>Actual position</h2>		
+		<h2>Which butterflies did you see?</h2>
+		<!-- list of butterflies -->
+		<div data-role="fieldcontain">
+			<fieldset data-role="controlgroup">
+				<label><img src="images/smallwhite.jpg"/><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Small White</label>
+				<label><input type="checkbox" name="bf_species" value="largewhite"/>Large White</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Green-veined White</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Brimstone</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Large Skipper</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Six-spot Burnet</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Silver Y</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Common Blue</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Holly Blue</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Small Copper</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Ringlet</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Meadow Brown</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Gate Keeper</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Wall</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Speckled Wood</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Marbled White</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Peacock</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Small Tortoiseshell</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Painted Lady</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Comma</label>
+				<label><input type="checkbox" name="bf_species" value="smallwhite" id="smallwhite"/>Red Admiral</label>
+			</fieldset>
+		</div>
+		<!--		
 		<p><a href="#" data-role="button" data-icon="arrow-d" data-iconpos="right" id="showposition">Show my position</a></p>
 		<div id="map"></div>
+		-->
+	</div>
+	<!-- footer -->
+	<div data-role="footer" data-position="fixed">
+		<a href="#enter_amount" data-role="button">Next: how many have you seen?</a>
+	</div>
+</div>
+<!-- second page: enter the amount -->
+<div data-role="page" id="enter_amount" data-title="The butterfly counter - Enter the amount">
+	<!-- header -->
+	<div data-role="header">
+		<h1>Mobile butterfly counter</h1>
+	</div>
+	<!-- content -->
+	<div id="content" data-role="content">	
+		<h2>How many did you see?</h2>		
 	</div>
 	<!-- footer -->
 	<div data-role="footer">
-		<p class="footer">Here is the footer</p>
+		<a href="#choose_butterfly" data-role="button">Back</a>
+		<a href="#" data-role="button">Next: where did you make your sightings?</a>
 	</div>
 </div>
 </body>
