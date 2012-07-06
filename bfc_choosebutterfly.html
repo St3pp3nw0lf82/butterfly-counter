@@ -1,0 +1,134 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<title>The butterfly counter - a mobile version</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+-->
+<!-- ############################################
+############# jquery mobile stylesheet ##########
+#################################################
+-->
+<!-- external link 
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+<!-- local link -->
+<link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
+<!-- <link rel="stylesheet" href="css/jquery.mobile-1.1.0.css" />
+<!-- ############################################
+######## customized stylesheet goes here ######## 
+#################################################
+-->
+<link rel="stylesheet" href="css/style.css" />
+<!--
+#################################################
+############# jquery mobile #####################
+#################################################
+-->
+<!-- external link 
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<!-- local link -->
+<script type="text/javascript" src="js/jquerymobile/jquery-1.7.1.min.js"></script>
+<!-- initialisation of global vars goes here, see: http://jquerymobile.com/demos/1.1.0/docs/api/globalconfig.html -->
+<script type="text/javascript" src="js/mobileinit.js"></script>
+<!-- jquery mobile source code files -->
+<!-- external link
+<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+<!-- local link -->
+<script type="text/javascript" src="js/jquerymobile/jquery.mobile-1.1.0.min.js"></script>
+
+<!--
+#################################################
+###### google maps plugin for jquery mobile #####
+#################################################
+-->
+<script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+<script type="text/javascript" src="js/jquerymobile/jquery.ui.map.full.min.js"></script>
+<script type="text/javascript" src="js/jquerymobile/jquery.ui.map.extensions.js"></script>
+
+<!--
+#################################################
+############# custom javascript #################
+#################################################
+-->
+<script type="text/javascript" src="js/showposition.js"></script>
+
+<!-- add click event to button after dom is ready -->
+<script type="text/javascript">
+	/*
+	use this approach to bind special scripts to certain pages, e.g. the page with id='myPage'
+	$( document ).delegate("#myPage", "pageinit", function() {
+	  alert('A page with an ID of "aboutPage" was just created by jQuery Mobile!');
+	});
+	*/
+</script>
+
+</head> 
+<body>
+<!-- TODO: use data-rel="dialog", data-transition="pop" to produce popup-dialog for the found old sightings
+process -->
+<!-- first page: choose butterflies -->
+<div data-role="page" id="bfc_choosebutterfly" data-title="The butterfly counter - Choose butterflies">
+	<!-- header -->
+	<div data-role="header" data-position="fixed">
+		<h1>Mobile butterfly counter</h1>
+	</div>
+	<!-- content -->
+	<div id="content" data-role="content">	
+		<h2>Which butterflies did you see?</h2>
+		<!-- list of butterflies -->
+		<!--
+				<ul data-role="listview">
+					<li><input type="text" name="bf_species" value="Enter amount" size="10" class="input_amount"/><img class="bf_image" src="images/smallwhite_small.jpg"/><span class="center">Small White</span></li>
+				</ul>
+		-->
+		<ul data-role="listview">
+			<li><a href="#"><img class="bf_image" src="images/smallwhite_big.jpg"/></a></li>
+			<li><a href="#"><img class="bf_image" src="images/largewhite_small.jpg"/></a></li>
+		</ul>
+
+		<!--
+		<div data-role="fieldcontain" id="butterflylist">
+			<fieldset data-role="controlgroup">
+				<ul data-role="listview">
+					<li><img class="bf_image" src="images/smallwhite_small.jpg"/></li>
+				</ul>
+					<label><img class="bf_image" src="images/smallwhite_small.jpg"/><span class="center">Small White</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="largewhite" id="largewhite"/><img class="bf_image" src="images/largewhite_small.jpg"/><span class="center">Large White</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="greenveinedwhite" id="greenveinedwhite"/><img class="bf_image" src="images/greenveinedwhite_small.jpg"/><span class="center">Green-veined White</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="brimstone" id="brimstone"/><img class="bf_image" src="images/brimstone_small.jpg"/><span class="center">Brimstone</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="largeskipper" id="largeskipper"/><img class="bf_image" src="images/largeskipper_small.jpg"/><span class="center">Large Skipper</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="sixspotburnet" id="sixspotburnet"/><img class="bf_image" src="images/sixspotburnet_small.jpg"/><span class="center">Six-spot Burnet</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="silvery" id="silvery"/><img class="bf_image" src="images/silvery_small.jpg"/><span class="center">Silver Y</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="commonblue" id="commonblue"/><img class="bf_image" src="images/commonblue_small.jpg"/><span class="center">Common Blue</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="hollyblue" id="hollyblue"/><img class="bf_image" src="images/hollyblue_small.jpg"/><span class="center">Holly Blue</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="smallcopper" id="smallcopper"/><img class="bf_image" src="images/smallcopper_small.jpg"/><span class="center">Small Copper</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="ringlet" id="ringlet"/><img class="bf_image" src="images/ringlet_small.jpg"/><span class="center">Ringlet</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="meadowbrown" id="meadowbrown"/><img class="bf_image" src="images/meadowbrown_small.jpg"/><span class="center">Meadow Brown</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="gatekeeper" id="gatekeeper"/><img class="bf_image" src="images/gatekeeper_small.jpg"/><span class="center">Gate Keeper</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="wall" id="wall"/><img class="bf_image" src="images/wall_small.jpg"/><span class="center">Wall</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="speckledwood" id="speckledwood"/><img class="bf_image" src="images/speckledwood_small.jpg"/><span class="center">Speckled Wood</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="marbledwhite" id="marbledwhite"/><img class="bf_image" src="images/marbledwhite_small.jpg"/><span class="center">Marbled White</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="peacock" id="peacock"/><img class="bf_image" src="images/peacock_small.jpg"/><span class="center">Peacock</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="smalltortoiseshell" id="smalltortoiseshell"/><img class="bf_image" src="images/smalltortoiseshell_small.jpg"/><span class="center">Small Tortoiseshell</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="paintedlady" id="paintedlady"/><img class="bf_image" src="images/paintedlady_small.jpg"/><span class="center">Painted Lady</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="comma" id="comma"/><img class="bf_image" src="images/comma_small.jpg"/><span class="center">Comma</span></label>
+					<label><input type="checkbox" name="bf_species[]" value="redadmiral" id="redadmiral"/><img class="bf_image" src="images/redadmiral_small.jpg"/><span class="center">Red Admiral</span></label>
+			</fieldset>	
+		</div>
+		<!--		
+		<p><a href="#" data-role="button" data-icon="arrow-d" data-iconpos="right" id="showposition">Show my position</a></p>
+		<div id="map"></div>
+		-->
+	</div>
+	<!-- footer -->
+	<div data-role="footer" data-position="fixed">
+		<a href="index.html" data-role="button">Back</a>
+	</div>
+<script type="text/javascript">
+$("#butterflylist fieldset label").bind("click", create_sightingobject);
+</script>
+<script type="text/javascript" src="js/createsighting.js"></script>
+</div>
+</body>
+</html>

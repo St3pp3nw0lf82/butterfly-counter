@@ -1,8 +1,17 @@
-.footer {
-text-align: center;
+img.bf_image {
+float: left;
+margin: 0 10px 0 0;
 }
 
-#map {
-width: 250px;
-height: 250px;
+span.center {
+display: block;
+margin: 50px 0 0 0;
 }
+
+.submit {
+position: fixed;
+}
+input .input_amount {
+float: right;
+}
+

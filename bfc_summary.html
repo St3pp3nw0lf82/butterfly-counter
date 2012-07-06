@@ -52,16 +52,18 @@
 #################################################
 -->
 <script type="text/javascript" src="js/showposition.js"></script>
+<script type="text/javascript" src="js/createsighting.js"></script>
 
 <!-- add click event to button after dom is ready -->
 <script type="text/javascript">
 	//init_sightingobject();
 
-	//use this approach to bind special scripts to certain pages, e.g. the page with id='myPage'
-	//TODO: at each call of the startpage check for older sightingobjects here:
+	/*use this approach to bind special scripts to certain pages, e.g. the page with id='myPage'
+	TODO: at each call of the startpage check for older sightingobjects here:
 	$(document).delegate("#bfc_startpage", "pageinit", function() {
-		$("#start_sighting").bind("click", create_sightingbasket);
+		alert('startpage init');
 	});
+	*/
 </script>
 
 </head> 
@@ -69,26 +71,22 @@
 <!-- TODO: use data-rel="dialog", data-transition="pop" to produce popup-dialog for the found old sightings
 process -->
 <!-- first page: choose butterflies -->
-<div data-role="page" id="bfc_startpage" data-title="The butterfly counter - Start page">
+<div data-role="page" id="bfc_summary" data-title="The butterfly counter - Summary">
 	<!-- header -->
 	<div data-role="header" data-position="fixed">
 		<h1>Mobile butterfly counter</h1>
 	</div>
 	<!-- content -->
 	<div id="content" data-role="content">	
-		<h2>What do you want to do?</h2>
-		<div id="startoptions">
-			<p><a href="bfc_choosebutterfly.html" data-role="button" id="start_sighting">Start sighting session</a><p/>
-			<p><a href="#" data-role="button" id="quit_app">Quit app</a><p/>
-			<!--
-			<p><a href='#' data-role='button' onclick="javascript:delete_basket();">Delete basket</a><p/>
--->
+		<h2>Your sightings</h2>
+		<div id="sightingbasket">
+
 		</div>
 	</div>
 	<!-- footer -->
-	<div data-role="footer" data-position="fixed"></div>
-<script type="text/javascript" src="js/modernizr.js"></script>
-<script type="text/javascript" src="js/createsighting.js"></script>
+	<div data-role="footer" data-position="fixed">
+		<a href="bfc_choosebutterfly.html" data-role="button">Back</a>
+	</div>
 </div>
 </body>
 </html>
