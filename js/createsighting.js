@@ -1,5 +1,6 @@
 function create_sightingbasket() {
 	try {
+		alert("sightingbasket created.");
 		/*
 		// create the butterfly basket: 
 		if(window.localStorage) {
