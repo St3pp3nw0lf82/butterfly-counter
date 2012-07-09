@@ -28,7 +28,7 @@ function create_sightingbasket() {
 
 function create_sightingobject() {
 	try {
-		alert("label clicked");
+		alert("li clicked");
 		/*
 		var d = new Date();
 		var id = d.getFullYear()+"_"+d.getMonth()+"_"+d.getDay()+"_"+d.getHours()+"_"+d.getMinutes()+"_"+d.getSeconds();
