@@ -57,10 +57,10 @@
 <!-- add click event to button after dom is ready -->
 <script type="text/javascript">
 	//init_sightingobject();
-
 	//use this approach to bind special scripts to certain pages, e.g. the page with id='myPage'
 	//TODO: at each call of the startpage check for older sightingobjects here:
 	$(document).delegate("#bfc_startpage", "pageinit", function() {
+		$("#bfc_startpage").ready(checkforbasket);
 		$("#start_sighting").bind("click", create_sightingbasket);
 	});
 </script>
@@ -89,6 +89,7 @@ process -->
 	<!-- footer -->
 	<div data-role="footer" data-position="fixed"></div>
 <script type="text/javascript" src="js/modernizr.js"></script>
+<script type="text/javascript">checkforbasket();</script>
 </div>
 </body>
 </html>

@@ -83,8 +83,8 @@ process -->
 				</ul>
 		-->
 		<ul data-role="listview">
-			<li><a href="#"><img class="bf_image" src="images/smallwhite_big.jpg"/></a></li>
-			<li><a href="#"><img class="bf_image" src="images/largewhite_small.jpg"/></a></li>
+			<li><a href="#"><img class="bf_image" src="images/smallwhite_small.jpg"/>Small White</a></li>
+			<li><a href="#"><img class="bf_image" src="images/largewhite_small.jpg"/>Large White</a></li>
 		</ul>
 
 		<!--
@@ -123,8 +123,14 @@ process -->
 	</div>
 	<!-- footer -->
 	<div data-role="footer" data-position="fixed">
-		<a href="index.html" data-role="button">Back</a>
+		<div data-role="navbar">
+			<ul>
+				<li><a href="index.html" data-role="button">Back</a></li>
+				<li><a href="bfc_summary.html" data-role="button">Summary</a></li>
+			</ul>
+		</div>
 	</div>
+<script type="text/javascript" src="js/modernizr.js"></script>
 <script type="text/javascript" src="js/createsighting.js"></script>
 <script type="text/javascript">
 $("#content ul li").bind("click", create_sightingobject);

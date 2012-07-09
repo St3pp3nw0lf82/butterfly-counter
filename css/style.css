@@ -15,3 +15,8 @@ input .input_amount {
 float: right;
 }
 
+span.bf_name {
+font-weight: bold;
+font-size: 16px;
+} 
+
