@@ -21,12 +21,10 @@ function checkforbasket() {
 	try {
 		if(window.localStorage) {
 			if(window.localStorage.bf_basket) {
-				alert("basket found");
 				// .trigger('create') is needed in addition to .append() to apply the mobile styles to the new button:
 				if(!$("#delete_basket").length) {
-					alert("no delete button, creating one ..");
 					$("#startoptions").append("<p id='delete_basket'><a href='#' data-role='button' onclick='javascript:delete_basket();'>Delete basket</a><p/>").trigger('create');
-				} else { alert("delete button found."); }
+				}
 			}
 		} else {
 			throw "locstor_err";

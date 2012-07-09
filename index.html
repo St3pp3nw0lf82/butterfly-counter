@@ -10,9 +10,9 @@
 ############# jquery mobile stylesheet ##########
 #################################################
 -->
-<!-- external link 
+<!-- external link -->
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
-<!-- local link -->
+<!-- local link 
 <link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
 <!-- <link rel="stylesheet" href="css/jquery.mobile-1.1.0.css" />
 <!-- ############################################
@@ -25,16 +25,16 @@
 ############# jquery mobile #####################
 #################################################
 -->
-<!-- external link 
+<!-- external link -->
 <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-<!-- local link -->
+<!-- local link 
 <script type="text/javascript" src="js/jquerymobile/jquery-1.7.1.min.js"></script>
 <!-- initialisation of global vars goes here, see: http://jquerymobile.com/demos/1.1.0/docs/api/globalconfig.html -->
 <script type="text/javascript" src="js/mobileinit.js"></script>
 <!-- jquery mobile source code files -->
-<!-- external link
+<!-- external link -->
 <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
-<!-- local link -->
+<!-- local link 
 <script type="text/javascript" src="js/jquerymobile/jquery.mobile-1.1.0.min.js"></script>
 
 <!--
@@ -60,7 +60,6 @@
 	//use this approach to bind special scripts to certain pages, e.g. the page with id='myPage'
 	//TODO: at each call of the startpage check for older sightingobjects here:
 	$(document).delegate("#bfc_startpage", "pageinit", function() {
-		$("#bfc_startpage").ready(checkforbasket);
 		$("#start_sighting").bind("click", create_sightingbasket);
 	});
 </script>
