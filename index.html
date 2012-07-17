@@ -62,6 +62,9 @@ try {
 	var ba = new Butterflyapp();
 	if(typeof(ba) == "object") {
 		ba.init();
+		$(document).delegate("#bfc_startpage", "pageshow", function() {
+			$("#quit_app").bind("click", function() { ba.closeApp(); });
+		});
 		$(document).delegate("#bfc_choosebutterfly", "pageshow", function() { ba.printButterflies(); });
 		$(document).delegate("#bfc_summary", "pageshow", function() { ba.showBasket(); });
 		/*
@@ -127,9 +130,6 @@ first page: choose start options
 		<div id="startoptions">
 			<p><a href="#bfc_choosebutterfly" data-role="button" id="start_sighting">Start sighting session</a><p/>
 			<p><a href="#" data-role="button" id="quit_app">Quit app</a><p/>
-			<p><a href="#" data-role="button" id="check_session">check session</a><p/>
-			<p><a href='#' data-role='button' onclick="javascript:ba.printButterflies();">print bfs</a><p/>
-
 		</div>
 	</div>
 	<!-- footer -->

@@ -25,6 +25,7 @@ this.init = init;
 this.createButterflies = createButterflies;
 this.printButterflies = printButterflies;
 this.showBasket = showBasket;
+this.closeApp = closeApp;
 return true;
 }
 
@@ -32,8 +33,8 @@ Butterflyapp.prototype.basket = [];
 Butterflyapp.prototype.addToBasket = function(sighting) { return this.basket.push(sighting); };
 
 function init() {
-	this.createButterflies("Small White");
-	//this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Printed Lady","Comma","Red Admiral");
+	//this.createButterflies("Small White");
+	this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
 }
 
 function createButterflies() {
@@ -76,6 +77,9 @@ function showBasket() {
 	$("#sightingbasket").html(bf_summary);
 }
 
+function closeApp() {
+	navigator.app.exitApp();
+}
 
 
 
