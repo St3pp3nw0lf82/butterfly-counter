@@ -36,7 +36,7 @@
 <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
 <!-- local link 
 <script type="text/javascript" src="js/jquerymobile/jquery.mobile-1.1.0.min.js"></script>
-
+-->
 <!--
 #################################################
 ###### google maps plugin for jquery mobile #####
@@ -51,24 +51,71 @@
 ############# custom javascript #################
 #################################################
 -->
-<script type="text/javascript" src="js/showposition.js"></script>
+<script type="text/javascript" src="js/butterflyapp.js"></script>
+<script type="text/javascript" src="js/butterfly.js"></script>
+<script type="text/javascript" src="js/basket.js"></script>
 <script type="text/javascript" src="js/createsighting.js"></script>
 
 <!-- add click event to button after dom is ready -->
 <script type="text/javascript">
-	//init_sightingobject();
+try {
+	var ba = new Butterflyapp();
+	if(typeof(ba) == "object") {
+		ba.init();
+		$(document).delegate("#bfc_choosebutterfly", "pageshow", function() { ba.printButterflies(); });
+		$(document).delegate("#bfc_summary", "pageshow", function() { ba.showBasket(); });
+		/*
+		if(typeof(Storage) !== "undefined") {
+			//sessionStorage.setItem("sessionStarted", false);
+			//localStorage.ba = JSON.stringify([]);
+			//var ba_array = JSON.parse(localStorage["ba"]);
+			//ba_array.push(ba);
+			//localStorage["ba"] = JSON.stringify(ba_array);
+			/*
+			if(sessionStorage.length == 2) {
+				$(document).delegate("#bfc_startpage", "pageinit", function() {
+				$("#start_sighting").bind("click", ba.startSession);
+				});
+			} else {
+				throw "sessionstorage_err";
+			}
+		} else {
+			throw "sessupport_err";
+		}
+		*/
+	} else {
+		throw "init_err";
+	}
+} catch(e) {
+	var errormsg = "";
+	switch(e) {
+		case "sessionstorage_err":
+			errormsg += "Butterflyapp object could not be stored.";
+		break;
+		case "sessupport_err":
+			errormsg += "Local storage is not supported on your device.";
+		break;
+		case "init_err":
+			errormsg += "Butterflyapp opbject could not be initialized.";
+		break;
+		default:
+			errormsg += e.message;
+	}
+	alert(errormsg);
+}	
 	//use this approach to bind special scripts to certain pages, e.g. the page with id='myPage'
 	//TODO: at each call of the startpage check for older sightingobjects here:
-	$(document).delegate("#bfc_startpage", "pageinit", function() {
-		$("#start_sighting").bind("click", create_sightingbasket);
-	});
 </script>
 
 </head> 
 <body>
 <!-- TODO: use data-rel="dialog", data-transition="pop" to produce popup-dialog for the found old sightings
 process -->
-<!-- first page: choose butterflies -->
+<!--
+#################################################
+first page: choose start options
+#################################################
+-->
 <div data-role="page" id="bfc_startpage" data-title="The butterfly counter - Start page">
 	<!-- header -->
 	<div data-role="header" data-position="fixed">
@@ -78,17 +125,71 @@ process -->
 	<div id="content" data-role="content">	
 		<h2>What do you want to do?</h2>
 		<div id="startoptions">
-			<p><a href="bfc_choosebutterfly.html" data-role="button" id="start_sighting">Start sighting session</a><p/>
+			<p><a href="#bfc_choosebutterfly" data-role="button" id="start_sighting">Start sighting session</a><p/>
 			<p><a href="#" data-role="button" id="quit_app">Quit app</a><p/>
-			<!--
-			<p><a href='#' data-role='button' onclick="javascript:delete_basket();">Delete basket</a><p/>
--->
+			<p><a href="#" data-role="button" id="check_session">check session</a><p/>
+			<p><a href='#' data-role='button' onclick="javascript:ba.printButterflies();">print bfs</a><p/>
+
 		</div>
 	</div>
 	<!-- footer -->
 	<div data-role="footer" data-position="fixed"></div>
 <script type="text/javascript" src="js/modernizr.js"></script>
+<!--
 <script type="text/javascript">checkforbasket();</script>
+-->
+</div>
+<!--
+#################################################
+second page: choose butterflies
+#################################################
+-->
+<div data-role="page" id="bfc_choosebutterfly" data-title="The butterfly counter - Choose butterflies">
+	<!-- header -->
+	<div data-role="header" data-position="fixed">
+		<h1>Mobile butterfly counter</h1>
+	</div>
+	<!-- content -->
+	<div id="content" data-role="content">	
+		<h2>Which butterflies did you see?</h2>
+		<!-- list of butterflies -->
+		<ul id="butterflylist"></ul>
+	</div>
+	<!-- footer -->
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#bfc_startpage" data-role="button">Back</a></li>
+				<li><a href="#bfc_summary" data-role="button">Summary</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!--
+#################################################
+third page: sighting summary
+#################################################
+-->
+<div data-role="page" id="bfc_summary" data-title="The butterfly counter - Summary">
+	<!-- header -->
+	<div data-role="header" data-position="fixed">
+		<h1>Mobile butterfly counter</h1>
+	</div>
+	<!-- content -->
+	<div id="content" data-role="content">	
+		<h2>Your sightings</h2>
+		<div id="sightingbasket"></div>
+	</div>
+	<!-- footer -->
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#bfc_choosebutterfly" data-role="button">Back</a></li>
+			</ul>
+		</div>
+	</div>
+<script type="text/javascript" src="js/sightingsummary.js"></script>
+<script type="text/javascript">show_sightings();</script>
 </div>
 </body>
 </html>
