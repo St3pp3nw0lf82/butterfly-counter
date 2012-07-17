@@ -78,7 +78,9 @@ function showBasket() {
 }
 
 function closeApp() {
-	navigator.app.exitApp();
+	// note: force app to close for example in iOS is stromgly recommended not to do on Apple devices!
+	// see: http://stackoverflow.com/questions/3154491/quit-app-when-pressing-home
+	navigator.device.exitApp();
 }
 
 
