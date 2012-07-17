@@ -51,11 +51,21 @@
 ############# custom javascript #################
 #################################################
 -->
-<script type="text/javascript" src="js/cordova-1.9.0.js"></script>
+<script type="text/javascript" src="js/cordova-1.8.1.js"></script>
 <script type="text/javascript" src="js/butterflyapp.js"></script>
 <script type="text/javascript" src="js/butterfly.js"></script>
 <script type="text/javascript" src="js/basket.js"></script>
-<script type="text/javascript" src="js/createsighting.js"></script>
+<script type="text/javascript">
+function init() {
+	document.addEventListener("deviceready", onDeviceReady, true);
+}
+//$(document).ready(function() {
+//$(function() {
+//	document.addEventListener("deviceready", onDeviceReady, false);
+//});
+function onDeviceReady() { alert("cordova ready"); }
+//});
+</script>
 
 <!-- add click event to button after dom is ready -->
 <script type="text/javascript">
@@ -120,7 +130,7 @@ process -->
 first page: choose start options
 #################################################
 -->
-<div data-role="page" id="bfc_startpage" data-title="The butterfly counter - Start page">
+<div data-role="page" onload="init();" id="bfc_startpage" data-title="The butterfly counter - Start page">
 	<!-- header -->
 	<div data-role="header" data-position="fixed">
 		<h1>Mobile butterfly counter</h1>
@@ -139,6 +149,7 @@ first page: choose start options
 <!--
 <script type="text/javascript">checkforbasket();</script>
 -->
+<script type="text/javascript" charset="utf-8" src="js/android/cordova-1.7.0.js"></script>
 </div>
 <!--
 #################################################
