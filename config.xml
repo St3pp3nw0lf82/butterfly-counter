@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+xmlns:gap = "http://phonegap.com/ns/1.0"
+id        = "co.uk.headscape"
+version   = "0.0.1">
+
+<!-- versionCode is optional and Android only -->
+
+<name>Mobile Butterfly Counter</name>
+
+<description>
+Register sightings of butterflys across the UK with a mobile web application
+</description>
+
+<author>
+Johannes Cox 
+</author>
+<preference name="phonegap-version" value="1.9.0"/>
+
+</widget>
