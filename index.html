@@ -66,59 +66,11 @@ function init() {
 //});
 function onDeviceReady() { 
 	alert("cordova ready");
-	try {
-		var ba = new Butterflyapp();
-		if(typeof(ba) == "object") {
-			ba.init();
-			$(document).delegate("#bfc_startpage", "pageshow", function() {
-				$("#quit_app").bind("click", function() { ba.closeApp(); });
-			});
-			$(document).delegate("#bfc_choosebutterfly", "pageshow", function() { ba.printButterflies(); });
-			$(document).delegate("#bfc_summary", "pageshow", function() { ba.showBasket(); });
-			/*
-			if(typeof(Storage) !== "undefined") {
-				//sessionStorage.setItem("sessionStarted", false);
-				//localStorage.ba = JSON.stringify([]);
-				//var ba_array = JSON.parse(localStorage["ba"]);
-				//ba_array.push(ba);
-				//localStorage["ba"] = JSON.stringify(ba_array);
-				/*
-				if(sessionStorage.length == 2) {
-					$(document).delegate("#bfc_startpage", "pageinit", function() {
-					$("#start_sighting").bind("click", ba.startSession);
-					});
-				} else {
-					throw "sessionstorage_err";
-				}
-			} else {
-				throw "sessupport_err";
-			}
-			*/
-		} else {
-			throw "init_err";
-		}
-	} catch(e) {
-		var errormsg = "";
-		switch(e) {
-			case "sessionstorage_err":
-				errormsg += "Butterflyapp object could not be stored.";
-			break;
-			case "sessupport_err":
-				errormsg += "Local storage is not supported on your device.";
-			break;
-			case "init_err":
-				errormsg += "Butterflyapp opbject could not be initialized.";
-			break;
-			default:
-				errormsg += e.message;
-		}
-		alert(errormsg);
-	}
 }
 //});
 </script>
 
-<!-- add click event to button after dom is ready
+<!-- add click event to button after dom is ready -->
 <script type="text/javascript">
 try {
 	var ba = new Butterflyapp();
