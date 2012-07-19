@@ -76,6 +76,7 @@ try {
 	alert("in try block...");
 	var ba = new Butterflyapp();
 	if(typeof(ba) == "object") {
+		alert("ba is object");
 		ba.init();
 		$(document).delegate("#bfc_startpage", "pageshow", function() {
 			$("#quit_app").bind("click", function() { ba.closeApp(); });
@@ -102,6 +103,7 @@ try {
 		}
 		*/
 	} else {
+		alert("ba is no object");
 		throw "init_err";
 	}
 } catch(e) {
