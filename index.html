@@ -57,8 +57,8 @@
 <script type="text/javascript" src="js/butterfly.js"></script>
 <script type="text/javascript" src="js/basket.js"></script>
 <script type="text/javascript">
-function init() {
-	document.addEventListener("deviceready", onDeviceReady, true);
+function init_phonegap() {
+	document.addEventListener("deviceready", onDeviceReady, false);
 }
 //$(document).ready(function() {
 //$(function() {
@@ -128,7 +128,7 @@ try {
 </script>
 
 </head> 
-<body>
+<body onload="init_phonegap();">
 <!-- TODO: use data-rel="dialog", data-transition="pop" to produce popup-dialog for the found old sightings
 process -->
 <!--
@@ -136,7 +136,7 @@ process -->
 first page: choose start options
 #################################################
 -->
-<div data-role="page" onload="init();" id="bfc_startpage" data-title="The butterfly counter - Start page">
+<div data-role="page" id="bfc_startpage" data-title="The butterfly counter - Start page">
 	<!-- header -->
 	<div data-role="header" data-position="fixed">
 		<h1>Mobile butterfly counter</h1>
