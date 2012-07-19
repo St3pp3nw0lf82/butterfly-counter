@@ -33,12 +33,14 @@ Butterflyapp.prototype.basket = [];
 Butterflyapp.prototype.addToBasket = function(sighting) { return this.basket.push(sighting); };
 
 function init() {
+	alert("in init");
 	//this.createButterflies("Small White");
 	this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
 }
 
 function createButterflies() {
 	try {
+		alert("in createbutterflies");
 		for(var i = 0; i < arguments.length; i++) {
 			var bf = new Butterfly(arguments[i]);
 			if(typeof(bf) == "object") {
@@ -59,6 +61,7 @@ function createButterflies() {
 }
 
 function printButterflies() {
+	alert("in printbutterflies");
 	$("#butterflylist").html("");
 	for(var i = 0; i < this.butterflies.length; i++) {
 		this.butterflies[i].printMe();
@@ -80,7 +83,7 @@ function showBasket() {
 function closeApp() {
 	// note: force app to close for example in iOS is stromgly recommended not to do on Apple devices!
 	// see: http://stackoverflow.com/questions/3154491/quit-app-when-pressing-home
-	navigator.device.exitApp();
+	navigator.app.exitApp();
 }
 
 
