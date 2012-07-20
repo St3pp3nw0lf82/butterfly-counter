@@ -92,7 +92,7 @@ function getPosition(obj) {
 		obj.currentPosition.latitude = position.coords.latitude;
 		obj.currentPosition.longitude = position.coords.longitude;
 		//alert("Latitude: "+position.coords.latitude+"\nLongitude: "+position.coords.longitude);
-		return true;
+		//return true;
 	};
 	var onError = function(error) {
 		obj.currentPosition.latitude = "default";
@@ -113,7 +113,7 @@ function getPosition(obj) {
 				errormsg += error.message;
 		}
 		alert(errormsg);
-		return false;
+		//return false;
 	};
 	navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
 }
