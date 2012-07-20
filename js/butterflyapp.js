@@ -72,7 +72,8 @@ function showBasket() {
 	$("#sightingbasket").html("");
 	if(this.basket.length) {
 		for(var i = 0; i < this.basket.length; i++) {
-			alert(this.basket[i].getMyPosition);
+			var testoutput = this.basket[i].getMyPosition();
+			alert(testoutput);
 			this.basket[i].printMe("basket");
 			$("#sightingbasket").listview("refresh");
 		}
