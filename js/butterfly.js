@@ -6,16 +6,24 @@ this.printMe = printMe;
 this.countMe = countMe;
 this.getName = getName;
 this.getAmount = getAmount;
-this.me = "<li id='"+this.name+"'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span></a></li>";
+this.me_butterflylist = "<li id='"+this.name+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span></a></li>";
+this.me_basket = "<li id='"+this.name+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='ui-li-count'></span></a></li>";
 return true;
 }
 
 Butterfly.prototype = new Butterflyapp;
 
-function printMe() {
-	var that = this;
-	var output = $(this.me);
-	$("#butterflylist").append(output.click(function() { that.countMe(); }));
+function printMe(forwhat) {
+	if(forwhat == "butterflylist") {
+		var that = this;
+		var output = $(this.me_butterflylist);
+		$("#butterflylist").append(output.click(function() { that.countMe(); }));
+	} else if(forwhat == "basket") {
+		var count = " count";
+		if(this.amount > 1) { count = " counts"; }
+		var output = "<li id='"+this.name+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
+		$("#sightingbasket").append(output);
+	}
 }
 
 function countMe() {

@@ -60,20 +60,21 @@ function createButterflies() {
 function printButterflies() {
 	$("#butterflylist").html("");
 	for(var i = 0; i < this.butterflies.length; i++) {
-		this.butterflies[i].printMe();
+		this.butterflies[i].printMe("butterflylist");
+		$("#butterflylist").listview("refresh");
 	}
 }
 
 function showBasket() {
-	var bf_summary = "";
+	$("#sightingbasket").html("");
 	if(this.basket.length) {
 		for(var i = 0; i < this.basket.length; i++) {
-			bf_summary += "<p>Name: "+this.basket[i].getName()+"</br >Amount: "+this.basket[i].getAmount()+"</p>";
+			this.basket[i].printMe("basket");
+			$("#sightingbasket").listview("refresh");
 		}
 	} else {
-		bf_summary += "<p>You have made no sighting yet.</p><p><a href='#bfc_choosebutterfly' data-role='button'>Create one!</a><p/>";
+		$("#sightingbasket").html("<p>You have made no sighting yet.</p><p><a href='#bfc_choosebutterfly' data-role='button'>Create one!</a><p/>");
 	}
-	$("#sightingbasket").html(bf_summary);
 }
 
 function closeApp() {
