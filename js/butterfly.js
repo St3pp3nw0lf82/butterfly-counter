@@ -55,4 +55,7 @@ function countMe() {
 
 function getName() { return this.name; }
 function getAmount() { return this.amount; }
-function getMyPosition() { return {this.myPosition.latitude,this.myPosition.longitude}; }
+function getMyPosition() {
+	var mypos = this.myPosition.latitude+","+this.myPosition.longitude;
+	return mypos;
+}
