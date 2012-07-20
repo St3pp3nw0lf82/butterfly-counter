@@ -72,7 +72,7 @@ function showBasket() {
 	$("#sightingbasket").html("");
 	if(this.basket.length) {
 		for(var i = 0; i < this.basket.length; i++) {
-			alert(this.basket[i].currentPosition.latitude+"\n"+this.basket[i].currentPosition.longitude);
+			alert(this.basket[i].getMyPosition);
 			this.basket[i].printMe("basket");
 			$("#sightingbasket").listview("refresh");
 		}

@@ -1,13 +1,14 @@
 function Butterfly(name) {
 this.name = name;
 this.amount = 0;
+this.myPosition = {latitude:"",longitude:""};
 this.inBasket = false;
 this.printMe = printMe;
 this.countMe = countMe;
 this.getName = getName;
 this.getAmount = getAmount;
+this.getMyPosition = getMyPosition;
 this.me_butterflylist = "<li id='"+this.name+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span></a></li>";
-this.me_basket = "<li id='"+this.name+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='ui-li-count'></span></a></li>";
 return true;
 }
 
@@ -29,10 +30,11 @@ function printMe(forwhat) {
 function countMe() {
 	try {
 		this.amount++;
+		this.myPosition.latitude = Butterflyapp.prototype.currentPosition.latitude;
+		this.myPosition.longitude = Butterflyapp.prototype.currentPosition.longitude;
 		if(!this.inBasket) {
 			var that = this;
 			var oldlength = Butterflyapp.prototype.basket.length;
-			var that = this;
 			var newlength = Butterflyapp.prototype.addToBasket.call(this, that);
 			if(oldlength < newlength) {
 				this.inBasket = true;
@@ -50,3 +52,4 @@ function countMe() {
 
 function getName() { return this.name; }
 function getAmount() { return this.amount; }
+function getMyPosition() { alert("My position is:\nLatitude: "+this.myPosition.latitude+"\nLongitude: "+this.myPosition.longitude); }
