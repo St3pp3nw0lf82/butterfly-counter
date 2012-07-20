@@ -31,6 +31,7 @@ return true;
 
 Butterflyapp.prototype.basket = [];
 Butterflyapp.prototype.addToBasket = function(sighting) { return this.basket.push(sighting); };
+Butterflyapp.prototype.currentPosition = {latitude:"",longitude:""};
 
 function init() {
 	this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
@@ -59,7 +60,7 @@ function createButterflies() {
 
 function printButterflies() {
 	// get GPS coordinates:
-	getPosition();
+	getPosition(this);
 	$("#butterflylist").html("");
 	for(var i = 0; i < this.butterflies.length; i++) {
 		this.butterflies[i].printMe("butterflylist");
@@ -71,6 +72,7 @@ function showBasket() {
 	$("#sightingbasket").html("");
 	if(this.basket.length) {
 		for(var i = 0; i < this.basket.length; i++) {
+			alert(this.basket[i].currentPosition.latitude+"\n"+this.basket[i].currentPosition.longitude);
 			this.basket[i].printMe("basket");
 			$("#sightingbasket").listview("refresh");
 		}
@@ -85,27 +87,33 @@ function closeApp() {
 	navigator.app.exitApp();
 }
 
-function getPosition() {
+function getPosition(obj) {
 	var onSuccess = function(position) {
-		alert("Latitude: "+position.coords.latitude+"\nLongitude: "+position.coords.longitude);
+		obj.currentPosition.latitude = position.coords.latitude;
+		obj.currentPosition.longitude = position.coords.longitude;
+		//alert("Latitude: "+position.coords.latitude+"\nLongitude: "+position.coords.longitude);
+		return true;
 	};
 	var onError = function(error) {
-		var errormsg = "";
+		obj.currentPosition.latitude = "default";
+		obj.currentPosition.longitude = "default";
+		var errormsg = "Your current position could not be retrieved.\n";
 		switch(error.code) {
 			case "PERMISSION_DENIED":
 				errormsg += "Retrieving position information is disabled on the device.";
 			break;
 			case "POSITION_UNAVAILABLE":
-				errormsg += "Unable to retrieve the current position. Make sure to have network connection or GPS enabled.";
+				errormsg += "Make sure to have network connection or GPS enabled on your device.";
 			break;
 			// TIMEOUT only in combination with timeout parameter set in the getCurrentPosition function
 			case "TIMEOUT":
-				errormsg += "Specified timeout was exceeded.";
+				errormsg += "Specified timeout to retrieve position was exceeded.";
 			break;
 			default:
 				errormsg += error.message;
 		}
 		alert(errormsg);
+		return false;
 	};
 	navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
 }
