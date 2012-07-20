@@ -66,6 +66,7 @@ function init_phonegap() {
 //	document.addEventListener("deviceready", onDeviceReady, false);
 //});
 function onDeviceReady() {
+//NOTE: this only works with phonegap on mobile device, uncomment it when running in a browser on desktop:
 try {
 	var ba = new Butterflyapp();
 	if(typeof(ba) == "object") {
@@ -114,14 +115,14 @@ try {
 	}
 	alert(errormsg);
 }
-
 }
 //});
 </script>
 
-<!-- add click event to button after dom is ready
+<!-- add click event to button after dom is ready -->
 <script type="text/javascript">
-
+//NOTE: use this when running in a browser on desktop:
+/*
 try {
 	var ba = new Butterflyapp();
 	if(typeof(ba) == "object") {
@@ -149,7 +150,7 @@ try {
 		} else {
 			throw "sessupport_err";
 		}
-		*/
+		
 	} else {
 		throw "init_err";
 	}
@@ -198,11 +199,6 @@ first page: choose start options
 	</div>
 	<!-- footer -->
 	<div data-role="footer" data-position="fixed"></div>
-<script type="text/javascript" src="js/modernizr.js"></script>
-<!--
-<script type="text/javascript">checkforbasket();</script>
--->
-<script type="text/javascript" charset="utf-8" src="js/android/cordova-1.7.0.js"></script>
 </div>
 <!--
 #################################################
@@ -218,7 +214,7 @@ second page: choose butterflies
 	<div id="content" data-role="content">	
 		<h2>Which butterflies did you see?</h2>
 		<!-- list of butterflies -->
-		<ul id="butterflylist"></ul>
+		<ul data-role="listview" id="butterflylist"></ul>
 	</div>
 	<!-- footer -->
 	<div data-role="footer" data-position="fixed">
@@ -243,7 +239,9 @@ third page: sighting summary
 	<!-- content -->
 	<div id="content" data-role="content">	
 		<h2>Your sightings</h2>
-		<div id="sightingbasket"></div>
+		<ul data-role="listview" id="sightingbasket"></ul>
+		
+		<!--<div id="sightingbasket"></div>-->
 	</div>
 	<!-- footer -->
 	<div data-role="footer" data-position="fixed">
