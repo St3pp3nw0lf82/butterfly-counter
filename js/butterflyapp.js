@@ -58,6 +58,8 @@ function createButterflies() {
 }
 
 function printButterflies() {
+	// get GPS coordinates:
+	getPosition();
 	$("#butterflylist").html("");
 	for(var i = 0; i < this.butterflies.length; i++) {
 		this.butterflies[i].printMe("butterflylist");
@@ -81,6 +83,31 @@ function closeApp() {
 	// note: force app to close for example in iOS is stromgly recommended NOT TO DO on Apple devices!
 	// see: http://stackoverflow.com/questions/3154491/quit-app-when-pressing-home
 	navigator.app.exitApp();
+}
+
+function getPosition() {
+	var onSuccess = function(position) {
+		alert("Latitude: "+position.coords.latitude+"\nLongitude: "+position.coords.longitude);
+	};
+	var onError = function(error) {
+		var errormsg = "";
+		switch(error.code) {
+			case "PERMISSION_DENIED":
+				errormsg += "Retrieving position information is disabled on the device.";
+			break;
+			case "POSITION_UNAVAILABLE":
+				errormsg += "Unable to retrieve the current position. Make sure to have network connection or GPS enabled.";
+			break;
+			// TIMEOUT only in combination with timeout parameter set in the getCurrentPosition function
+			case "TIMEOUT":
+				errormsg += "Specified timeout was exceeded.";
+			break;
+			default:
+				errormsg += error.message;
+		}
+		alert(errormsg);
+	};
+	navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
 }
 
 
