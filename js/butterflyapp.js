@@ -1,6 +1,17 @@
 function Butterflyapp() {
 this.butterflies = [];
-this.bf_images = {"Brimstone": "brimstone_small.jpg",
+this.init = init;
+this.getPosition = getPosition;
+this.createButterflies = createButterflies;
+this.printButterflies = printButterflies;
+this.showBasket = showBasket;
+this.showMap = showMap;
+this.closeApp = closeApp;
+return true;
+}
+
+Butterflyapp.prototype.basket = [];
+Butterflyapp.prototype.bf_images = {"Brimstone": "brimstone_small.jpg",
 		"Comma": "comma_small.jpg",
 		"Common Blue": "commonblue_small.jpg",
 		"Gatekeeper": "gatekeeper_small.jpg",
@@ -21,17 +32,6 @@ this.bf_images = {"Brimstone": "brimstone_small.jpg",
 		"Small White": "smallwhite_small.jpg",
 		"Speckled Wood": "speckledwood_small.jpg",
 		"Wall": "wall_small.jpg"};
-this.init = init;
-this.getPosition = getPosition;
-this.createButterflies = createButterflies;
-this.printButterflies = printButterflies;
-this.showBasket = showBasket;
-this.showMap = showMap;
-this.closeApp = closeApp;
-return true;
-}
-
-Butterflyapp.prototype.basket = [];
 Butterflyapp.prototype.addToBasket = function(sighting) { return this.basket.push(sighting); };
 Butterflyapp.prototype.currentPosition = {"latitude":"","longitude":"","lastTaken":""};
 
@@ -61,7 +61,7 @@ function getPosition() {
 			case "POSITION_UNAVAILABLE":
 				errormsg += "Make sure to have network connection or GPS enabled on your device.";
 			break;
-			// TIMEOUT only in combination with timeout parameter set in the getCurrentPosition function
+			// TIMEOUT only in combination with timeout parameter set in the getCurrentPosition function below
 			case "TIMEOUT":
 				errormsg += "Specified timeout to retrieve position was exceeded.";
 			break;
@@ -126,16 +126,24 @@ function showBasket() {
 function showMap() {
 	if(this.basket.length) {		
 		$('#map_canvas').gmap().bind('init', function(ev, map) {
-			$('#map_canvas').gmap('option','zoom',15);
-			$('#map_canvas').gmap('addMarker', {'position': Butterflyapp.prototype.basket[0].getMyPosition(), 'bounds': true}).click(function() {
-				var name = Butterflyapp.prototype.basket[0].getName();
-				var amount = Butterflyapp.prototype.basket[0].getAmount();
-				var image = "../images/commonblue_small.jpg";
-				alert(window.location);
-				//var image = "../images/"+Butterflyapp.prototype.bf_images[Butterflyapp.prototype.basket[0].getName()];
-				var infowindow = "<div id='iw_wrapper'><img src='"+image+"' class='iw_bfimage'/><p>Name: "+name+"<br />Amount: "+amount+"</p>";
-				$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
-			});
+			//$('#map_canvas').gmap('option','zoom',15);
+			//for(var i = 0; i < Butterflyapp.prototype.basket.length; i++) {
+				/*
+				if(i < Butterflyapp.prototype.basket.length-1) {
+					var thislat = Butterflyapp.prototype.basket
+				}
+				*/
+				$('#map_canvas').gmap('addMarker', {'position': Butterflyapp.prototype.basket[0].getMyPosition(), 'bounds': true}).click(function() {
+					var name = Butterflyapp.prototype.basket[0].getName();
+					var amount = Butterflyapp.prototype.basket[0].getAmount();
+					var path = window.location.toString();
+					var index = path.lastIndexOf('/');
+					var pathto = path.slice(0,index);
+					var image = pathto+"/images/"+Butterflyapp.prototype.bf_images[Butterflyapp.prototype.basket[0].getName()];
+					var infowindow = "<div id='iw_wrapper'><img src='"+image+"' class='iw_bfimage'/><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br />Counts: <strong>"+amount+"</strong></p>";
+					$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
+				});
+			//}
 		});
 	}
 }
