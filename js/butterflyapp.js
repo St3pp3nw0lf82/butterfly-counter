@@ -33,7 +33,7 @@ return true;
 
 Butterflyapp.prototype.basket = [];
 Butterflyapp.prototype.addToBasket = function(sighting) { return this.basket.push(sighting); };
-Butterflyapp.prototype.currentPosition = {latitude:"",longitude:"",lastTaken:""};
+Butterflyapp.prototype.currentPosition = {"latitude":"","longitude":"","lastTaken":""};
 
 function init() {
 	this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
@@ -45,14 +45,14 @@ function getPosition() {
 	this.currentPosition.lastTaken = d.getTime();
 	// try getting position:
 	var onSuccess = function(position) {
-		this.currentPosition.latitude = position.coords.latitude;
-		this.currentPosition.longitude = position.coords.longitude;
+		Butterflyapp.prototype.currentPosition.latitude = position.coords.latitude;
+		Butterflyapp.prototype.currentPosition.longitude = position.coords.longitude;
 		//return true;
 	};
 	var onError = function(error) {
 		//TODO: deal with default values:
-		this.currentPosition.latitude = "default";
-		this.currentPosition.longitude = "default";
+		Butterflyapp.prototype.currentPosition.latitude = "default";
+		Butterflyapp.prototype.currentPosition.longitude = "default";
 		var errormsg = "Your current position could not be retrieved.\n";
 		switch(error.code) {
 			case "PERMISSION_DENIED":
@@ -98,10 +98,10 @@ function createButterflies() {
 
 function printButterflies() {
 	var now = new Date().getTime();
-	var diff = ((now - this.currentPosition.lastTaken)*0.001);
-	diff = parseInt(Math.round(diff));
+	var time_diff = ((now - this.currentPosition.lastTaken)*0.001);
+	time_diff = parseInt(Math.round(time_diff));
 	// make new sighting after 2 mins?: 
-	if(diff > 120) {
+	if(time_diff > 120) {
 		this.getPosition();
 	}
 	$("#butterflylist").html("");
@@ -124,10 +124,11 @@ function showBasket() {
 }
 
 function showMap() {
-	if(this.basket.length) {
+	if(this.basket.length) {		
 		$('#map_canvas').gmap().bind('init', function(ev, map) {
-			$('#map_canvas').gmap('addMarker', {'position': this.basket[0].getMyPosition(), 'bounds': true}).click(function() {
-				$('#map_canvas').gmap('openInfoWindow', {'content': this.basket[0].getName()}, this);
+			alert(Butterflyapp.prototype.basket[0].getMyPosition());
+			$('#map_canvas').gmap('addMarker', {'position': Butterflyapp.prototype.basket[0].getMyPosition(), 'bounds': true}).click(function() {
+				$('#map_canvas').gmap('openInfoWindow', {'content': Butterflyapp.prototype.basket[0].getName()}, this);
 			});
 		});
 	}
