@@ -65,7 +65,7 @@ function init_phonegap() {
 //});
 function onDeviceReady() {
 //NOTE: this only works with phonegap on mobile device, uncomment it when running in a browser on desktop:
-/*
+
 try {
 	var ba = new Butterflyapp();
 	if(typeof(ba) == "object") {
@@ -101,11 +101,11 @@ try {
 	}
 	alert(errormsg);
 }
-*/
+
 }
 </script>
 
-<!-- add click event to button after dom is ready -->
+<!-- add click event to button after dom is ready 
 <script type="text/javascript">
 //NOTE: use this when running in a browser on desktop:
 
@@ -165,6 +165,7 @@ try {
 	//use this approach to bind special scripts to certain pages, e.g. the page with id='myPage'
 	//TODO: at each call of the startpage check for older sightingobjects here:
 </script>
+-->
 </head> 
 <body onload="init_phonegap();">
 <!-- TODO: use data-rel="dialog", data-transition="pop" to produce popup-dialog for the found old sightings
