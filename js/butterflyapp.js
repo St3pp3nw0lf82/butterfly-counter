@@ -126,9 +126,15 @@ function showBasket() {
 function showMap() {
 	if(this.basket.length) {		
 		$('#map_canvas').gmap().bind('init', function(ev, map) {
-			$('#map_canvas').gmap({'zoom': 15});
+			$('#map_canvas').gmap('option','zoom',15);
 			$('#map_canvas').gmap('addMarker', {'position': Butterflyapp.prototype.basket[0].getMyPosition(), 'bounds': true}).click(function() {
-				$('#map_canvas').gmap('openInfoWindow', {'content': Butterflyapp.prototype.basket[0].getName()}, this);
+				var name = Butterflyapp.prototype.basket[0].getName();
+				var amount = Butterflyapp.prototype.basket[0].getAmount();
+				var image = "../images/commonblue_small.jpg";
+				alert(window.location);
+				//var image = "../images/"+Butterflyapp.prototype.bf_images[Butterflyapp.prototype.basket[0].getName()];
+				var infowindow = "<div id='iw_wrapper'><img src='"+image+"' class='iw_bfimage'/><p>Name: "+name+"<br />Amount: "+amount+"</p>";
+				$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
 			});
 		});
 	}
