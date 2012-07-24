@@ -8,7 +8,7 @@ this.countMe = countMe;
 this.getName = getName;
 this.getAmount = getAmount;
 this.getMyPosition = getMyPosition;
-this.me_butterflylist = "<li id='"+this.name+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span></a></li>";
+this.me_butterflylist = "<li id='"+this.name+"' data-icon='false' data-shadow='false'><a href='#bfc_summary'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span></a></li>";
 return true;
 }
 
