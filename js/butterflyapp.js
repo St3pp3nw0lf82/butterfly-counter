@@ -5,6 +5,8 @@ this.getPosition = getPosition;
 this.createButterflies = createButterflies;
 this.printButterflies = printButterflies;
 this.showBasket = showBasket;
+this.checkConnection = checkConnection;
+this.submitSightings = submitSightings;
 this.showMap = showMap;
 this.closeApp = closeApp;
 return true;
@@ -122,6 +124,20 @@ function showBasket() {
 	} else {
 		$("#sightingbasket").html("<p>You have made no sighting yet.</p><p><a href='#bfc_choosebutterfly' data-role='button'>Create one!</a><p/>");
 	}
+}
+
+function checkConnection() {
+	var networkState = navigator.network.connection.type;
+	alert(networkState);
+	alert(networkState.connection.type);
+	//switch(networkState) {
+	//	case "":
+	//} 
+}
+
+function submitSightings() {
+	// check the network connection:
+	this.checkConnection();
 }
 
 function showMap() {

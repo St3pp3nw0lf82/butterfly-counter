@@ -69,6 +69,9 @@ function onDeviceReady() {
 try {
 	var ba = new Butterflyapp();
 	if(typeof(ba) == "object") {
+		// get database object to access device storage:
+		// 1mb == 1024 X 1024 bytes -> 1048576
+		var db = window.openDatabase("sightings","1.0","Sighting database",1048576);
 		// init the position object here:
 		ba.getPosition();
 		ba.init();
@@ -76,10 +79,13 @@ try {
 			$("#quit_app").bind("click", function() { ba.closeApp(); });
 		});
 		$(document).delegate("#bfc_choosebutterfly", "pageshow", function() { ba.printButterflies(); });
-		$(document).delegate("#bfc_summary", "pageshow", function() { ba.showBasket(); });
+		$(document).delegate("#bfc_summary", "pageshow", function() {
+			ba.showBasket();
+			$("#submit_sightings").bind("click", function() { ba.submitSightings(); });
+		});
 		$(document).delegate("#bfc_map", "pageshow", function() {
 			ba.showMap();
-			$("map_canvas").gmap("refresh");
+			//$("map_canvas").gmap("refresh");
 		});
 	} else {
 		throw "init_err";
@@ -105,7 +111,7 @@ try {
 }
 </script>
 
-<!-- add click event to button after dom is ready 
+<!-- add click event to button after dom is ready -->
 <script type="text/javascript">
 //NOTE: use this when running in a browser on desktop:
 
@@ -118,10 +124,13 @@ try {
 			$("#quit_app").bind("click", function() { ba.closeApp(); });
 		});
 		$(document).delegate("#bfc_choosebutterfly", "pageshow", function() { ba.printButterflies(); });
-		$(document).delegate("#bfc_summary", "pageshow", function() { ba.showBasket(); });
+		$(document).delegate("#bfc_summary", "pageshow", function() {
+			ba.showBasket();
+			$("#submit_sightings").bind("click", function() { ba.submitSightings(); });
+		});
 		$(document).delegate("#bfc_map", "pageshow", function() {
 			ba.showMap();
-			$("map_canvas").gmap("refresh");
+			//$("map_canvas").gmap("refresh");
 		});
 		/*
 		if(typeof(Storage) !== "undefined") {
@@ -165,7 +174,6 @@ try {
 	//use this approach to bind special scripts to certain pages, e.g. the page with id='myPage'
 	//TODO: at each call of the startpage check for older sightingobjects here:
 </script>
--->
 </head> 
 <body onload="init_phonegap();">
 <!-- TODO: use data-rel="dialog", data-transition="pop" to produce popup-dialog for the found old sightings
@@ -205,7 +213,7 @@ second page: choose butterflies
 	<div id="content" data-role="content">	
 		<h2>Which butterflies did you see?</h2>
 		<!-- list of butterflies -->
-		<ul data-role="listview" id="butterflylist"></ul>
+		<ul data-role="listview" data-theme="c" id="butterflylist"></ul>
 	</div>
 	<!-- footer -->
 	<div data-role="footer" data-position="fixed">
@@ -237,6 +245,7 @@ third page: sighting summary
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#bfc_choosebutterfly" data-role="button">Back</a></li>
+				<li><a href="#" data-role="button" id="submit_sightings">Submit sightings</a></li>
 				<li><a href="#bfc_map" data-role="button">Map</a></li>
 			</ul>
 		</div>
