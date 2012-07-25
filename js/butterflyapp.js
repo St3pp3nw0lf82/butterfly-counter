@@ -82,7 +82,7 @@ function createButterflies() {
 	try {
 		for(var i = 0; i < arguments.length; i++) {
 			var bf = new Butterfly(arguments[i],i);
-			if(typeof(bf) == "object") {
+			if(typeof(bf) === "object") {
 				this.butterflies.push(bf);
 			} else {
 				throw "bfcreation_err";
@@ -146,9 +146,13 @@ function submitSightings() {
 		if(this.basket.length) {
 			var storage = window.localStorage;
 			if(typeof(storage) === "object") {
-				alert("is object");
+				var myobj = JSON.stringify(this.basket[0]);
+				alert(myobj);
+				//for(var i = 0; i < this.basket.length; i++) {
+					
+				//}
 			} else {
-				alert("type of storage: "+typeof(storage));
+				throw "storage_err";
 			}
 			/*
 			// get database object to access device storage:
@@ -195,7 +199,8 @@ function submitSightings() {
 		} else { throw "nosightings_err"; }
 	} catch(e) {
 		var errormsg = "";
-		if(e == "nosightings_err") { errormsg += "There are no sighting#s to submit."; }
+		if(e == "storage_err") { errormsg += "Local storage is not possible on the device."; }
+		else if(e == "nosightings_err") { errormsg += "There are no sightings to submit."; }
 		else { errormsg += "An error occurred trying to submit your sightings: "+e.message; }
 		alert(errormsg);
 	}

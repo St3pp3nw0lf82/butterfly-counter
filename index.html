@@ -68,7 +68,7 @@ function onDeviceReady() {
 
 try {
 	var ba = new Butterflyapp();
-	if(typeof(ba) == "object") {
+	if(typeof(ba) === "object") {
 		// init the position object here:
 		ba.getPosition();
 		ba.init();
