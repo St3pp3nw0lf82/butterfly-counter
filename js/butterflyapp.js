@@ -6,6 +6,7 @@ this.createButterflies = createButterflies;
 this.printButterflies = printButterflies;
 this.showBasket = showBasket;
 this.checkConnection = checkConnection;
+this.storeSightings = storeSightings;
 this.submitSightings = submitSightings;
 this.showMap = showMap;
 this.closeApp = closeApp;
@@ -128,16 +129,66 @@ function showBasket() {
 
 function checkConnection() {
 	var networkState = navigator.network.connection.type;
-	alert("networkstate: "+networkState);
-	alert("networkstate.connection.type: "+networkState.connection.type);
-	//switch(networkState) {
-	//	case "":
-	//} 
+	//alert("networkstate: "+networkState);
+	if(!(networkState == "UNKNOWN" || networkState == "NONE")) {
+		return true;
+	} else {
+		return false;
+	} 
+}
+
+function storeSightings() {
+
 }
 
 function submitSightings() {
-	// check the network connection:
-	this.checkConnection();
+	try {
+		if(this.basket.length) {
+			// access local database:
+			function createDB(tx) {
+				tx.executeSql("create table if not exists bf_sightings (id int not null primary key  autoincrement,bf_id int not null,sighting text)");
+			}
+			function errorCreate(err) {
+				alert("Error creating table 'bf_sightings': "+err.code);
+			}
+			function successCreate() {
+				alert("Table 'bf_sightings' successfully created!");	
+			}
+			db.transaction(createDB, errorCreate, successCreate);
+			/*
+			// build insert query:
+			var insert_query = "insert into bf_sightings (bf_id, sighting)";
+			for(var i = 0; i < this.basket.length; i++) {
+				insert_query +=" select "+this.basket[i].id+" as bf_id,"+JSON.stringify(this.basket[i])+" as sighting";
+				if(i < this.basket.length-1) { insert_query += " union"; }
+			}
+			//alert("insert query: "+insert_query);
+			// insert values into db:
+			function insertDB(tx,insert_query) {
+				tx.executeSql(insert_query);
+			}
+			function errorInsert(err) {
+				alert("Error inserting values into database: "+err.code);
+			}
+			function successInsert() {
+				alert("Values successfully inserted!");
+			}
+			db.transaction(insertDB, errorInsert, successInsert);
+			// check the network connection:
+			/*
+			if(this.checkConnection()) {
+		
+			} else {
+				throw "connection_err";
+			}
+			*/
+		} else { throw "nosightings_err"; }
+	} catch(e) {
+		var errormsg = "";
+		if(e == "nosightings_err") { errormsg += "There are no sighting#s to submit."; }
+		else { errormsg += "An error occurred trying to submit your sightings: "+e.message; }
+		alert(errormsg);
+	}
 }
 
 function showMap() {
