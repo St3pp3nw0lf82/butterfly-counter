@@ -128,8 +128,8 @@ function showBasket() {
 
 function checkConnection() {
 	var networkState = navigator.network.connection.type;
-	alert(networkState);
-	alert(networkState.connection.type);
+	alert("networkstate: "+networkState);
+	alert("networkstate.connection.type: "+networkState.connection.type);
 	//switch(networkState) {
 	//	case "":
 	//} 
