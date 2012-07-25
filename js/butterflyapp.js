@@ -144,6 +144,7 @@ function storeSightings() {
 function submitSightings() {
 	try {
 		if(this.basket.length) {
+			
 			// get database object to access device storage:
 			// 1mb == 1024 X 1024 bytes -> 1048576
 			var db = window.openDatabase("sightings","1.0","Sighting database",1048576);
@@ -152,7 +153,7 @@ function submitSightings() {
 				tx.executeSql("create table if not exists bf_sightings (id int not null primary key  autoincrement,bf_id int not null,sighting text)");
 			}
 			function errorCreate(err) {
-				alert("Error creating table 'bf_sightings': "+err.code);
+				alert("Error creating table 'bf_sightings': "+err.message);
 			}
 			function successCreate() {
 				alert("Table 'bf_sightings' successfully created!");	
