@@ -69,9 +69,6 @@ function onDeviceReady() {
 try {
 	var ba = new Butterflyapp();
 	if(typeof(ba) == "object") {
-		// get database object to access device storage:
-		// 1mb == 1024 X 1024 bytes -> 1048576
-		var db = window.openDatabase("sightings","1.0","Sighting database",1048576);
 		// init the position object here:
 		ba.getPosition();
 		ba.init();
