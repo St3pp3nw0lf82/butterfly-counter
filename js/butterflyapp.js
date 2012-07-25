@@ -144,13 +144,19 @@ function storeSightings() {
 function submitSightings() {
 	try {
 		if(this.basket.length) {
-			
+			var storage = window.localStorage;
+			if(typeof(storage) === "object") {
+				alert("is object");
+			} else {
+				alert("type of storage: "+typeof(storage));
+			}
+			/*
 			// get database object to access device storage:
 			// 1mb == 1024 X 1024 bytes -> 1048576
 			var db = window.openDatabase("sightings","1.0","Sighting database",1048576);
 			// access local database:
 			function createDB(tx) {
-				tx.executeSql("create table if not exists bf_sightings (id int not null primary key  autoincrement,bf_id int not null,sighting text)");
+				tx.executeSql("create table if not exists bf_sightings (id integer not null primary key autoincrement,bf_id integer not null,sighting text)");
 			}
 			function errorCreate(err) {
 				alert("Error creating table 'bf_sightings': "+err.message);
