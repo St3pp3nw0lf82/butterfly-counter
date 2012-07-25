@@ -78,7 +78,7 @@ function getPosition() {
 function createButterflies() {
 	try {
 		for(var i = 0; i < arguments.length; i++) {
-			var bf = new Butterfly(arguments[i]);
+			var bf = new Butterfly(arguments[i],i);
 			if(typeof(bf) == "object") {
 				this.butterflies.push(bf);
 			} else {
@@ -107,6 +107,7 @@ function printButterflies() {
 	$("#butterflylist").html("");
 	for(var i = 0; i < this.butterflies.length; i++) {
 		this.butterflies[i].printMe("butterflylist");
+		$("#"+i).text(this.butterflies[i].getAmount());
 		$("#butterflylist").listview("refresh");
 	}
 }
@@ -126,25 +127,39 @@ function showBasket() {
 function showMap() {
 	if(this.basket.length) {		
 		$('#map_canvas').gmap().bind('init', function(ev, map) {
-			//$('#map_canvas').gmap('option','zoom',15);
-			//for(var i = 0; i < Butterflyapp.prototype.basket.length; i++) {
-				/*
-				if(i < Butterflyapp.prototype.basket.length-1) {
-					var thislat = Butterflyapp.prototype.basket
-				}
-				*/
-				$('#map_canvas').gmap('addMarker', {'position': Butterflyapp.prototype.basket[0].getMyPosition(), 'bounds': true}).click(function() {
-					var name = Butterflyapp.prototype.basket[0].getName();
-					var amount = Butterflyapp.prototype.basket[0].getAmount();
+			if(Butterflyapp.prototype.basket.length >= 2) {
+				for(var i = 0; i < Butterflyapp.prototype.basket.length-1; i++) {
+					for(var j =(i+1); j < array.length; j++) {
+						var latdiff = parseInt(array[i].myPosition.latitude) - parseInt(array[j].myPosition.latitude);
+						var longdiff = parseInt(array[i].myPosition.longitude) - parseInt(array[j].myPosition.longitude);
+						if((latdiff == 0) && (longdiff == 0)) {  }
+					}
+					// build the info window:
+					var name = Butterflyapp.prototype.basket[i].getName();
+					var amount = Butterflyapp.prototype.basket[i].getAmount();
 					var path = window.location.toString();
 					var index = path.lastIndexOf('/');
 					var pathto = path.slice(0,index);
-					var image = pathto+"/images/"+Butterflyapp.prototype.bf_images[Butterflyapp.prototype.basket[0].getName()];
+					var image = pathto+"/images/"+Butterflyapp.prototype.bf_images[Butterflyapp.prototype.basket[i].getName()];
 					var infowindow = "<div id='iw_wrapper'><img src='"+image+"' class='iw_bfimage'/><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br />Counts: <strong>"+amount+"</strong></p>";
-					$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
-				});
-			//}
+					// create the marker:
+					$('#map_canvas').gmap('addMarker', {'position': Butterflyapp.prototype.basket[i].getMyPosition(), 'bounds': true}).click(function() {
+							$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
+					});
+				}
+			}
 		});
+	}
+}
+
+function comparePositions(array) {
+	//TODO: check for array == array
+	for(var i = 0; i < array.length-1; i++) {
+		for(var j =(i+1); j < array.length; j++) {
+			var latdiff = parseInt(array[i].myPosition.latitude) - parseInt(array[j].myPosition.latitude);
+			var longdiff = parseInt(array[i].myPosition.longitude) - parseInt(array[j].myPosition.longitude);
+			if((latdiff == 0) && (longdiff == 0)) {  }
+		}
 	}
 }
 

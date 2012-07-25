@@ -1,4 +1,5 @@
-function Butterfly(name) {
+function Butterfly(name,index) {
+this.id = index;
 this.name = name;
 this.amount = 0;
 this.myPosition = {"latitude":"","longitude":"","isSet":false};
@@ -8,7 +9,7 @@ this.countMe = countMe;
 this.getName = getName;
 this.getAmount = getAmount;
 this.getMyPosition = getMyPosition;
-this.me_butterflylist = "<li id='"+this.name+"' data-icon='false' data-shadow='false'><a href='#bfc_choosebutterfly'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span></a></li>";
+this.me_butterflylist = "<li data-icon='false' data-shadow='false'><a href='#bfc_choosebutterfly'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><div class='bf_infowrapper'><span class='bf_info'>"+this.name+"</span><span id='"+this.id+"' class='bf_currentamount'></span></div></a></li>";
 return true;
 }
 
@@ -18,7 +19,7 @@ function printMe(forwhat) {
 	if(forwhat == "butterflylist") {
 		var that = this;
 		var output = $(this.me_butterflylist);
-		$("#butterflylist").append(output.click(function() { that.countMe(); }));
+		$("#butterflylist").append(output.click(function(e) { that.countMe(); e.preventDefault();}));
 	} else if(forwhat == "basket") {
 		var count = " count";
 		if(this.amount > 1) { count = " counts"; }
@@ -30,6 +31,7 @@ function printMe(forwhat) {
 function countMe() {
 	try {
 		this.amount++;
+		$("#"+this.id).text(this.amount);
 		if(!this.myPosition.isSet) {
 			this.myPosition.latitude = Butterflyapp.prototype.currentPosition.latitude;
 			this.myPosition.longitude = Butterflyapp.prototype.currentPosition.longitude;
