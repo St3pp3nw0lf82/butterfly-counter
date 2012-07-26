@@ -2,7 +2,7 @@ function Butterfly(name,index) {
 this.id = index;
 this.name = name;
 this.amount = 0;
-this.myPosition = {"latitude":"","longitude":"","isSet":false};
+this.myPosition = {"latitude":false,"longitude":false,"isSet":false};
 this.inBasket = false;
 this.printMe = printMe;
 this.countMe = countMe;

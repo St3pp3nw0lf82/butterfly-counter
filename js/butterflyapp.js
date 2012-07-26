@@ -54,8 +54,8 @@ function getPosition() {
 	};
 	var onError = function(error) {
 		//TODO: deal with default values:
-		Butterflyapp.prototype.currentPosition.latitude = "default";
-		Butterflyapp.prototype.currentPosition.longitude = "default";
+		Butterflyapp.prototype.currentPosition.latitude = false;
+		Butterflyapp.prototype.currentPosition.longitude = false;
 		var errormsg = "Your current position could not be retrieved.\n";
 		switch(error.code) {
 			case "PERMISSION_DENIED":
@@ -129,11 +129,13 @@ function showBasket() {
 
 function checkConnection() {
 	var networkState = navigator.network.connection.type;
-	//alert("networkstate: "+networkState);
+	alert("networkstate: "+networkState);
 	if(!(networkState == "UNKNOWN" || networkState == "NONE")) {
 		return true;
+		alert("true");
 	} else {
 		return false;
+		alert("false");
 	} 
 }
 
@@ -143,6 +145,9 @@ function storeSightings() {
 
 function submitSightings() {
 	try {
+		// check for network connection:
+		this.checkConnection();
+		/*
 		if(this.basket.length) {
 			if(typeof(Storage) !== "undefined") {
 				var storage = window.localStorage.key(0);
@@ -154,7 +159,7 @@ function submitSightings() {
 				sightings.push(this.basket[0]);
 				window.localStorage.setItem("sightings",JSON.stringify(sightings));
 				var check = JSON.parse(window.localStorage.getItem("sightings"));
-				alert("output of stored bf: "+check[0].me_butterflylist);
+				//alert("output of stored bf: "+check[0].me_butterflylist);
 				//var checkSightings = storage
 				/*
 				if(!storage.getItem("sightings")) {
@@ -162,7 +167,7 @@ function submitSightings() {
 					window.localStorage.setItem("sightings", []);
 			
 				} else { alert("storage already exists"); }
-				*/
+				
 			} else {
 				throw "storage_err";
 			}
@@ -218,7 +223,7 @@ function submitSightings() {
 				throw "connection_err";
 			}
 			*/
-		} else { throw "nosightings_err"; }
+		//} else { throw "nosightings_err"; }
 	} catch(e) {
 		var errormsg = "";
 		if(e == "storage_err") { errormsg += "Local storage is not supported on the device."; }
