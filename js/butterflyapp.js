@@ -146,7 +146,12 @@ function submitSightings() {
 		if(this.basket.length) {
 			if(typeof(Storage) !== "undefined") {
 				var storage = window.localStorage.key(0);
-				alert("storage: "+storage);
+				if(storage === null || storage === undefined) {
+					alert("creating storage ...");
+					window.localStorage.setItem("sightings",[]);
+				} else {
+					alert("storage: "+storage);
+				}
 				//var checkSightings = storage
 				/*
 				if(!storage.getItem("sightings")) {
