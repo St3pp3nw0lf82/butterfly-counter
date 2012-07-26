@@ -154,7 +154,7 @@ function submitSightings() {
 				sightings.push(this.basket[0]);
 				window.localStorage.setItem("sightings",JSON.stringify(sightings));
 				var check = JSON.parse(window.localStorage.getItem("sightings"));
-				alert("name of stored bf with function: "+check[0].getName());
+				alert("output of stored bf: "+check[0].me_butterflylist);
 				//var checkSightings = storage
 				/*
 				if(!storage.getItem("sightings")) {
