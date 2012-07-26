@@ -145,13 +145,16 @@ function submitSightings() {
 	try {
 		if(this.basket.length) {
 			if(typeof(Storage) !== "undefined") {
-				if(!window.localStorage.sightings) {
+				var storage = window.localStorage.key(0);
+				alert("storage: "+storage);
+				//var checkSightings = storage
+				/*
+				if(!storage.getItem("sightings")) {
 					alert("creating storage");
 					window.localStorage.setItem("sightings", []);
 			
 				} else { alert("storage already exists"); }
-				window.localStorage;
-				storage.set
+				*/
 			} else {
 				throw "storage_err";
 			}
