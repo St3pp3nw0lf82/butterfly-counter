@@ -154,7 +154,7 @@ function submitSightings() {
 				sightings.push(this.basket[0]);
 				window.localStorage.setItem("sightings",sightings);
 				var check = window.localStorage.getItem("sightings");
-				alert("name of stored bf: "+check[0].getName());
+				alert("name of stored bf: "+check[0].name);
 				//var checkSightings = storage
 				/*
 				if(!storage.getItem("sightings")) {
