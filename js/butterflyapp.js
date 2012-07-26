@@ -147,10 +147,13 @@ function submitSightings() {
 			if(typeof(Storage) !== "undefined") {
 				var storage = window.localStorage.key(0);
 				if(storage === null || storage === undefined) {
-					alert("creating storage ...");
 					window.localStorage.setItem("sightings",[]);
 				} else {
-					alert("storage: "+storage);
+					var sightings = window.localStorage.getItem("sightings");
+					sightings.push(this.basket[0]);
+					window.localStorage.setItem("sightings",sightings);
+					var check = window.localStorage.getItem("sightings");
+					alert("name of stored bf: "+check[0].getName());
 				}
 				//var checkSightings = storage
 				/*
