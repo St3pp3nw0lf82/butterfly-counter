@@ -129,14 +129,22 @@ function showBasket() {
 
 function checkConnection() {
 	var networkState = navigator.network.connection.type;
-	alert("networkstate: "+networkState);
-	if(!(networkState == "UNKNOWN" || networkState == "NONE")) {
-		return true;
-		alert("true");
-	} else {
-		return false;
+	var states = {};
+	states[Connection.UNKNOWN]  = 'UNKNOWN';
+	states[Connection.ETHERNET] = 'ETHERNET';
+	states[Connection.WIFI]     = 'WIFI';
+	states[Connection.CELL_2G]  = '2G';
+	states[Connection.CELL_3G]  = '3G';
+	states[Connection.CELL_4G]  = '4G';
+	states[Connection.NONE]     = 'NONE';
+	//alert("networkstate: "+networkState);
+	if(states[networkState] == "UNKNOWN" || states[networkState] == "NONE") {
+		//return false;
 		alert("false");
-	} 
+	} else {
+		alert("true");
+		//return true;
+	}
 }
 
 function storeSightings() {
