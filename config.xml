@@ -15,9 +15,7 @@ Register sightings of butterflies across the UK with a mobile web application
 <author>
 Johannes Cox 
 </author>
-<!--
-<preference name="phonegap-version" value="1.8.1"/>
--->
+
 <feature name="http://api.phonegap.com/1.0/network"/>
 <feature name="http://api.phonegap.com/1.0/file"/>
 <feature name="http://api.phonegap.com/1.0/geolocation"/>
