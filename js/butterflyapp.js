@@ -148,9 +148,9 @@ function submitSightings() {
 				var storage = window.localStorage.key(0);
 				if(storage === null || storage === undefined) {
 					var sightings = new Array();
-					window.localStorage.setItem("sightings",sightings);
+					window.localStorage.setItem("sightings",JSON.stringify(sightings));
 				}
-				var sightings = window.localStorage.getItem("sightings");
+				var sightings = JSON.parse(window.localStorage.getItem("sightings"));
 				sightings.push(this.basket[0]);
 				window.localStorage.setItem("sightings",sightings);
 				var check = window.localStorage.getItem("sightings");
