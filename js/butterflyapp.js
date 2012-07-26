@@ -144,15 +144,26 @@ function storeSightings() {
 function submitSightings() {
 	try {
 		if(this.basket.length) {
-			var storage = window.localStorage;
+			if(typeof(Storage) !== "undefined") {
+				if(!window.localStorage.sightings) {
+					alert("creating storage");
+					window.localStorage.setItem("sightings", []);
+			
+				} else { alert("storage already exists"); }
+				window.localStorage;
+				storage.set
+			} else {
+				throw "storage_err";
+			}
+			/*
 			if(typeof(storage) === "object") {
 				var myobj = JSON.stringify(this.basket[0]);
-				alert(myobj);
+				
 				//for(var i = 0; i < this.basket.length; i++) {
 					
 				//}
 			} else {
-				throw "storage_err";
+			
 			}
 			/*
 			// get database object to access device storage:
@@ -199,7 +210,7 @@ function submitSightings() {
 		} else { throw "nosightings_err"; }
 	} catch(e) {
 		var errormsg = "";
-		if(e == "storage_err") { errormsg += "Local storage is not possible on the device."; }
+		if(e == "storage_err") { errormsg += "Local storage is not supported on the device."; }
 		else if(e == "nosightings_err") { errormsg += "There are no sightings to submit."; }
 		else { errormsg += "An error occurred trying to submit your sightings: "+e.message; }
 		alert(errormsg);
