@@ -70,19 +70,24 @@ try {
 	var ba = new Butterflyapp();
 	if(typeof(ba) === "object") {
 		// init the position object here:
-		ba.getPosition();
+		var returnvalue = ba.getPosition();
+		alert("return of getposition: "+returnvalue);
 		ba.init();
 		$(document).delegate("#bfc_startpage", "pageshow", function() {
 			$("#quit_app").bind("click", function() { ba.closeApp(); });
 		});
 		$(document).delegate("#bfc_choosebutterfly", "pageshow", function() { ba.printButterflies(); });
 		$(document).delegate("#bfc_summary", "pageshow", function() {
-			ba.showBasket();
-			$("#submit_sightings").bind("click", function() { ba.submitSightings(); });
+			ba.showBasket("sightingbasket");
+			//$("#submit_sightings").bind("click", function() { ba.submitSightings(); });
 		});
 		$(document).delegate("#bfc_map", "pageshow", function() {
 			ba.showMap();
 			//$("map_canvas").gmap("refresh");
+		});
+		$(document).delegate("#bfc_submit", "pageshow", function() {
+			ba.showBasket("submitlist");
+			ba.submitSightings();
 		});
 	} else {
 		throw "init_err";
@@ -243,7 +248,7 @@ third page: sighting summary
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#bfc_choosebutterfly" data-role="button">Back</a></li>
-				<li><a href="#" data-role="button" id="submit_sightings">Submit sightings</a></li>
+				<li><a href="#bfc_submit" data-role="button">Submit sightings</a></li>
 				<li><a href="#bfc_map" data-role="button">Map</a></li>
 			</ul>
 		</div>
@@ -265,6 +270,30 @@ fourth page: show sightings on map
 		<div id="map_wrapper">
 			<div id="map_canvas"></div>
 		</div>
+	</div>
+	<!-- footer -->
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#bfc_choosebutterfly" data-role="button">Back</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!--
+#################################################
+fifth page: submit sightings
+#################################################
+-->
+<div data-role="page" id="bfc_submit" data-title="The butterfly counter - Submit sightings">
+	<!-- header -->
+	<div data-role="header" data-position="fixed">
+		<h1>Mobile butterfly counter</h1>
+	</div>
+	<!-- content -->
+	<div id="content" data-role="content">	
+		<h2>Submitting your sightings</h2>
+		<ul data-role="listview" id="submitlist"></ul>
 	</div>
 	<!-- footer -->
 	<div data-role="footer" data-position="fixed">
