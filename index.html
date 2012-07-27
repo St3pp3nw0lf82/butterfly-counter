@@ -70,8 +70,7 @@ try {
 	var ba = new Butterflyapp();
 	if(typeof(ba) === "object") {
 		// init the position object here:
-		var returnvalue = ba.getPosition();
-		alert("return of getposition: "+returnvalue);
+		ba.getPosition();
 		ba.init();
 		$(document).delegate("#bfc_startpage", "pageshow", function() {
 			$("#quit_app").bind("click", function() { ba.closeApp(); });

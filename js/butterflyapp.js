@@ -13,6 +13,7 @@ this.closeApp = closeApp;
 return true;
 }
 
+Butterflyapp.prototype.validPosition = false;
 Butterflyapp.prototype.date;
 Butterflyapp.prototype.basket = [];
 Butterflyapp.prototype.bf_images = {"Brimstone": "brimstone_small.jpg",
@@ -59,12 +60,13 @@ function getPosition() {
 	var onSuccess = function(position) {
 		Butterflyapp.prototype.currentPosition.latitude = position.coords.latitude;
 		Butterflyapp.prototype.currentPosition.longitude = position.coords.longitude;
-		return true;
+		Butterflyapp.prototype.validPosition = true;
 	};
 	var onError = function(error) {
 		//TODO: deal with default values:
 		Butterflyapp.prototype.currentPosition.latitude = false;
 		Butterflyapp.prototype.currentPosition.longitude = false;
+		Butterflyapp.prototype.validPosition = false;
 		var errormsg = "Your current position could not be retrieved.\n";
 		switch(error.code) {
 			case "PERMISSION_DENIED":
@@ -81,10 +83,9 @@ function getPosition() {
 				errormsg += error.message;
 		}
 		alert(errormsg);
-		return false;
 	};
 
-	return navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
+	navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
 }
 
 function createButterflies() {
@@ -190,7 +191,8 @@ function submitSightings() {
 						*/
 					// try to determine position again:
 					} else {
-						if(this.getPosition()) {
+						this.getPosition();
+						if(this.validPosition) {
 							this.basket[i].myPosition.latitude = this.currentPosition.latitude;
 							this.basket[i].myPosition.longitude = this.currentPosition.longitude;
 							position_valid = true;
@@ -200,11 +202,13 @@ function submitSightings() {
 							"date=" + this.basket[i].getDate() + "&" +
 							"time=" + this.basket[i].getTime() + "&" +
 							"position=" + this.basket[i].getMyPosition();
+							/*
 							var oldlength = submitQueue.length;
 							var newlength = submitQueue.push(this.basket[i]);
 							if(oldlength < newlength) {
 								throw "insertqueue_err";
 							}
+							*/
 						} else {
 							//TODO: add message to this bf element to inform user
 							//$('#'+this.basket[i].id).text("Invalid position");
@@ -212,6 +216,8 @@ function submitSightings() {
 						}					
 					}
 					if(position_valid) {
+						alert("data: "+data);
+						/*
 						$.ajax({
 							url: 'http://192.168.1.29/bfsighting.php',
 							type: 'POST',
@@ -223,6 +229,7 @@ function submitSightings() {
 
 							}
 						});
+						*/
 					}
 					if(!position_valid || !upload_success) {
 						// check if local storage is available and store this bf object:
