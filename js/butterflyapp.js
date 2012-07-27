@@ -84,7 +84,7 @@ function getPosition() {
 		return false;
 	};
 
-	navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
+	return navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
 }
 
 function createButterflies() {
