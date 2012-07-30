@@ -50,7 +50,6 @@ function init() {
 	if(month.length == 1) { month = "0" + month; }
 	var year = d.getFullYear();
 	var today = day + "/" + month + "/" + year;
-	alert("today: "+today)
 	Butterflyapp.prototype.date = today;
 	this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
 }
