@@ -56,17 +56,21 @@ function getPosition() {
 	// get timestamp:
 	var d = new Date();
 	this.currentPosition.lastTaken = d.getTime();
+	var validPosition = false;
 	// try getting position:
-	var onSuccess = function(position) {
+	var onSuccess = function(position,validPosition) {
 		Butterflyapp.prototype.currentPosition.latitude = position.coords.latitude;
 		Butterflyapp.prototype.currentPosition.longitude = position.coords.longitude;
-		Butterflyapp.prototype.validPosition = true;
+		validPosition = true;
+		alert("position success");
+		//Butterflyapp.prototype.validPosition = true;
 	};
-	var onError = function(error) {
+	var onError = function(error,validPosition) {
 		//TODO: deal with default values:
 		Butterflyapp.prototype.currentPosition.latitude = false;
 		Butterflyapp.prototype.currentPosition.longitude = false;
-		Butterflyapp.prototype.validPosition = false;
+		validPosition = false;
+		//Butterflyapp.prototype.validPosition = false;
 		var errormsg = "Your current position could not be retrieved.\n";
 		switch(error.code) {
 			case "PERMISSION_DENIED":
@@ -86,6 +90,7 @@ function getPosition() {
 	};
 
 	navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
+	alert("value of validPosition: "+ validPosition);
 }
 
 function createButterflies() {
@@ -150,11 +155,11 @@ function checkConnection() {
 	states[Connection.NONE]     = 'NONE';
 	//alert("networkstate: "+networkState);
 	if(states[networkState] == "UNKNOWN" || states[networkState] == "NONE") {
-		//return false;
-		alert("false");
+		return false;
+		//alert("false");
 	} else {
-		alert("true");
-		//return true;
+		//alert("true");
+		return true;
 	}
 }
 
