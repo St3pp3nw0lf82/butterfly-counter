@@ -202,12 +202,12 @@ function submitSightings() {
 							this.basket[i].myPosition.longitude = this.currentPosition.longitude;
 							position_valid = true;
 							// name, amount, date&time, position
-							data += "name=" + this.basket[i].getName() + "&" +
+							data += "name='" + this.basket[i].getName() + "'&" +
 							"amount=" + this.basket[i].getAmount() + "&" +
-							"date=" + this.basket[i].getDate() + "&" +
-							"time=" + this.basket[i].getTime() + "&" +
-							"latitude=" + this.basket[i].myPosition.latitude + "&" +
-							"longitude=" + this.basket[i].myPosition.longitude;
+							"date='" + this.basket[i].getDate() + "'&" +
+							"time='" + this.basket[i].getTime() + "'&" +
+							"latitude='" + this.basket[i].myPosition.latitude + "'&" +
+							"longitude='" + this.basket[i].myPosition.longitude + "'";
 							/*
 							var oldlength = submitQueue.length;
 							var newlength = submitQueue.push(this.basket[i]);
