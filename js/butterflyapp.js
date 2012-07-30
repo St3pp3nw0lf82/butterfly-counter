@@ -56,21 +56,17 @@ function getPosition() {
 	// get timestamp:
 	var d = new Date();
 	this.currentPosition.lastTaken = d.getTime();
-	var validPosition = false;
 	// try getting position:
 	var onSuccess = function(position,validPosition) {
 		Butterflyapp.prototype.currentPosition.latitude = position.coords.latitude;
 		Butterflyapp.prototype.currentPosition.longitude = position.coords.longitude;
-		validPosition = true;
-		alert("position success");
-		//Butterflyapp.prototype.validPosition = true;
+		Butterflyapp.prototype.validPosition = true;
 	};
 	var onError = function(error,validPosition) {
 		//TODO: deal with default values:
 		Butterflyapp.prototype.currentPosition.latitude = false;
 		Butterflyapp.prototype.currentPosition.longitude = false;
-		validPosition = false;
-		//Butterflyapp.prototype.validPosition = false;
+		Butterflyapp.prototype.validPosition = false;
 		var errormsg = "Your current position could not be retrieved.\n";
 		switch(error.code) {
 			case "PERMISSION_DENIED":
@@ -90,7 +86,6 @@ function getPosition() {
 	};
 
 	navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
-	alert("value of validPosition: "+ validPosition);
 }
 
 function createButterflies() {
@@ -196,7 +191,9 @@ function submitSightings() {
 						*/
 					// try to determine position again:
 					} else {
-						this.getPosition();
+						if(!this.validPosition) {
+							this.getPosition();
+						}
 						if(this.validPosition) {
 							this.basket[i].myPosition.latitude = this.currentPosition.latitude;
 							this.basket[i].myPosition.longitude = this.currentPosition.longitude;
