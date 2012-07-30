@@ -112,13 +112,14 @@ try {
 }
 </script>
 
-<!-- add click event to button after dom is ready
+<!-- add click event to button after dom is ready 
 <script type="text/javascript">
 //NOTE: use this when running in a browser on desktop:
 
 try {
 	var ba = new Butterflyapp();
-	if(typeof(ba) == "object") {
+	if(typeof(ba) === "object") {
+		// init the position object here:
 		ba.getPosition();
 		ba.init();
 		$(document).delegate("#bfc_startpage", "pageshow", function() {
@@ -126,12 +127,16 @@ try {
 		});
 		$(document).delegate("#bfc_choosebutterfly", "pageshow", function() { ba.printButterflies(); });
 		$(document).delegate("#bfc_summary", "pageshow", function() {
-			ba.showBasket();
-			$("#submit_sightings").bind("click", function() { ba.submitSightings(); });
+			ba.showBasket("sightingbasket");
+			//$("#submit_sightings").bind("click", function() { ba.submitSightings(); });
 		});
 		$(document).delegate("#bfc_map", "pageshow", function() {
 			ba.showMap();
 			//$("map_canvas").gmap("refresh");
+		});
+		$(document).delegate("#bfc_submit", "pageshow", function() {
+			ba.showBasket("submitlist");
+			ba.submitSightings();
 		});
 		/*
 		if(typeof(Storage) !== "undefined") {

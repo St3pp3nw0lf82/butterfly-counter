@@ -12,7 +12,7 @@ this.getName = getName;
 this.getAmount = getAmount;
 this.getMyPosition = getMyPosition;
 this.getDate = getDate;
-this.getTime = getTime:
+this.getTime = getTime;
 this.validateMyPosition = validateMyPosition;
 this.me_butterflylist = "<li data-icon='false' data-shadow='false'><a href='#bfc_choosebutterfly'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><div class='bf_infowrapper'><span class='bf_info'>"+this.name+"</span><span id='"+this.id+"' class='bf_currentamount'></span></div></a></li>";
 return true;
