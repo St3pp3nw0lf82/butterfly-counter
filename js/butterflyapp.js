@@ -222,19 +222,17 @@ function submitSightings() {
 					}
 					if(position_valid) {
 						alert("data: "+data);
-						/*
 						$.ajax({
 							url: 'http://192.168.1.29/bfsighting.php',
 							type: 'POST',
 							data: data,
 							success: function(data) {
-
+								alert("success, data: "+data);
 							},
-							error: function() {
-
+							error: function(jqXHR, textStatus, errorThrown) {
+								alert("error, textstatus: "+textStatus+", errorthrown: "+errorThrown);
 							}
 						});
-						*/
 					}
 					if(!position_valid || !upload_success) {
 						// check if local storage is available and store this bf object:
