@@ -6,8 +6,12 @@ this.date = false;
 this.time = false;
 this.myPosition = {"latitude":false,"longitude":false,"isSet":false};
 this.inBasket = false;
+this.errorCode = 0; /* 0 = no error, 1 = invalid position */
+this.infoMessage = "";
 this.printMe = printMe;
 this.countMe = countMe;
+this.uploadMe = uploadMe;
+this.setInfoMessage = setInfoMessage;
 this.getName = getName;
 this.getAmount = getAmount;
 this.getMyPosition = getMyPosition;
@@ -18,6 +22,7 @@ this.me_butterflylist = "<li data-icon='false' data-shadow='false'><a href='#bfc
 return true;
 }
 
+Butterfly.prototype.uploadSuccess = false;
 Butterfly.prototype = new Butterflyapp;
 
 function printMe(forwhat) {
@@ -34,7 +39,7 @@ function printMe(forwhat) {
 			$("#sightingbasket").append(output);
 		break;
 		case "submitlist":
-			var output = "<li id='"+this.name+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span id='"+this.id+"'></span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
+			var output = "<li id='"+this.name+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='infomessage'>"+this.infomessage+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
 			$("#submit_list").append(output);
 		break;
 		default:
@@ -75,6 +80,53 @@ function countMe() {
 		else { errormsg += e.message; }
 		alert(errormsg);
 	}
+}
+
+function uploadMe() {
+	try {
+		if(this.myPosition.latitude != false && this.myPosition.longitude != false) {
+			var data = "name=" + this.getName() + "&" +
+			"amount=" + this.getAmount() + "&" +
+			"date=" + this.getDate() + "&" +
+			"time=" + this.getTime() + "&" +
+			"latitude=" + this.myPosition.latitude + "&" +
+			"longitude=" + this.myPosition.longitude;
+
+			$.ajax({
+				url: 'http://192.168.1.29/bfsighting.php',
+				type: 'POST',
+				data: data,
+				success: function(data, textStatus, jqXHR) {
+					alert("success, data: "+data+", textstatus:"+textStatus);
+					throw "success";
+					//Butterfly.prototype.uploadSuccess = true;
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					alert("error, textstatus: "+textStatus+", errorthrown: "+errorThrown);
+					//Butterfly.prototype.uploadSuccess = false;
+				},
+				complete: function(jqXHR, textStatus) {
+					alert("complete, textstatus: "+textStatus);
+				}
+			});
+		} else {
+			throw "invalidposition_err";
+		}
+	} catch(e) {
+		if(e == "invalidposition_err") {
+			this.infoMessage += "Invalid position";
+			this.errorCode = 1;
+		} else if(e == "success") {
+			alert("success was thrown!");
+		} else {
+			errormsg += e.message;
+		}
+		alert(errormsg);
+	}
+}
+
+function setInfoMessage(message) {
+	this.infomessage = message;
 }
 
 function getName() { return this.name; }

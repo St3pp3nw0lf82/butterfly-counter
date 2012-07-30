@@ -166,37 +166,30 @@ function storeSightings() {
 
 function submitSightings() {
 	try {
+		//TODO: IDEE -> JEDES BF-ELEMENT ERHAELT UPLOAD-FUNKTION 'uploadMe', errorcode gibt auskunft darueber warum upload fehlgeschlagen:
+		// UEBERGABEPARAMETER FUER submitSightings(), das angibt welches array mit bf-elementen uebertragen werden soll
 		// check for network connection:
 		if(this.checkConnection()) {
 			// check basket is not empty:
 			if(this.basket.length) {
 				// try to submit each sighting:
-				//var submitQueue = new Array();
 				for(var i = 0; i < this.basket.length; i++) {
+					this.basket[i].uploadMe();
+					/*
 					var data = "";
 					var position_valid, upload_success = false;
 					// only items with valid position object:
 					if(this.basket[i].validateMyPosition()) {
 						position_valid = true;
-						// name, amount, date&time, position
+						// name, amount, date, time, latitude, longitude
 						data += "name=" + this.basket[i].getName() + "&" +
 						"amount=" + this.basket[i].getAmount() + "&" +
 						"date=" + this.basket[i].getDate() + "&" +
 						"time=" + this.basket[i].getTime() + "&" +
 						"latitude=" + this.basket[i].myPosition.latitude + "&" +
 						"longitude=" + this.basket[i].myPosition.longitude;
-						/*
-						var oldlength = submitQueue.length;
-						var newlength = submitQueue.push(this.basket[i]);
-						if(!(oldlength < newlength)) {
-							throw "insertqueue_err";
-						}
-						*/
 					// try to determine position again:
 					} else {
-						if(!this.validPosition) {
-							this.getPosition();
-						}
 						if(this.validPosition) {
 							this.basket[i].myPosition.latitude = this.currentPosition.latitude;
 							this.basket[i].myPosition.longitude = this.currentPosition.longitude;
@@ -208,29 +201,36 @@ function submitSightings() {
 							"time=" + this.basket[i].getTime() + "&" +
 							"latitude=" + this.basket[i].myPosition.latitude + "&" +
 							"longitude=" + this.basket[i].myPosition.longitude;
-							/*
-							var oldlength = submitQueue.length;
-							var newlength = submitQueue.push(this.basket[i]);
-							if(oldlength < newlength) {
-								throw "insertqueue_err";
-							}
-							*/
 						} else {
-							//TODO: add message to this bf element to inform user
-							//$('#'+this.basket[i].id).text("Invalid position");
-							
+							this.getPosition();
+							if(this.validPosition) {
+								this.basket[i].myPosition.latitude = this.currentPosition.latitude;
+								this.basket[i].myPosition.longitude = this.currentPosition.longitude;
+								position_valid = true;
+								// name, amount, date&time, position
+								data += "name=" + this.basket[i].getName() + "&" +
+								"amount=" + this.basket[i].getAmount() + "&" +
+								"date=" + this.basket[i].getDate() + "&" +
+								"time=" + this.basket[i].getTime() + "&" +
+								"latitude=" + this.basket[i].myPosition.latitude + "&" +
+								"longitude=" + this.basket[i].myPosition.longitude;
+							} else {
+								position_valid = false;
+								this.basket[i].setInfoMessage("Invalid position");
+							}	
 						}					
 					}
 					if(position_valid) {
-						alert("data: "+data);
 						$.ajax({
 							url: 'http://192.168.1.29/bfsighting.php',
 							type: 'POST',
 							data: data,
 							success: function(data) {
+								upload_success = true;
 								alert("success, data: "+data);
 							},
 							error: function(jqXHR, textStatus, errorThrown) {
+								upload_success = false;
 								alert("error, textstatus: "+textStatus+", errorthrown: "+errorThrown);
 							}
 						});
@@ -248,11 +248,12 @@ function submitSightings() {
 							sightings.push(this.basket[0]);
 							window.localStorage.setItem("sightings",JSON.stringify(sightings));
 							var check = JSON.parse(window.localStorage.getItem("sightings"));
-							*/
+		
 						} else {
 							throw "storage_err";
 						}
 					}
+					*/
 				}
 			} else {
 				throw "nosightings_err";
