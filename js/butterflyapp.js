@@ -44,10 +44,13 @@ function init() {
 	var d = new Date();
 	var day = "" + d.getDate();
 	if(day.length == 1) { day = "0" + day; }
-	var month = "" + d.getMonth()+1;
+	var month = d.getMonth();
+	month += 1;
+	month = "" + month;
 	if(month.length == 1) { month = "0" + month; }
 	var year = d.getFullYear();
 	var today = day + "/" + month + "/" + year;
+	alert("today: "+today)
 	this.date = today;
 	this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
 }

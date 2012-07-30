@@ -52,7 +52,13 @@ function countMe() {
 		}
 		if(!this.inBasket) {
 			var d = new Date();
-			this.time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+			var hours = "" + d.getHours();
+			if(hours.length == 1) { hours = "0" + hours; }
+			var minutes = "" + d.getMinutes();
+			if(minutes.length == 1) { minutes = "0" + minutes; }
+			var seconds = d.getSeconds();
+			if(seconds.length == 1) { seconds = "0" + seconds; }
+			this.time = hours + ":" + minutes + ":" + seconds;
 			this.date = Butterflyapp.prototype.date;
 			var that = this;
 			var oldlength = Butterflyapp.prototype.basket.length;
