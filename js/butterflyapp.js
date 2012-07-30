@@ -14,7 +14,7 @@ return true;
 }
 
 Butterflyapp.prototype.validPosition = false;
-Butterflyapp.prototype.date;
+Butterflyapp.prototype.date = false;
 Butterflyapp.prototype.basket = [];
 Butterflyapp.prototype.bf_images = {"Brimstone": "brimstone_small.jpg",
 		"Comma": "comma_small.jpg",
