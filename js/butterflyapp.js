@@ -175,6 +175,9 @@ function submitSightings() {
 				// try to submit each sighting:
 				for(var i = 0; i < this.basket.length; i++) {
 					this.basket[i].uploadMe();
+					if(this.basket[i].uploadSuccess) {
+						alert("uploadSuccess");
+					}
 					/*
 					var data = "";
 					var position_valid, upload_success = false;

@@ -98,26 +98,26 @@ function uploadMe() {
 				data: data,
 				success: function(data, textStatus, jqXHR) {
 					alert("success, data: "+data+", textstatus:"+textStatus);
-					throw "success";
-					//Butterfly.prototype.uploadSuccess = true;
+					Butterfly.prototype.uploadSuccess = true;
 				},
 				error: function(jqXHR, textStatus, errorThrown) {
 					alert("error, textstatus: "+textStatus+", errorthrown: "+errorThrown);
-					//Butterfly.prototype.uploadSuccess = false;
-				},
+					Butterfly.prototype.uploadSuccess = false;
+				}
+				/*
 				complete: function(jqXHR, textStatus) {
 					alert("complete, textstatus: "+textStatus);
 				}
+				*/
 			});
 		} else {
 			throw "invalidposition_err";
 		}
 	} catch(e) {
+		Butterfly.prototype.uploadSuccess = false;
 		if(e == "invalidposition_err") {
 			this.infoMessage += "Invalid position";
 			this.errorCode = 1;
-		} else if(e == "success") {
-			alert("success was thrown!");
 		} else {
 			errormsg += e.message;
 		}
