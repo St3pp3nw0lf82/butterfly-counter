@@ -183,7 +183,8 @@ function submitSightings() {
 						"amount=" + this.basket[i].getAmount() + "&" +
 						"date=" + this.basket[i].getDate() + "&" +
 						"time=" + this.basket[i].getTime() + "&" +
-						"position=" + this.basket[i].getMyPosition();
+						"latitude=" + this.basket[i].myPosition.latitude + "&" +
+						"longitude=" + this.basket[i].myPosition.longitude;
 						/*
 						var oldlength = submitQueue.length;
 						var newlength = submitQueue.push(this.basket[i]);
@@ -205,7 +206,8 @@ function submitSightings() {
 							"amount=" + this.basket[i].getAmount() + "&" +
 							"date=" + this.basket[i].getDate() + "&" +
 							"time=" + this.basket[i].getTime() + "&" +
-							"position=" + this.basket[i].getMyPosition();
+							"latitude=" + this.basket[i].myPosition.latitude + "&" +
+							"longitude=" + this.basket[i].myPosition.longitude;
 							/*
 							var oldlength = submitQueue.length;
 							var newlength = submitQueue.push(this.basket[i]);
