@@ -92,29 +92,22 @@ function uploadMe() {
 			"latitude=" + this.myPosition.latitude + "&" +
 			"longitude=" + this.myPosition.longitude;
 
-			$.ajax({
+			var returnvalue = $.ajax({
 				url: 'http://192.168.1.29/bfsighting.php',
 				type: 'POST',
 				data: data,
 				success: function(data, textStatus, jqXHR) {
 					alert("success, data: "+data+", textstatus:"+textStatus);
-					Butterfly.prototype.uploadSuccess = true;
 				},
 				error: function(jqXHR, textStatus, errorThrown) {
 					alert("error, textstatus: "+textStatus+", errorthrown: "+errorThrown);
-					Butterfly.prototype.uploadSuccess = false;
 				}
-				/*
-				complete: function(jqXHR, textStatus) {
-					alert("complete, textstatus: "+textStatus);
-				}
-				*/
-			});
+			}).responseText;
+			alert("returnvalue: "+returnvalue);
 		} else {
 			throw "invalidposition_err";
 		}
 	} catch(e) {
-		Butterfly.prototype.uploadSuccess = false;
 		if(e == "invalidposition_err") {
 			this.infoMessage += "Invalid position";
 			this.errorCode = 1;
