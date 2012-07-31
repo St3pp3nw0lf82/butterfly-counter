@@ -104,8 +104,10 @@ function upload(data, callback) {
 }
 
 function uploadMe() {
+	alert("in uploadMe ...");
 	try {
 		if(this.myPosition.latitude != false && this.myPosition.longitude != false) {
+			alert("position valid.");
 			var data = "name=" + this.getName() + "&" +
 			"amount=" + this.getAmount() + "&" +
 			"date=" + this.getDate() + "&" +
@@ -132,7 +134,11 @@ function uploadMe() {
 		}
 	} catch(e) {
 		var errormsg = "";
-		errormsg += e.message;
+		if(e == "invalidposition_err") {
+			errormsg += "Invalid position attached to the current sighting.";
+		} else {
+			errormsg += e.message;
+		}
 		alert(errormsg);
 	}
 }
