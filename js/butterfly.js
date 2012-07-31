@@ -11,6 +11,7 @@ this.infoMessage = "";
 this.printMe = printMe;
 this.countMe = countMe;
 this.uploadMe = uploadMe;
+this.submitResult = submitResult;
 this.setInfoMessage = setInfoMessage;
 this.getName = getName;
 this.getAmount = getAmount;
@@ -30,7 +31,7 @@ function printMe(forwhat) {
 		case "butterflylist":
 			var that = this;
 			var output = $(this.me_butterflylist);
-			$("#butterflylist").append(output.click(function(e) { that.countMe(); e.preventDefault();}));
+			$("#butterflylist").append(output.click(function() { that.countMe(); }));
 		break;
 		case "sightingbasket":
 			var count = " count";
@@ -39,8 +40,8 @@ function printMe(forwhat) {
 			$("#sightingbasket").append(output);
 		break;
 		case "submitlist":
-			var output = "<li id='"+this.name+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='infomessage'>"+this.infomessage+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
-			$("#submit_list").append(output);
+			var output = "<li id='"+this.name+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='infomessage'>"+this.infoMessage+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
+			$("#submitlist").append(output);
 		break;
 		default:
 	}
@@ -83,8 +84,15 @@ function countMe() {
 }
 
 function submitResult(result) {
+	var result = result.toLowerCase();
+	if(result == "success") {
+		this.infoMessage = "Success";
+	} else {
+		this.infoMessage = "Failed";
+	}
+	$("#submitlist").listview("refresh");
 	//alert("in submitresult, result: "+result);
-	return result;
+	//return result;
 }
 
 function upload(data, callback) {
@@ -114,7 +122,7 @@ function uploadMe() {
 			"time=" + this.getTime() + "&" +
 			"latitude=" + this.myPosition.latitude + "&" +
 			"longitude=" + this.myPosition.longitude;
-			var res = upload(data, submitResult);
+			var res = upload(data, this.submitResult);
 			/*
 			$.ajax({
 				url: 'http://192.168.1.29/bfsighting.php',
