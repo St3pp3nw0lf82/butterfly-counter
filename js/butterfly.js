@@ -131,12 +131,8 @@ function uploadMe() {
 			throw "invalidposition_err";
 		}
 	} catch(e) {
-		if(e == "invalidposition_err") {
-			this.infoMessage += "Invalid position";
-			this.errorCode = 1;
-		} else {
-			errormsg += e.message;
-		}
+		var errormsg = "";
+		errormsg += e.message;
 		alert(errormsg);
 	}
 }
