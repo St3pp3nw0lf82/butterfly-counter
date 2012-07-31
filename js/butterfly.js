@@ -83,8 +83,8 @@ function countMe() {
 }
 
 function submitResult(result) {
-	alert("in submitresult, result: "+result);
-	//return result;
+	//alert("in submitresult, result: "+result);
+	return result;
 }
 
 function upload(data, callback) {
@@ -114,7 +114,7 @@ function uploadMe() {
 			"time=" + this.getTime() + "&" +
 			"latitude=" + this.myPosition.latitude + "&" +
 			"longitude=" + this.myPosition.longitude;
-			upload(data, submitResult);
+			var res = upload(data, submitResult);
 			/*
 			$.ajax({
 				url: 'http://192.168.1.29/bfsighting.php',
@@ -128,7 +128,7 @@ function uploadMe() {
 				}
 			});
 			*/
-			//alert("returnvalue: "+res);
+			alert("returnvalue: "+res);
 		} else {
 			throw "invalidposition_err";
 		}
