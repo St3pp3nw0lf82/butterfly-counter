@@ -23,21 +23,6 @@ return true;
 }
 
 Butterfly.prototype.uploadSuccess = false;
-Butterfly.prototype.upload = function(data, callback) {
-	$.ajax({
-		url: 'http://192.168.1.29/bfsighting.php',
-		type: 'POST',
-		data: data,
-		success: function(data, textStatus, jqXHR) {
-			alert("success, data: "+data+", textstatus:"+textStatus);
-			callback.call(this,textStatus);
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			alert("error, textstatus: "+textStatus+", errorthrown: "+errorThrown);
-			callback.call(this,textStatus);
-		}
-	});
-}
 Butterfly.prototype = new Butterflyapp;
 
 function printMe(forwhat) {
@@ -98,10 +83,10 @@ function countMe() {
 }
 
 function submitResult(result) {
-	alert("in submitresult");
+	alert("in submitresult, result: "+result);
 	//return result;
 }
-/*
+
 function upload(data, callback) {
 	$.ajax({
 		url: 'http://192.168.1.29/bfsighting.php',
@@ -117,7 +102,7 @@ function upload(data, callback) {
 		}
 	});
 }
-*/
+
 function uploadMe() {
 	alert("in uploadMe ...");
 	try {
@@ -129,7 +114,7 @@ function uploadMe() {
 			"time=" + this.getTime() + "&" +
 			"latitude=" + this.myPosition.latitude + "&" +
 			"longitude=" + this.myPosition.longitude;
-			this.upload(data, submitResult);
+			upload(data, submitResult);
 			/*
 			$.ajax({
 				url: 'http://192.168.1.29/bfsighting.php',
