@@ -89,7 +89,7 @@ function submitResult(result) {
 
 function upload(data, callback) {
 	$.ajax({
-		url: 'http://192.168.1.29/bfsighting.php',
+		url: 'http://192.168.43.177/bfsighting.php',
 		type: 'POST',
 		data: data,
 		success: function(data, textStatus, jqXHR) {
