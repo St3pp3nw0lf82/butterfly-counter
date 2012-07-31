@@ -82,6 +82,26 @@ function countMe() {
 	}
 }
 
+function callback(result) {
+	return result;
+}
+
+function upload(data, callback) {
+	$.ajax({
+		url: 'http://192.168.1.29/bfsighting.php',
+		type: 'POST',
+		data: data,
+		success: function(data, textStatus, jqXHR) {
+			alert("success, data: "+data+", textstatus:"+textStatus);
+			callback(textStatus);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert("error, textstatus: "+textStatus+", errorthrown: "+errorThrown);
+			callback(textStatus);
+		}
+	});
+}
+
 function uploadMe() {
 	try {
 		if(this.myPosition.latitude != false && this.myPosition.longitude != false) {
@@ -91,8 +111,9 @@ function uploadMe() {
 			"time=" + this.getTime() + "&" +
 			"latitude=" + this.myPosition.latitude + "&" +
 			"longitude=" + this.myPosition.longitude;
-
-			var returnvalue = $.ajax({
+			var res = upload(data, callback);
+			/*
+			$.ajax({
 				url: 'http://192.168.1.29/bfsighting.php',
 				type: 'POST',
 				data: data,
@@ -102,8 +123,9 @@ function uploadMe() {
 				error: function(jqXHR, textStatus, errorThrown) {
 					alert("error, textstatus: "+textStatus+", errorthrown: "+errorThrown);
 				}
-			}).responseText;
-			alert("returnvalue: "+returnvalue);
+			});
+			*/
+			alert("returnvalue: "+res);
 		} else {
 			throw "invalidposition_err";
 		}
