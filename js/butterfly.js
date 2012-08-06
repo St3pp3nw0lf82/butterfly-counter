@@ -54,6 +54,7 @@ function printMe(forwhat) {
 		case "butterflylist":
 			var that = this;
 			var output = $(this.me_butterflylist);
+			alert("in printMe, printing "+this.name);
 			$("#butterflylist").append(output.click(function() { that.countMe(); }));
 		break;
 		case "sightingbasket":
