@@ -151,7 +151,7 @@ function showBasket(page) {
 	}
 	$("#"+page).html("");
 	var no_sightings = true;
-	alert("items in older sightings: "+this.olderSightings.length);
+	//alert("items in older sightings: "+this.olderSightings.length);
 	if(this.olderSightings.length) {
 		no_sightings = false;
 		for(var i = 0; i < this.olderSightings.length; i++) {
