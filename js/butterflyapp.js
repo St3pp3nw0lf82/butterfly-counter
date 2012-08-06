@@ -130,6 +130,7 @@ function createButterflies() {
 }
 
 function printButterflies() {
+	alert("in printButterflies ...");
 	var now = new Date().getTime();
 	var time_diff = ((now - this.currentPosition.lastTaken)*0.001);
 	time_diff = parseInt(Math.round(time_diff));
@@ -140,7 +141,7 @@ function printButterflies() {
 	$("#butterflylist").html("");
 	for(var i = 0; i < this.butterflies.length; i++) {
 		this.butterflies[i].printMe("butterflylist");
-		$("#"+i).text(this.butterflies[i].getAmount());
+		$("#bf_"+i).text(this.butterflies[i].getAmount());
 		$("#butterflylist").listview("refresh");
 	}
 }
