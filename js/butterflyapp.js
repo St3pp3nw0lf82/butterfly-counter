@@ -58,8 +58,8 @@ function init() {
 		Butterflyapp.prototype.date = today;
 		// check for older sightings:
 		//this.checkForOlderSightings();
-
-		this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
+		this.createButterflies("Small White","Large White","Green-veined White");
+		//this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
 	} catch(e) {
 		var errormsg = "";
 		if(e == "bfcreation_err") {
@@ -130,7 +130,7 @@ function createButterflies() {
 }
 
 function printButterflies() {
-	alert("in printButterflies ...");
+	//alert("in printButterflies ...");
 	var now = new Date().getTime();
 	var time_diff = ((now - this.currentPosition.lastTaken)*0.001);
 	time_diff = parseInt(Math.round(time_diff));
@@ -140,6 +140,7 @@ function printButterflies() {
 	}
 	$("#butterflylist").html("");
 	for(var i = 0; i < this.butterflies.length; i++) {
+		alert("in for loop, printing "+this.butterflies[i].name);
 		this.butterflies[i].printMe("butterflylist");
 		$("#bf_"+i).text(this.butterflies[i].getAmount());
 		$("#butterflylist").listview("refresh");
