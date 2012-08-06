@@ -178,7 +178,7 @@ function showBasket(page) {
 
 function checkConnection() {
 	//TODO: remove the line below!!!!!!!!!!:
-	return true;
+	//return true;
 	var networkState = navigator.network.connection.type;
 	var states = {};
 	states[Connection.UNKNOWN]  = 'UNKNOWN';
@@ -239,7 +239,7 @@ function checkForOlderSightings() {
 			var storage = window.localStorage.key(0);
 			//TODO: check === vs. == :
 			//alert("storage: "+storage);
-			if(storage !== null || storage !== undefined) {
+			if(storage !== "null" || storage !== "undefined") {
 				// first clear olderSightings array:
 				var len = this.olderSightings.length -1;
 				for(var i = len; this.olderSightings[i]; i--) {
@@ -248,7 +248,7 @@ function checkForOlderSightings() {
 				//alert("items in older sightings: "+this.olderSightings.length);
 				//this.olderSightings.length = 0;
 				var sightings = JSON.parse(window.localStorage.getItem("sightings"));
-				if(typeof(sightings) === "object" && sightings !== null) {
+				if(typeof(sightings) === "object" && sightings !== "null") {
 					//TODO: attach submit older sightings button to the start page:
 					if(sightings.length) {
 						$("startoptions").html("");
