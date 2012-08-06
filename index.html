@@ -70,8 +70,8 @@ try {
 	var ba = new Butterflyapp();
 	if(typeof(ba) === "object") {
 		// init the position object here:
-		ba.getPosition();
 		ba.init();
+		ba.getPosition();
 		$(document).delegate("#bfc_startpage", "pageshow", function() {
 			ba.checkForOlderSightings();
 			$("#quit_app").bind("click", function() { ba.closeApp(); });
@@ -112,7 +112,6 @@ try {
 	}
 	alert(errormsg);
 }
-
 }
 </script>
 
@@ -124,8 +123,8 @@ try {
 	var ba = new Butterflyapp();
 	if(typeof(ba) === "object") {
 		// init the position object here:
-		ba.getPosition();
 		ba.init();
+		ba.getPosition();
 		$(document).delegate("#bfc_startpage", "pageshow", function() {
 			ba.checkForOlderSightings();
 			$("#quit_app").bind("click", function() { ba.closeApp(); });
