@@ -58,8 +58,8 @@ function init() {
 		Butterflyapp.prototype.date = today;
 		// check for older sightings:
 		//this.checkForOlderSightings();
-		this.createButterflies("Small White","Large White","Green-veined White");
-		//this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
+		//this.createButterflies("Small White","Large White","Green-veined White");
+		this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
 	} catch(e) {
 		var errormsg = "";
 		if(e == "bfcreation_err") {
@@ -139,14 +139,11 @@ function printButterflies() {
 		this.getPosition();
 	}
 	$("#butterflylist").html("");
-	alert("amount of items in butterflies array: "+this.butterflies.length);
 	for(var i = 0; i < this.butterflies.length; i++) {
-		//alert("in for loop, printing "+this.butterflies[i].name);
 		this.butterflies[i].printMe("butterflylist");
 		$("#bf_"+i).text(this.butterflies[i].getAmount());
 		$("#butterflylist").listview("refresh");
 	}
-	//$("#butterflylist").listview("refresh");
 }
 
 function showBasket(page) {
@@ -155,7 +152,6 @@ function showBasket(page) {
 	}
 	$("#"+page).html("");
 	var no_sightings = true;
-	//alert("items in older sightings: "+this.olderSightings.length);
 	if(this.olderSightings.length) {
 		no_sightings = false;
 		for(var i = 0; i < this.olderSightings.length; i++) {
@@ -182,7 +178,7 @@ function showBasket(page) {
 
 function checkConnection() {
 	//TODO: remove the line below!!!!!!!!!!:
-	//return true;
+	return true;
 	var networkState = navigator.network.connection.type;
 	var states = {};
 	states[Connection.UNKNOWN]  = 'UNKNOWN';
@@ -202,6 +198,7 @@ function checkConnection() {
 
 function submitSightings() {
 	try {
+		$("submitlist").html("");
 		//TODO: 
 		// UEBERGABEPARAMETER FUER submitSightings(), das angibt welches array mit bf-elementen uebertragen werden soll
 		var sightings_toupload = false;
