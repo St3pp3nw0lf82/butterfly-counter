@@ -214,6 +214,7 @@ function uploadMe(what) {
 				upload(data, this.submitResult, that, what);	
 			} else {
 				this.errorCode.network = true;
+				this.serverMessage = "No network connection";
 				if(what == "new") {
 					this.positionInOlderSightings = Butterflyapp.prototype.olderSightings.length;
 					this.storeMe();
@@ -223,6 +224,7 @@ function uploadMe(what) {
 			}
 		} else {
 			this.errorCode.position = true;
+			this.serverMessage = "Invalid position";
 			if(what == "new") {
 				this.positionInOlderSightings = Butterflyapp.prototype.olderSightings.length;
 				this.storeMe();
@@ -240,9 +242,12 @@ function storeMe() {
 	try {
 		if(typeof(Storage) !== "undefined") {
 			var storage = window.localStorage.key(0);
-			if(storage === null || storage === undefined) {
+			alert("storage: "+storage);
+			if(storage === "null" || storage === "undefined") {
+				alert("in storeMe, creating new sightings array");
 				var sightings = new Array();
 			} else {
+				alert("in storeMe, sightings array already exists");
 				var sightings = JSON.parse(window.localStorage.getItem("sightings"));
 			}
 			// store the bf items that couldn't be submitted:
