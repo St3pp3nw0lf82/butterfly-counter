@@ -243,8 +243,9 @@ function storeMe() {
 		if(typeof(Storage) !== "undefined") {
 			var storage = window.localStorage.key(0);
 			alert("storage: "+storage);
-			if(storage === "null" || storage === "undefined") {
-				alert("in storeMe, creating new sightings array");
+			if(storage === null || storage === undefined) {
+				
+				alert("in storeMe, storage is null, creating new sightings array");
 				var sightings = new Array();
 			} else {
 				alert("in storeMe, sightings array already exists");
