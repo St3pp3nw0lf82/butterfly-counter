@@ -72,7 +72,7 @@ try {
 		// init the position object here:
 		ba.init();
 		ba.getPosition();
-		$(document).delegate("#bfc_startpage", "pageshow", function() {
+		$(document).delegate("#bfc_startpage", "pageinit", function() {
 			ba.checkForOlderSightings();
 			$("#quit_app").bind("click", function() { ba.closeApp(); });
 		});
