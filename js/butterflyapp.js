@@ -139,12 +139,14 @@ function printButterflies() {
 		this.getPosition();
 	}
 	$("#butterflylist").html("");
+	alert("amount of items in butterflies array: "+this.butterflies.length);
 	for(var i = 0; i < this.butterflies.length; i++) {
-		alert("in for loop, printing "+this.butterflies[i].name);
+		//alert("in for loop, printing "+this.butterflies[i].name);
 		this.butterflies[i].printMe("butterflylist");
 		$("#bf_"+i).text(this.butterflies[i].getAmount());
 		$("#butterflylist").listview("refresh");
 	}
+	//$("#butterflylist").listview("refresh");
 }
 
 function showBasket(page) {
