@@ -240,7 +240,8 @@ function checkForOlderSightings() {
 			var storage = window.localStorage.key(0);
 			//TODO: check === vs. == :
 			alert("in checkforoldersightings, storage: "+storage);
-			if(storage !== "null" || storage !== "undefined") {
+			if(storage !== null || storage !== undefined) {
+				alert("in checkforoldersightings, storage is not null: "+storage);
 				// first clear olderSightings array:
 				var len = this.olderSightings.length -1;
 				for(var i = len; this.olderSightings[i]; i--) {
@@ -249,8 +250,8 @@ function checkForOlderSightings() {
 				//alert("items in older sightings: "+this.olderSightings.length);
 				//this.olderSightings.length = 0;
 				var sightings = JSON.parse(window.localStorage.getItem("sightings"));
-				if(typeof(sightings) === "object" && sightings !== "null") {
-					alert("length of sightings: "+sightings.length);
+				if(typeof(sightings) === "object" && sightings !== null) {
+					//alert("length of sightings: "+sightings.length);
 					//TODO: attach submit older sightings button to the start page:
 					if(sightings.length) {
 						$("startoptions").html("");

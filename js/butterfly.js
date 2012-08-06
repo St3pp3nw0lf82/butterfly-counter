@@ -221,6 +221,8 @@ function uploadMe(what) {
 					Butterflyapp.prototype.olderSightings.push(this);
 					Butterflyapp.prototype.basket.splice(this.positionInBasket,1);
 				}
+				this.printMe("submitlist");
+				$("#submitlist").listview("refresh");
 			}
 		} else {
 			this.errorCode.position = true;
@@ -231,6 +233,8 @@ function uploadMe(what) {
 				Butterflyapp.prototype.olderSightings.push(this);
 				Butterflyapp.prototype.basket.splice(this.positionInBasket,1);
 			}
+			this.printMe("submitlist");
+			$("#submitlist").listview("refresh");
 		}
 	} catch(e) {
 		var errormsg = "Upload failed.\n" + e.message;
