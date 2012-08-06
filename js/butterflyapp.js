@@ -1,21 +1,25 @@
 function Butterflyapp() {
 this.butterflies = [];
 this.init = init;
-this.getPosition = getPosition;
 this.createButterflies = createButterflies;
 this.printButterflies = printButterflies;
 this.showBasket = showBasket;
-this.checkConnection = checkConnection;
-this.storeSightings = storeSightings;
+//this.checkConnection = checkConnection;
 this.submitSightings = submitSightings;
+this.checkForOlderSightings = checkForOlderSightings;
 this.showMap = showMap;
+this.deleteSighting = deleteSighting;
 this.closeApp = closeApp;
 return true;
 }
 
+Butterflyapp.prototype.editSighting = [];
+Butterflyapp.prototype.getPosition = getPosition;
+Butterflyapp.prototype.checkConnection = checkConnection;
 Butterflyapp.prototype.validPosition = false;
 Butterflyapp.prototype.date = false;
 Butterflyapp.prototype.basket = [];
+Butterflyapp.prototype.olderSightings = [];
 Butterflyapp.prototype.bf_images = {"Brimstone": "brimstone_small.jpg",
 		"Comma": "comma_small.jpg",
 		"Common Blue": "commonblue_small.jpg",
@@ -41,17 +45,30 @@ Butterflyapp.prototype.addToBasket = function(sighting) { return this.basket.pus
 Butterflyapp.prototype.currentPosition = {"latitude":false,"longitude":false,"lastTaken":false};
 
 function init() {
-	var d = new Date();
-	var day = "" + d.getDate();
-	if(day.length == 1) { day = "0" + day; }
-	var month = d.getMonth();
-	month += 1;
-	month = "" + month;
-	if(month.length == 1) { month = "0" + month; }
-	var year = d.getFullYear();
-	var today = day + "/" + month + "/" + year;
-	Butterflyapp.prototype.date = today;
-	this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
+	try {
+		var d = new Date();
+		var day = "" + d.getDate();
+		if(day.length == 1) { day = "0" + day; }
+		var month = d.getMonth();
+		month += 1;
+		month = "" + month;
+		if(month.length == 1) { month = "0" + month; }
+		var year = d.getFullYear();
+		var today = day + "/" + month + "/" + year;
+		Butterflyapp.prototype.date = today;
+		// check for older sightings:
+		//this.checkForOlderSightings();
+
+		this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
+	} catch(e) {
+		var errormsg = "";
+		if(e == "bfcreation_err") {
+			errormsg += "Creation of butterfly object failed.";
+		} else {
+			errormsg += e.message;
+		}
+		alert(errormsg);
+	}
 }
 
 function getPosition() {
@@ -95,6 +112,7 @@ function createButterflies() {
 		for(var i = 0; i < arguments.length; i++) {
 			var bf = new Butterfly(arguments[i],i);
 			if(typeof(bf) === "object") {
+				//bf.addListener("success", bf.updateMe());
 				this.butterflies.push(bf);
 			} else {
 				throw "bfcreation_err";
@@ -128,19 +146,39 @@ function printButterflies() {
 }
 
 function showBasket(page) {
-	//TODO: page parameter der festlegt fuer welche seite basket aufgabeut wird (basket oder submit page)
+	if(page == "sightingbasket") {
+		$("#oldersightings").html("");
+	}
 	$("#"+page).html("");
+	var no_sightings = true;
+	alert("items in older sightings: "+this.olderSightings.length);
+	if(this.olderSightings.length) {
+		no_sightings = false;
+		for(var i = 0; i < this.olderSightings.length; i++) {
+			if(page == "sightingbasket") {
+				this.olderSightings[i].printMe("oldersightings");
+				$("#oldersightings").listview("refresh");
+			} else {
+				this.olderSightings[i].printMe(page);
+				$("#"+page).listview("refresh");
+			}
+		}
+	}
 	if(this.basket.length) {
+		no_sightings = false;
 		for(var i = 0; i < this.basket.length; i++) {
 			this.basket[i].printMe(page);
 			$("#"+page).listview("refresh");
 		}
-	} else {
+	}
+	if(no_sightings) {
 		$("#"+page).html("<p>You have made no sighting yet.</p><p><a href='#bfc_choosebutterfly' data-role='button'>Create one!</a><p/>");
 	}
 }
 
 function checkConnection() {
+	//TODO: remove the line below!!!!!!!!!!:
+	return true;
 	var networkState = navigator.network.connection.type;
 	var states = {};
 	states[Connection.UNKNOWN]  = 'UNKNOWN';
@@ -150,198 +188,116 @@ function checkConnection() {
 	states[Connection.CELL_3G]  = '3G';
 	states[Connection.CELL_4G]  = '4G';
 	states[Connection.NONE]     = 'NONE';
-	//alert("networkstate: "+networkState);
+
 	if(states[networkState] == "UNKNOWN" || states[networkState] == "NONE") {
 		return false;
-		//alert("false");
 	} else {
-		//alert("true");
 		return true;
 	}
 }
 
-function storeSightings() {
-
-}
-
 function submitSightings() {
 	try {
-		//TODO: IDEE -> JEDES BF-ELEMENT ERHAELT UPLOAD-FUNKTION 'uploadMe', errorcode gibt auskunft darueber warum upload fehlgeschlagen:
+		//TODO: 
 		// UEBERGABEPARAMETER FUER submitSightings(), das angibt welches array mit bf-elementen uebertragen werden soll
-		// check for network connection:
-		if(this.checkConnection()) {
-			// check basket is not empty:
-			if(this.basket.length) {
-				// try to submit each sighting:
-				for(var i = 0; i < this.basket.length; i++) {
-					this.basket[i].uploadMe();
-					/*
-					var data = "";
-					var position_valid, upload_success = false;
-					// only items with valid position object:
-					if(this.basket[i].validateMyPosition()) {
-						position_valid = true;
-						// name, amount, date, time, latitude, longitude
-						data += "name=" + this.basket[i].getName() + "&" +
-						"amount=" + this.basket[i].getAmount() + "&" +
-						"date=" + this.basket[i].getDate() + "&" +
-						"time=" + this.basket[i].getTime() + "&" +
-						"latitude=" + this.basket[i].myPosition.latitude + "&" +
-						"longitude=" + this.basket[i].myPosition.longitude;
-					// try to determine position again:
-					} else {
-						if(this.validPosition) {
-							this.basket[i].myPosition.latitude = this.currentPosition.latitude;
-							this.basket[i].myPosition.longitude = this.currentPosition.longitude;
-							position_valid = true;
-							// name, amount, date&time, position
-							data += "name=" + this.basket[i].getName() + "&" +
-							"amount=" + this.basket[i].getAmount() + "&" +
-							"date=" + this.basket[i].getDate() + "&" +
-							"time=" + this.basket[i].getTime() + "&" +
-							"latitude=" + this.basket[i].myPosition.latitude + "&" +
-							"longitude=" + this.basket[i].myPosition.longitude;
-						} else {
-							this.getPosition();
-							if(this.validPosition) {
-								this.basket[i].myPosition.latitude = this.currentPosition.latitude;
-								this.basket[i].myPosition.longitude = this.currentPosition.longitude;
-								position_valid = true;
-								// name, amount, date&time, position
-								data += "name=" + this.basket[i].getName() + "&" +
-								"amount=" + this.basket[i].getAmount() + "&" +
-								"date=" + this.basket[i].getDate() + "&" +
-								"time=" + this.basket[i].getTime() + "&" +
-								"latitude=" + this.basket[i].myPosition.latitude + "&" +
-								"longitude=" + this.basket[i].myPosition.longitude;
-							} else {
-								position_valid = false;
-								this.basket[i].setInfoMessage("Invalid position");
-							}	
-						}					
-					}
-					if(position_valid) {
-						$.ajax({
-							url: 'http://192.168.1.29/bfsighting.php',
-							type: 'POST',
-							data: data,
-							success: function(data) {
-								upload_success = true;
-								alert("success, data: "+data);
-							},
-							error: function(jqXHR, textStatus, errorThrown) {
-								upload_success = false;
-								alert("error, textstatus: "+textStatus+", errorthrown: "+errorThrown);
-							}
-						});
-					}
-					if(!position_valid || !upload_success) {
-						// check if local storage is available and store this bf object:
-						if(typeof(Storage) !== "undefined") {
-							var storage = window.localStorage.key(0);
-							if(storage === null || storage === undefined) {
-								var sightings = new Array(this.basket[i]);
-								window.localStorage.setItem("sightings",JSON.stringify(sightings));
-							}
-							/*
-							var sightings = JSON.parse(window.localStorage.getItem("sightings"));
-							sightings.push(this.basket[0]);
-							window.localStorage.setItem("sightings",JSON.stringify(sightings));
-							var check = JSON.parse(window.localStorage.getItem("sightings"));
-		
-						} else {
-							throw "storage_err";
-						}
-					}
-					*/
-				}
-			} else {
-				throw "nosightings_err";
+		var sightings_toupload = false;
+		// are there older sightings still to upload?:
+		if(this.olderSightings.length) {
+			sightings_toupload = true;
+			// try to submit each sighting:
+			for(var i = 0; i < this.olderSightings.length; i++) {
+				//this.olderSightings[i].uploadMe("old",i);
+				this.olderSightings[i].uploadMe("old");
 			}
-		} else {
-			throw "connection_err"
 		}
-		
-
-				//alert("output of stored bf: "+check[0].me_butterflylist);
-				//var checkSightings = storage
-				/*
-				if(!storage.getItem("sightings")) {
-					alert("creating storage");
-					window.localStorage.setItem("sightings", []);
-			
-				} else { alert("storage already exists"); }
-				
-			}
-			/*
-			if(typeof(storage) === "object") {
-				var myobj = JSON.stringify(this.basket[0]);
-				
-				//for(var i = 0; i < this.basket.length; i++) {
-					
-				//}
-			} else {
-			
-			}
-			/*
-			// get database object to access device storage:
-			// 1mb == 1024 X 1024 bytes -> 1048576
-			var db = window.openDatabase("sightings","1.0","Sighting database",1048576);
-			// access local database:
-			function createDB(tx) {
-				tx.executeSql("create table if not exists bf_sightings (id integer not null primary key autoincrement,bf_id integer not null,sighting text)");
-			}
-			function errorCreate(err) {
-				alert("Error creating table 'bf_sightings': "+err.message);
-			}
-			function successCreate() {
-				alert("Table 'bf_sightings' successfully created!");	
-			}
-			db.transaction(createDB, errorCreate, successCreate);
-			/*
-			// build insert query:
-			var insert_query = "insert into bf_sightings (bf_id, sighting)";
+		// check basket is not empty:
+		if(this.basket.length) {
+			sightings_toupload = true;
+			// try to submit each sighting:
 			for(var i = 0; i < this.basket.length; i++) {
-				insert_query +=" select "+this.basket[i].id+" as bf_id,"+JSON.stringify(this.basket[i])+" as sighting";
-				if(i < this.basket.length-1) { insert_query += " union"; }
+				//this.basket[i].uploadMe("new",i);
+				this.basket[i].uploadMe("new");
 			}
-			//alert("insert query: "+insert_query);
-			// insert values into db:
-			function insertDB(tx,insert_query) {
-				tx.executeSql(insert_query);
-			}
-			function errorInsert(err) {
-				alert("Error inserting values into database: "+err.code);
-			}
-			function successInsert() {
-				alert("Values successfully inserted!");
-			}
-			db.transaction(insertDB, errorInsert, successInsert);
-			// check the network connection:
-			/*
-			if(this.checkConnection()) {
-		
-			} else {
-				throw "connection_err";
-			}
-			*/
+		}
+		if(!sightings_toupload) {
+			throw "nosightings_err";
+		}
 	} catch(e) {
 		var errormsg = "";
-		switch(e) {
-			case "connection_err":
-				errormsg += "Currently there is no network connection available.";
-			break;
-			case "storage_err":
-				errormsg += "Local storage is not supported on the device.";
-			break;
-			case "nosightings_err":
-				errormsg += "There are no sightings to submit.";
-			break;
-			case "insertqueue_err":
-				errormsg += "The current butterfly object could not be added to the submit queue.";
-			break;
-			default:
-				errormsg += "An error occurred trying to submit your sightings: "+e.message;
+		if(e == "nosightings_err") {
+			errormsg += "There are no sightings to submit.";
+		} else {
+			errormsg += e.message;
+		}
+		alert(errormsg);
+	}
+}
+
+function checkForOlderSightings() {
+	try {
+		if(typeof(Storage) !== "undefined") {
+			var storage = window.localStorage.key(0);
+			//TODO: check === vs. == :
+			//alert("storage: "+storage);
+			if(storage !== null || storage !== undefined) {
+				// first clear olderSightings array:
+				var len = this.olderSightings.length -1;
+				for(var i = len; this.olderSightings[i]; i--) {
+					this.olderSightings.pop(i);
+				}
+				//alert("items in older sightings: "+this.olderSightings.length);
+				//this.olderSightings.length = 0;
+				var sightings = JSON.parse(window.localStorage.getItem("sightings"));
+				if(typeof(sightings) === "object" && sightings !== null) {
+					//TODO: attach submit older sightings button to the start page:
+					if(sightings.length) {
+						$("startoptions").html("");
+						$("startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a><p/><p><a href='#bfc_submit' data-role='button'>Submit older sightings</a><p/><p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>");
+					}
+					//alert("items in localStorage: "+sightings.length);
+					for(var i = 0; i < sightings.length; i++) {
+						var init_args = {
+							id: sightings[i].id,
+							name: sightings[i].name,
+							positionInStorage: i,
+							// TODO: when a sighting was stored locally, it can't be in basket:
+							positionInBasket: null,
+							positionInOlderSightings: this.olderSightings.length,
+							amount: sightings[i].amount,
+							date: sightings[i].date,
+							time: sightings[i].time,
+							myPosition: {latitude: sightings[i].myPosition.latitude,
+								longitude: sightings[i].myPosition.longitude,
+								isSet: sightings[i].myPosition.isSet},
+							inBasket: true,
+							errorCode: {position: sightings[i].errorCode.position,
+								network: sightings[i].errorCode.network,
+								server: sightings[i].errorCode.server},
+							//errorCode: sightings[i].errorCode,
+							serverMessage: sightings[i].serverMessage,
+						};
+						//alert(init_args.name);
+						var bf = new Butterfly(sightings[i].name,sightings[i].id,init_args);
+						if(typeof(bf) === "object") {
+							//bf.addListener("success", this.updateMe());
+							this.olderSightings.push(bf);
+						} else {
+							throw "bfrecover_err";
+						}
+					}
+				}
+			}
+		} else {
+			throw "storage_err";
+		}
+	} catch(e) {
+		var errormsg = "Check for stored, older sightings failed.\n";
+		if(e == "storage_err") {
+			errormsg += "Local storage not supported on the device.";
+		} else if(e == "bfrecover_err") {
+			errormsg += "Recovery failed.";
+		} else {
+			errormsg += e.message;
 		}
 		alert(errormsg);
 	}
@@ -375,6 +331,59 @@ function showMap() {
 	}
 }
 
+function deleteSighting() {
+	try {
+		if(this.editSighting.length) {
+			var ok = confirm("Delete this sighting?");
+			if(ok) {
+				if(this.editSighting[0].status == "new") {
+					if(this.editSighting[0].me.positionInBasket < this.basket.length-1) {
+						var i = this.editSighting[0].me.positionInBasket;
+						for(var j = i+1; j < this.basket.length; j++) {
+							this.basket[j].positionInBasket = j-1;
+						}
+					}
+					this.basket.splice(this.editSighting[0].me.positionInBasket,1);			
+				} else {
+					//alert("in deleteSighting, positionInOlderSightings des zu loeschenden elements: "+this.editSighting[0].me.positionInOlderSightings);
+					// adjust the position properties of every bf item in olderSightings and localStorage if necessary:
+					if(typeof(Storage) !== "undefined") {
+						var sightings = JSON.parse(window.localStorage.getItem("sightings"));
+					}
+					if(this.editSighting[0].me.positionInOlderSightings < this.olderSightings.length-1) {
+						var i = this.editSighting[0].me.positionInOlderSightings;
+						for(var j = i+1; j < this.olderSightings.length; j++) {
+							this.olderSightings[j].positionInOlderSightings = j-1;
+							sightings[j].positionInStorage = j-1;
+						}
+					}
+					// delete from local storage:
+					if(typeof(Storage) !== "undefined") {
+						alert("delete from local stoprage...");
+						for(var i = 0; i < sightings.length; i++) {
+							//alert("index: "+i+", item: "+sightings[i].name);
+						}
+						sightings.splice(this.editSighting[0].me.positionInStorage,1);
+						window.localStorage.setItem("sightings",JSON.stringify(sightings));
+					}
+					// delete from older sightings:
+					this.olderSightings.splice(this.editSighting[0].me.positionInOlderSightings,1);
+					/*
+					for(var i=0; i < this.olderSightings.length; i++) {
+						alert("index: "+i+", element: "+this.olderSightings[i].name);
+					}
+					*/
+				}
+				// after editing, delete item from editSighting again:
+				this.editSighting.splice(0,1);
+			}
+		}
+	} catch(e) {
+		var errormsg = "Erasure of the sighting failed.\n" + e.message;
+		alert(errormsg);
+	}
+}
+
 function comparePositions(array) {
 	//TODO: check for array == array
 	for(var i = 0; i < array.length-1; i++) {
@@ -392,6 +401,15 @@ function closeApp() {
 	navigator.app.exitApp();
 }
 
+/*
+function deleteStorage() {
+	if(this.olderSightings.length) {
+		alert("delete olderSightings...");
+		this.olderSightings.length = 0;
+		alert("after delete, length of olderSightings: "+this.olderSightings.length);
+	}
+}
+*/
 
 
 
