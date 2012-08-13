@@ -253,7 +253,7 @@ function uploadMe(what) {
 	try {
 		var position_valid = true;
 		var adjust_positions = false;
-		if(!this.validateMyPosition) {
+		if(!this.validateMyPosition()) {
 			// try to determine the correct position now:
 			Butterflyapp.prototype.getPosition();
 			if(Butterflyapp.prototype.currentPosition.latitude != false && Butterflyapp.prototype.currentPosition.longitude != false) {
