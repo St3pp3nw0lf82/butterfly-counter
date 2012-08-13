@@ -71,10 +71,14 @@ try {
 	var ba = new Butterflyapp();
 	if(typeof(ba) === "object") {
 		// init the position object here:
-		ba.init();
-		ba.getPosition();
+		$("#bfc_startpage").live( 'pageinit',function(event){
+			ba.init();
+			$("#quit_app").bind("click", function() { ba.closeApp(); });
+			//ba.getPosition();
+		});
+		//ba.init();
+		//ba.getPosition();
 		$(document).delegate("#bfc_startpage", "pageshow", function() {
-			alert("startpage will show off now...");
 			ba.checkForOlderSightings();
 			$("#quit_app").bind("click", function() { ba.closeApp(); });
 		});
