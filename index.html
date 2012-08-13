@@ -12,6 +12,7 @@
 -->
 <!-- external link 
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+<!-- TODO: find out if it makes difference if referred to jquery mobile core files via external link or keep a copy locally -->
 <!-- local link -->
 <link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
 <!-- <link rel="stylesheet" href="css/jquery.mobile-1.1.0.css" />
@@ -51,11 +52,14 @@
 ############# custom javascript #################
 #################################################
 -->
-<!-- <script type="text/javascript" src="js/cordova-1.8.1.js"></script> -->
+
 <script type="text/javascript" src="js/butterflyapp.js"></script>
 <script type="text/javascript" src="js/butterfly.js"></script>
+<!--
 <script type="text/javascript" src="js/basket.js"></script>
+-->
 <script type="text/javascript">
+
 function init_phonegap() {
 	document.addEventListener("deviceready", onDeviceReady, false);
 }
@@ -116,7 +120,7 @@ try {
 }
 </script>
 
-<!-- add click event to button after dom is ready 
+<!-- add click event to button after dom is ready
 <script type="text/javascript">
 //NOTE: use this when running in a browser on desktop:
 
@@ -129,7 +133,7 @@ try {
 		$(document).delegate("#bfc_startpage", "pageshow", function() {
 			ba.checkForOlderSightings();
 			$("#quit_app").bind("click", function() { ba.closeApp(); });
-			//$("#delete_storage").bind("click", function() { ba.deleteStorage(); });
+			$("#reset").bind("click", function() { ba.resetApp(); });
 		});
 		$(document).delegate("#bfc_choosebutterfly", "pageshow", function() { ba.printButterflies(); });
 		$(document).delegate("#bfc_summary", "pageshow", function() { ba.showBasket("sightingbasket"); });
@@ -142,6 +146,7 @@ try {
 		});
 		$(document).delegate("#bfc_submit", "pageshow", function() {
 			//ba.showBasket("submitlist");
+			$.mobile.showPageLoadingMsg();
 			ba.submitSightings();
 		});
 		/*
@@ -206,6 +211,7 @@ first page: choose start options
 		<h2>What do you want to do?</h2>
 		<div id="startoptions">
 			<p><a href="#bfc_choosebutterfly" data-role="button" id="start_sighting">Start sighting session</a><p/>
+			<p><a href="#" data-role="button" id="reset">Reset app</a><p/>
 			<p><a href="#" data-role="button" id="quit_app">Quit app</a><p/>
 		</div>
 	</div>
@@ -250,10 +256,17 @@ third page: sighting summary
 	</div>
 	<!-- content -->
 	<div id="content" data-role="content">
-		<h3>Older sightings</h3>
-		<ul data-role="listview" id="oldersightings"></ul>
-		<h3>Your sightings</h3>
-		<ul data-role="listview" id="sightingbasket"></ul>
+		<div id="os_wrapper_old">
+			<h3>Older sightings</h3>
+			<ul data-role="listview" id="oldersightings"></ul>
+		</div>
+		<div id="os_wrapper_new">
+			<h3>Your sightings</h3>
+			<ul data-role="listview" id="sightingbasket"></ul>
+		</div>
+		<div id="no_sightings">
+			<p>No sightings found</p><p><a href="#bfc_choosebutterfly" data-role="button">Make a sighting</a><p/>
+		</div>
 	</div>
 	<!-- footer -->
 	<div data-role="footer" data-position="fixed">
@@ -311,7 +324,7 @@ fifth page: submit sightings
 	<div data-role="footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#bfc_choosebutterfly" data-role="button">Back</a></li>
+				<li><a href="#bfc_summary" data-role="button">Back</a></li>
 			</ul>
 		</div>
 	</div>
@@ -335,7 +348,7 @@ sixth page: edit sightings
 	<div data-role="footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#bfc_choosebutterfly" data-role="button">Back</a></li>
+				<li><a href="#bfc_summary" data-role="button">Back</a></li>
 			</ul>
 		</div>
 	</div>

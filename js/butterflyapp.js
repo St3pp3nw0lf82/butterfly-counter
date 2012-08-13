@@ -9,6 +9,7 @@ this.submitSightings = submitSightings;
 this.checkForOlderSightings = checkForOlderSightings;
 this.showMap = showMap;
 this.deleteSighting = deleteSighting;
+this.resetApp = resetApp;
 this.closeApp = closeApp;
 return true;
 }
@@ -56,9 +57,7 @@ function init() {
 		var year = d.getFullYear();
 		var today = day + "/" + month + "/" + year;
 		Butterflyapp.prototype.date = today;
-		// check for older sightings:
-		//this.checkForOlderSightings();
-		//this.createButterflies("Small White","Large White","Green-veined White");
+		// create the butterflies:
 		this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
 	} catch(e) {
 		var errormsg = "";
@@ -112,7 +111,6 @@ function createButterflies() {
 		for(var i = 0; i < arguments.length; i++) {
 			var bf = new Butterfly(arguments[i],i);
 			if(typeof(bf) === "object") {
-				//bf.addListener("success", bf.updateMe());
 				this.butterflies.push(bf);
 			} else {
 				throw "bfcreation_err";
@@ -130,7 +128,6 @@ function createButterflies() {
 }
 
 function printButterflies() {
-	//alert("in printButterflies ...");
 	var now = new Date().getTime();
 	var time_diff = ((now - this.currentPosition.lastTaken)*0.001);
 	time_diff = parseInt(Math.round(time_diff));
@@ -147,15 +144,20 @@ function printButterflies() {
 }
 
 function showBasket(page) {
+	$("#os_wrapper_old").css("display","none");
+	$("#os_wrapper_new").css("display","none");
+	$("#no_sightings").css("display","none");
 	if(page == "sightingbasket") {
 		$("#oldersightings").html("");
 	}
 	$("#"+page).html("");
 	var no_sightings = true;
 	if(this.olderSightings.length) {
+		$("#os_wrapper_old").css("display","block");
 		no_sightings = false;
 		for(var i = 0; i < this.olderSightings.length; i++) {
 			if(page == "sightingbasket") {
+				//alert(this.olderSightings[i].name+", position in localStorage:"+this.olderSightings[i].positionInStorage);
 				this.olderSightings[i].printMe("oldersightings");
 				$("#oldersightings").listview("refresh");
 			} else {
@@ -165,6 +167,7 @@ function showBasket(page) {
 		}
 	}
 	if(this.basket.length) {
+		$("#os_wrapper_new").css("display","block");
 		no_sightings = false;
 		for(var i = 0; i < this.basket.length; i++) {
 			this.basket[i].printMe(page);
@@ -172,7 +175,7 @@ function showBasket(page) {
 		}
 	}
 	if(no_sightings) {
-		$("#"+page).html("<p>You have made no sighting yet.</p><p><a href='#bfc_choosebutterfly' data-role='button'>Create one!</a><p/>");
+		$("#no_sightings").css("display","block");
 	}
 }
 
@@ -198,7 +201,9 @@ function checkConnection() {
 
 function submitSightings() {
 	try {
-		$("submitlist").html("");
+		//alert("in submitSightings, elemente in basket: "+ this.basket.length);
+		$("#submitlist").html("");
+		$("#submitlist").listview("refresh");
 		//TODO: 
 		// UEBERGABEPARAMETER FUER submitSightings(), das angibt welches array mit bf-elementen uebertragen werden soll
 		var sightings_toupload = false;
@@ -221,6 +226,7 @@ function submitSightings() {
 			}
 		}
 		if(!sightings_toupload) {
+			//$.mobile.hidePageLoadingMsg();
 			throw "nosightings_err";
 		}
 	} catch(e) {
@@ -236,29 +242,30 @@ function submitSightings() {
 
 function checkForOlderSightings() {
 	try {
-		if(typeof(Storage) !== "undefined") {
+		if(typeof(Storage) !== undefined) {
 			var storage = window.localStorage.key(0);
-			//TODO: check === vs. == :
-			alert("in checkforoldersightings, storage: "+storage);
 			if(storage !== null || storage !== undefined) {
-				alert("in checkforoldersightings, storage is not null: "+storage);
+				//alert("in checkForOlderSightings, storage not null.");
 				// first clear olderSightings array:
-				var len = this.olderSightings.length -1;
-				for(var i = len; this.olderSightings[i]; i--) {
-					this.olderSightings.pop(i);
+				var len = this.olderSightings.length;
+				while(len--) {
+					this.olderSightings.pop();
 				}
-				//alert("items in older sightings: "+this.olderSightings.length);
-				//this.olderSightings.length = 0;
 				var sightings = JSON.parse(window.localStorage.getItem("sightings"));
+				//alert("in checkForOlderSightings, length of sightings array: "+sightings.length);
 				if(typeof(sightings) === "object" && sightings !== null) {
-					//alert("length of sightings: "+sightings.length);
+					//alert("in checkForOlderSightings, sighting is object");
 					//TODO: attach submit older sightings button to the start page:
+					$("#startoptions").html("");
 					if(sightings.length) {
-						$("startoptions").html("");
-						$("startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a><p/><p><a href='#bfc_submit' data-role='button'>Submit older sightings</a><p/><p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>");
+						$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a><p/><p><a href='#bfc_summary' data-role='button'>Older sightings</a><p/><p><a href='#' data-role='button' id='reset'>Reset app</a><p/><p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>");
+						
+					} else {
+						$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a><p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>");
 					}
-					//alert("items in localStorage: "+sightings.length);
+					$("#startoptions").trigger("create");
 					for(var i = 0; i < sightings.length; i++) {
+						//alert("in checkForOlderSightings, name of bf item at index "+i+": "+sightings[i].name);
 						var init_args = {
 							id: sightings[i].id,
 							name: sightings[i].name,
@@ -339,50 +346,95 @@ function deleteSighting() {
 		if(this.editSighting.length) {
 			var ok = confirm("Delete this sighting?");
 			if(ok) {
+				var deletion_ok = false;
+				var adjust_positions = false;
 				if(this.editSighting[0].status == "new") {
 					if(this.editSighting[0].me.positionInBasket < this.basket.length-1) {
+						adjust_positions = true;
 						var i = this.editSighting[0].me.positionInBasket;
-						for(var j = i+1; j < this.basket.length; j++) {
-							this.basket[j].positionInBasket = j-1;
-						}
 					}
-					this.basket.splice(this.editSighting[0].me.positionInBasket,1);			
+					// delete from sighting basket:
+					var oldlength = this.basket.length;
+					this.basket.splice(this.editSighting[0].me.positionInBasket,1);
+					var newlength = this.basket.length;
+					if(newlength < oldlength) {
+						deletion_ok = true;
+						if(adjust_positions) {
+							for(i; i < this.basket.length; i++) {
+								this.basket[i].positionInBasket = i;
+							}
+						}
+					}	
+					this.editSighting[0].me.resetMe();
 				} else {
-					//alert("in deleteSighting, positionInOlderSightings des zu loeschenden elements: "+this.editSighting[0].me.positionInOlderSightings);
 					// adjust the position properties of every bf item in olderSightings and localStorage if necessary:
 					if(typeof(Storage) !== "undefined") {
 						var sightings = JSON.parse(window.localStorage.getItem("sightings"));
-					}
-					if(this.editSighting[0].me.positionInOlderSightings < this.olderSightings.length-1) {
-						var i = this.editSighting[0].me.positionInOlderSightings;
-						for(var j = i+1; j < this.olderSightings.length; j++) {
-							this.olderSightings[j].positionInOlderSightings = j-1;
-							sightings[j].positionInStorage = j-1;
+
+						//alert("items in olderSightings: "+this.olderSightings.length);
+						//alert("position of current item in olderSightings: "+this.editSighting[0].me.positionInOlderSightings);
+						var diff_length = sightings.length - this.olderSightings.length;
+						var diff_pos = this.editSighting[0].me.positionInStorage - this.editSighting[0].me.positionInOlderSightings;
+						// make sure both arrays and positions of bf item stored in them are equal:
+						if(!diff_length && !diff_pos) {
+							//alert("equal.");
+							if(this.editSighting[0].me.positionInOlderSightings < this.olderSightings.length-1) {
+								adjust_positions = true;
+								var i = this.editSighting[0].me.positionInOlderSightings;
+							}
+							// delete from older sightings ...:
+							var oldlength_os = this.olderSightings.length;
+							this.olderSightings.splice(this.editSighting[0].me.positionInOlderSightings,1);
+							var newlength_os = this.olderSightings.length;
+							// ... and local storage:
+							var oldlength_ls = sightings.length;
+							sightings.splice(this.editSighting[0].me.positionInStorage,1);
+							var newlength_ls = sightings.length;
+							if((newlength_os < oldlength_os) && (newlength_ls < oldlength_ls)) {
+								deletion_ok = true;
+								if(adjust_positions) {
+									for(i; i < this.olderSightings.length; i++) {
+										//alert("index: "+i+", old value of positionInOlderSightings from "+this.olderSightings[i].name+": "+ this.olderSightings[i].positionInOlderSightings);
+										this.olderSightings[i].positionInOlderSightings = i;
+										sightings[i].positionInOlderSightings = i;
+										this.olderSightings[i].positionInStorage = i;
+										sightings[i].positionInStorage = i;
+										//alert("index: "+i+", new value of positionInOlderSightings from "+this.olderSightings[i].name+": "+ this.olderSightings[i].positionInOlderSightings);
+									}
+								}
+							} else {
+								throw "erase_err";
+							}
+						} else {
+							throw "diff_err";
 						}
+					} else {
+						throw "locstor_err";
 					}
-					// delete from local storage:
-					if(typeof(Storage) !== "undefined") {
-						alert("delete from local stoprage...");
-						for(var i = 0; i < sightings.length; i++) {
-							//alert("index: "+i+", item: "+sightings[i].name);
-						}
-						sightings.splice(this.editSighting[0].me.positionInStorage,1);
-						window.localStorage.setItem("sightings",JSON.stringify(sightings));
-					}
-					// delete from older sightings:
-					this.olderSightings.splice(this.editSighting[0].me.positionInOlderSightings,1);
-					/*
-					for(var i=0; i < this.olderSightings.length; i++) {
-						alert("index: "+i+", element: "+this.olderSightings[i].name);
-					}
-					*/
 				}
 				// after editing, delete item from editSighting again:
 				this.editSighting.splice(0,1);
+				if(deletion_ok) {
+					window.localStorage.setItem("sightings",JSON.stringify(sightings));
+					alert("Sighting deleted.");
+				}
 			}
 		}
 	} catch(e) {
-		var errormsg = "Erasure of the sighting failed.\n" + e.message;
+		var errormsg = "Erasure of the sighting failed.\n";
+		switch(e) {
+			case "locstor_err":
+				errormsg += "Local storage is not supported on the device.";
+			break;
+			case "diff_err":
+				errormsg += "Both local storage and older sightings arrays differ.";
+			break;
+			case "erase_err":
+				errormsg += "Removal was faulty.";
+			break;
+			default:
+				errormsg += e.message;
+		}
 		alert(errormsg);
 	}
 }
@@ -398,21 +450,26 @@ function comparePositions(array) {
 	}
 }
 
+function resetApp() {
+	//alert("in resetapp");
+	var sightings = JSON.parse(window.localStorage.getItem("sightings"));
+	var len = this.olderSightings.length;
+	//alert(len);
+	while(len--) {
+		this.olderSightings.pop();
+	}
+	var slen = sightings.length;
+	while(slen--) {
+		sightings.pop();
+	}
+	window.localStorage.setItem("sightings",JSON.stringify(sightings));
+}
+
 function closeApp() {
 	// note: force app to close for example in iOS is stromgly recommended NOT TO DO on Apple devices!
 	// see: http://stackoverflow.com/questions/3154491/quit-app-when-pressing-home
 	navigator.app.exitApp();
 }
-
-/*
-function deleteStorage() {
-	if(this.olderSightings.length) {
-		alert("delete olderSightings...");
-		this.olderSightings.length = 0;
-		alert("after delete, length of olderSightings: "+this.olderSightings.length);
-	}
-}
-*/
 
 
 
