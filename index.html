@@ -43,7 +43,7 @@
 #################################################
 ###### google maps plugin for jquery mobile #####
 #################################################
-
+-->
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
 <script type="text/javascript" src="js/jquerymobile/jquery.ui.map.full.min.js"></script>
 <script type="text/javascript" src="js/jquerymobile/jquery.ui.map.extensions.js"></script>
@@ -63,10 +63,7 @@
 function init_phonegap() {
 	document.addEventListener("deviceready", onDeviceReady, false);
 }
-//$(document).ready(function() {
-//$(function() {
-//	document.addEventListener("deviceready", onDeviceReady, false);
-//});
+
 function onDeviceReady() {
 //NOTE: this only works with phonegap on mobile device, uncomment it when running in a browser on desktop:
 
@@ -77,6 +74,7 @@ try {
 		ba.init();
 		ba.getPosition();
 		$(document).delegate("#bfc_startpage", "pageshow", function() {
+			alert("startpage will show off now...");
 			ba.checkForOlderSightings();
 			$("#quit_app").bind("click", function() { ba.closeApp(); });
 		});
@@ -120,7 +118,7 @@ try {
 }
 </script>
 
-<!-- add click event to button after dom is ready
+<!-- add click event to button after dom is ready 
 <script type="text/javascript">
 //NOTE: use this when running in a browser on desktop:
 
