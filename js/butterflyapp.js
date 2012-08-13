@@ -57,6 +57,10 @@ function init() {
 		var year = d.getFullYear();
 		var today = day + "/" + month + "/" + year;
 		Butterflyapp.prototype.date = today;
+		// determine current position:
+		this.getPosition();
+		// check for older sightings:
+		this.checkForOlderSightings();
 		// create the butterflies:
 		this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
 	} catch(e) {
@@ -181,7 +185,7 @@ function showBasket(page) {
 
 function checkConnection() {
 	//TODO: remove the line below!!!!!!!!!!:
-	//return true;
+	return true;
 	var networkState = navigator.network.connection.type;
 	var states = {};
 	states[Connection.UNKNOWN]  = 'UNKNOWN';
@@ -318,11 +322,13 @@ function showMap() {
 		$('#map_canvas').gmap().bind('init', function(ev, map) {
 			if(Butterflyapp.prototype.basket.length >= 2) {
 				for(var i = 0; i < Butterflyapp.prototype.basket.length-1; i++) {
+					/*
 					for(var j =(i+1); j < array.length; j++) {
 						var latdiff = parseInt(array[i].myPosition.latitude) - parseInt(array[j].myPosition.latitude);
 						var longdiff = parseInt(array[i].myPosition.longitude) - parseInt(array[j].myPosition.longitude);
 						if((latdiff == 0) && (longdiff == 0)) {  }
 					}
+					*/
 					// build the info window:
 					var name = Butterflyapp.prototype.basket[i].getName();
 					var amount = Butterflyapp.prototype.basket[i].getAmount();
