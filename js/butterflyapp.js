@@ -112,6 +112,7 @@ function getPosition() {
 
 function createButterflies() {
 	try {
+		alert("creating butterflies");
 		for(var i = 0; i < arguments.length; i++) {
 			var bf = new Butterfly(arguments[i],i);
 			if(typeof(bf) === "object") {
