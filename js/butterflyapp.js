@@ -64,12 +64,7 @@ function init() {
 		// create the butterflies:
 		this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
 	} catch(e) {
-		var errormsg = "";
-		if(e == "bfcreation_err") {
-			errormsg += "Creation of butterfly object failed.";
-		} else {
-			errormsg += e.message;
-		}
+		var errormsg = "Initialisation of the app failed.\n" + e.message;
 		alert(errormsg);
 	}
 }
@@ -186,7 +181,7 @@ function showBasket(page) {
 
 function checkConnection() {
 	//TODO: remove the line below!!!!!!!!!!:
-	return true;
+	//return true;
 	var networkState = navigator.network.connection.type;
 	var states = {};
 	states[Connection.UNKNOWN]  = 'UNKNOWN';
@@ -249,7 +244,6 @@ function checkForOlderSightings() {
 	try {
 		if(typeof(Storage) !== undefined) {
 			if(window.localStorage.key(0)) {
-				alert("sightings exists, key(0): "+window.localStorage.key(0));
 				// first clear olderSightings array:
 				var len = this.olderSightings.length;
 				while(len--) {
@@ -257,7 +251,6 @@ function checkForOlderSightings() {
 				}
 				var sightings = JSON.parse(window.localStorage.getItem("sightings"));
 				if(typeof(sightings) === "object" && sightings !== null) {
-					//alert("in checkForOlderSightings, sighting is object");
 					$("#startoptions").html("");
 					if(sightings.length) {
 						$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a><p/><p><a href='#bfc_summary' data-role='button'>Older sightings</a><p/><p><a href='#' data-role='button' id='reset'>Reset app</a><p/><p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>");
@@ -267,7 +260,6 @@ function checkForOlderSightings() {
 					}
 					$("#startoptions").trigger("create");
 					for(var i = 0; i < sightings.length; i++) {
-						//alert("in checkForOlderSightings, name of bf item at index "+i+": "+sightings[i].name);
 						var init_args = {
 							id: sightings[i].id,
 							name: sightings[i].name,

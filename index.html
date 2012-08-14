@@ -10,10 +10,10 @@
 ############# jquery mobile stylesheet ##########
 #################################################
 -->
-<!-- external link 
+<!-- external link -->
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
 <!-- TODO: find out if it makes difference if referred to jquery mobile core files via external link or keep a copy locally -->
-<!-- local link -->
+<!-- local link 
 <link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
 <!-- <link rel="stylesheet" href="css/jquery.mobile-1.1.0.css" />
 <!-- ############################################
@@ -26,17 +26,17 @@
 ############# jquery mobile #####################
 #################################################
 -->
-<!-- external link 
+<!-- external link -->
 <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-<!-- local link -->
+<!-- local link 
 <script type="text/javascript" src="js/jquerymobile/jquery-1.7.1.min.js"></script>
 <!-- initialisation of global vars goes here, see: http://jquerymobile.com/demos/1.1.0/docs/api/globalconfig.html -->
 <script type="text/javascript" src="js/mobileinit.js"></script>
 <!-- jquery mobile source code files -->
-<!-- external link 
+<!-- external link -->
 <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
 <script type="text/javascript" src="phonegap.js"></script>
-<!-- local link -->
+<!-- local link 
 <script type="text/javascript" src="js/jquerymobile/jquery.mobile-1.1.0.min.js"></script>
 <script type="text/javascript" src="phonegap.js"></script>
 <!--
@@ -66,52 +66,51 @@ function init_phonegap() {
 function onDeviceReady() {
 //NOTE: this only works with phonegap on mobile device, uncomment it when running in a browser on desktop:
 
-try {
-	var ba = new Butterflyapp();
-	if(typeof(ba) === "object") {
-		// initializing the app:
-		ba.init();
-		$("#quit_app").live("click", function() { ba.closeApp(); });
-		$(document).delegate("#bfc_startpage", "pageshow", function() {
-			ba.checkForOlderSightings();
-			$("#quit_app").bind("click", function() { ba.closeApp(); });
-		});
-		$(document).delegate("#bfc_choosebutterfly", "pageshow", function() { ba.printButterflies(); });
-		$(document).delegate("#bfc_summary", "pageshow", function() {
-			ba.showBasket("sightingbasket");
-			//$("#submit_sightings").bind("click", function() { ba.submitSightings(); });
-		});
-		$(document).delegate("#bfc_edit", "pageshow", function() {
-			$("#delete_sighting").bind("click", function() { ba.deleteSighting(); });
-		});
-		$(document).delegate("#bfc_map", "pageshow", function() {
-			ba.showMap();
-			//$("map_canvas").gmap("refresh");
-		});
-		$(document).delegate("#bfc_submit", "pageshow", function() {
-			//ba.showBasket("submitlist");
-			ba.submitSightings();
-		});
-	} else {
-		throw "init_err";
+	try {
+		var ba = new Butterflyapp();
+		if(typeof(ba) === "object") {
+			// initializing the app:
+			ba.init();
+			$("#quit_app").live("click", function() { ba.closeApp(); });
+			$(document).delegate("#bfc_startpage", "pageshow", function() {
+				ba.checkForOlderSightings();
+				$("#quit_app").bind("click", function() { ba.closeApp(); });
+			});
+			$(document).delegate("#bfc_choosebutterfly", "pageshow", function() { ba.printButterflies(); });
+			$(document).delegate("#bfc_summary", "pageshow", function() {
+				ba.showBasket("sightingbasket");
+			});
+			$(document).delegate("#bfc_edit", "pageshow", function() {
+				$("#delete_sighting").bind("click", function() { ba.deleteSighting(); });
+			});
+			$(document).delegate("#bfc_map", "pageshow", function() {
+				ba.showMap();
+				//$("map_canvas").gmap("refresh");
+			});
+			$(document).delegate("#bfc_submit", "pageshow", function() {
+				//ba.showBasket("submitlist");
+				ba.submitSightings();
+			});
+		} else {
+			throw "init_err";
+		}
+	} catch(e) {
+		var errormsg = "";
+		switch(e) {
+			case "sessionstorage_err":
+				errormsg += "Butterflyapp object could not be stored.";
+			break;
+			case "sessupport_err":
+				errormsg += "Local storage is not supported on your device.";
+			break;
+			case "init_err":
+				errormsg += "Butterflyapp opbject could not be initialized.";
+			break;
+			default:
+				errormsg += e.message;
+		}
+		alert(errormsg);
 	}
-} catch(e) {
-	var errormsg = "";
-	switch(e) {
-		case "sessionstorage_err":
-			errormsg += "Butterflyapp object could not be stored.";
-		break;
-		case "sessupport_err":
-			errormsg += "Local storage is not supported on your device.";
-		break;
-		case "init_err":
-			errormsg += "Butterflyapp opbject could not be initialized.";
-		break;
-		default:
-			errormsg += e.message;
-	}
-	alert(errormsg);
-}
 
 }
 </script>
