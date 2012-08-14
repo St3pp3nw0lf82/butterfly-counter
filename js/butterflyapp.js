@@ -245,6 +245,7 @@ function checkForOlderSightings() {
 		if(typeof(Storage) !== undefined) {
 			// check the device platform:
 			var platform = device.platform.toLowerCase();
+			alert("detected platform: "+platform);
 			var quitapp = "";
 			if(platform == "android") {
 				quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
