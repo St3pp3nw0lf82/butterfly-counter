@@ -68,11 +68,17 @@ function onDeviceReady() {
 
 	try {
 		// get the device properties:
+		/*
 		var deviceinfo = "device name: "+device.name+"\n"+
 				"device platform: "+device.platform+"\n"+
 				"device version: "+device.version+"\n"+
 				"phonegap version: "+device.cordova;
-		alert(deviceinfo);
+		 alerts:	name: gt-i9000
+				platform: android
+				version: 2.3.6
+				phonegap version: 1.8.1
+		*/
+		//alert(deviceinfo);
 		var ba = new Butterflyapp();
 		if(typeof(ba) === "object") {
 			// initializing the app:

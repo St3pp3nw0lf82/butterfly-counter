@@ -243,6 +243,12 @@ function submitSightings() {
 function checkForOlderSightings() {
 	try {
 		if(typeof(Storage) !== undefined) {
+			// check the device platform:
+			var platform = device.platform.toLowerCase();
+			var quitapp = "";
+			if(platform == "android") {
+				quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
+			}
 			if(window.localStorage.key(0)) {
 				// first clear olderSightings array:
 				var len = this.olderSightings.length;
@@ -253,10 +259,10 @@ function checkForOlderSightings() {
 				if(typeof(sightings) === "object" && sightings !== null) {
 					$("#startoptions").html("");
 					if(sightings.length) {
-						$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a><p/><p><a href='#bfc_summary' data-role='button'>Older sightings</a><p/><p><a href='#' data-role='button' id='reset'>Reset app</a><p/><p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>");
+						$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a><p/><p><a href='#bfc_summary' data-role='button'>Older sightings</a><p/><p><a href='#' data-role='button' id='reset'>Reset app</a><p/>"+quitapp);
 						
 					} else {
-						$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a><p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>");
+						$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a></p>"+quitapp);
 					}
 					$("#startoptions").trigger("create");
 					for(var i = 0; i < sightings.length; i++) {
@@ -291,7 +297,7 @@ function checkForOlderSightings() {
 					}
 				}
 			} else {
-				$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a><p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>");
+				$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a></p>"+quitapp);
 				$("#startoptions").trigger("create");
 			}
 		} else {
