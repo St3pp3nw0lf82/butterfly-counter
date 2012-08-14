@@ -78,7 +78,7 @@ function getPosition() {
 		Butterflyapp.prototype.currentPosition.longitude = position.coords.longitude;
 		Butterflyapp.prototype.validPosition = true;
 		var positions = "Latitude: "+Butterflyapp.prototype.currentPosition.latitude+"\nLongitude: "+Butterflyapp.prototype.currentPosition.longitude;
-		alert("in getPosition, positions:\n"+positions);
+		//alert("in getPosition, positions:\n"+positions);
 	};
 	var onError = function(error,validPosition) {
 		Butterflyapp.prototype.currentPosition.latitude = false;
