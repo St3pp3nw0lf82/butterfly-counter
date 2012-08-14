@@ -247,8 +247,13 @@ function submitSightings() {
 function checkForOlderSightings() {
 	try {
 		if(typeof(Storage) !== undefined) {
-			var storage = window.localStorage.key(0);
-			if(storage !== null || storage !== undefined) {
+			if(window.localStorage.key(0)) {
+				alert("sightings exists, key(0): "+window.localStorage.key(0));
+			} else {
+				alert("sightings doesn't exist");
+			}
+			//var storage = window.localStorage.key(0);
+			//if(storage !== null || storage !== undefined) {
 				//alert("in checkForOlderSightings, storage not null.");
 				// first clear olderSightings array:
 				var len = this.olderSightings.length;
@@ -300,7 +305,7 @@ function checkForOlderSightings() {
 						}
 					}
 				}
-			}
+			//}
 		} else {
 			throw "storage_err";
 		}
