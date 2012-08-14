@@ -22,7 +22,6 @@ if(typeof(optionalArg) === "undefined") {
 	this.myPosition = {"latitude":optionalArg.myPosition.latitude,"longitude":optionalArg.myPosition.longitude,"isSet":optionalArg.myPosition.isSet};
 	this.inBasket = optionalArg.inBasket;
 	this.errorCode = {"position":optionalArg.errorCode.position,"network":optionalArg.errorCode.network,"server":optionalArg.errorCode.server};
-	//this.errorCode = optionalArg.errorCode; /* 0 = no error, 1 = invalid position */
 	this.serverMessage = optionalArg.serverMessage;
 }
 
@@ -51,7 +50,6 @@ function printMe(forwhat) {
 	switch(forwhat) {
 		case "butterflylist":
 			var that = this;
-			//var output = $(this.me_butterflylist);
 			var output = $("<li data-icon='false' data-shadow='false'><a href='#bfc_choosebutterfly'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><div class='bf_infowrapper'><span class='bf_info'>"+this.name+"</span><span id='bf_"+this.id+"' class='bf_currentamount'></span></div></a></li>");
 			$("#butterflylist").append(output.click(function() { that.countMe(); }));
 		break;
@@ -70,7 +68,6 @@ function printMe(forwhat) {
 			$("#oldersightings").append(output);
 		break;
 		case "submitlist":
-			//alert("in printme, case submitlist");
 			var count = " count";
 			if(this.amount > 1) { count = " counts"; }
 			var output = "<li id='"+this.name+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='servermessage'>"+this.serverMessage+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
@@ -118,8 +115,6 @@ function countMe() {
 }
 
 function submitResult(result, that, what) {
-	//alert("in submitResult, that is: "+that+", amount to submit: "+that.getAmount()+", value of what: "+what);
-	//alert("in submitresult, tempstorage: "+this.tempstorage[0].name);
 	var response = result.toLowerCase();
 	var adjust_positions = false;
 	if(response == "success") {
@@ -155,7 +150,6 @@ function submitResult(result, that, what) {
 				var diff_pos = that.positionInStorage - that.positionInOlderSightings;
 				// make sure both arrays and positions of bf item stored in them are equal:
 				if(!diff_length && !diff_pos) {
-					//alert("in submitResult, equal.");
 					if(that.positionInOlderSightings < Butterflyapp.prototype.olderSightings.length-1) {
 						adjust_positions = true;
 						var i = that.positionInOlderSightings;
@@ -193,7 +187,6 @@ function submitResult(result, that, what) {
 			}
 		}
 	} else {
-		//alert("in submitresult, response = "+result);
 		that.errorCode.server = true;
 		that.serverMessage = result;
 		if(what == "new") {
@@ -235,21 +228,18 @@ function submitResult(result, that, what) {
 }
 
 function upload(data, callback, that, what) {
-	//alert("in upload, amount to submit: "+that.amount);
 	$.ajax({
 		url: 'http://192.168.1.29/bfsighting.php',
 		type: 'POST',
 		async: false,
 		data: data,
 		complete: function(jqXHR, textStatus) {
-			//callback.call(this, textStatus, that, what);
 			callback(textStatus, that, what);
 		}
 	});
 }
 
 function uploadMe(what) {
-	//alert("in uploadMe");
 	try {
 		var position_valid = true;
 		var adjust_positions = false;
@@ -264,7 +254,6 @@ function uploadMe(what) {
 				position_valid = false;
 			}
 		}
-		//alert("position_valid: "+position_valid);
 		if(position_valid) {
 			// check if a network connection is available:
 			if(Butterflyapp.prototype.checkConnection()) {
@@ -360,17 +349,13 @@ function storeMe() {
 		if(typeof(Storage) !== "undefined") {
 			var storage = window.localStorage.key(0);
 			if(storage === null || storage === undefined) {
-				//alert("in storeMe, storage is null, creating new sightings array");
 				var sightings = new Array();
 			} else {
-				//alert("in storeMe, sightings array already exists");
 				var sightings = JSON.parse(window.localStorage.getItem("sightings"));
 			}
 			// store the bf items that couldn't be submitted:
 			var position = sightings.length;
-			//alert("position of "+this.name+" in localStorage: "+position);
 			this.positionInStorage = position;
-			//this.positionInBasket = null;
 			sightings.push(this);
 			window.localStorage.setItem("sightings",JSON.stringify(sightings));
 		} else {
@@ -398,7 +383,6 @@ function editMe(what) {
 }
 
 function resetMe() {
-	//alert("in resetMe.");
 	this.positionInStorage = null;
 	this.positionInBasket = null;
 	this.positionInOlderSightings = null;
@@ -434,13 +418,10 @@ function validateMyPosition() {
 }
 
 function cloneMe() {
-	//alert("in cloneMe");
 	var newMe = {};
 	for(i in this) {
-		//alert("i: "+i+", this[i]: "+this[i]);
 		if(i == "cloneMe") { continue; }
 		if(this[i] && typeof(this[i]) == "object") {
-			//newMe[i] = this[i].clone();
 			newMe[i] = jQuery.extend(true, {}, this[i]);
 		} else {
 			newMe[i] = this[i];

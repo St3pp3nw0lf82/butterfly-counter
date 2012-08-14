@@ -4,7 +4,6 @@ this.init = init;
 this.createButterflies = createButterflies;
 this.printButterflies = printButterflies;
 this.showBasket = showBasket;
-//this.checkConnection = checkConnection;
 this.submitSightings = submitSightings;
 this.checkForOlderSightings = checkForOlderSightings;
 this.showMap = showMap;
@@ -78,9 +77,10 @@ function getPosition() {
 		Butterflyapp.prototype.currentPosition.latitude = position.coords.latitude;
 		Butterflyapp.prototype.currentPosition.longitude = position.coords.longitude;
 		Butterflyapp.prototype.validPosition = true;
+		var positions = "Latitude: "+Butterflyapp.prototype.currentPosition.latitude+"\nLongitude: "+Butterflyapp.prototype.currentPosition.longitude;
+		alert("in getPosition, positions:\n"+positions);
 	};
 	var onError = function(error,validPosition) {
-		//TODO: deal with default values:
 		Butterflyapp.prototype.currentPosition.latitude = false;
 		Butterflyapp.prototype.currentPosition.longitude = false;
 		Butterflyapp.prototype.validPosition = false;
@@ -107,7 +107,6 @@ function getPosition() {
 
 function createButterflies() {
 	try {
-		//alert("creating butterflies");
 		for(var i = 0; i < arguments.length; i++) {
 			var bf = new Butterfly(arguments[i],i);
 			if(typeof(bf) === "object") {
@@ -157,7 +156,6 @@ function showBasket(page) {
 		no_sightings = false;
 		for(var i = 0; i < this.olderSightings.length; i++) {
 			if(page == "sightingbasket") {
-				//alert(this.olderSightings[i].name+", position in localStorage:"+this.olderSightings[i].positionInStorage);
 				this.olderSightings[i].printMe("oldersightings");
 				$("#oldersightings").listview("refresh");
 			} else {
@@ -180,8 +178,6 @@ function showBasket(page) {
 }
 
 function checkConnection() {
-	//TODO: remove the line below!!!!!!!!!!:
-	//return true;
 	var networkState = navigator.network.connection.type;
 	var states = {};
 	states[Connection.UNKNOWN]  = 'UNKNOWN';
@@ -201,18 +197,14 @@ function checkConnection() {
 
 function submitSightings() {
 	try {
-		//alert("in submitSightings, elemente in basket: "+ this.basket.length);
 		$("#submitlist").html("");
 		$("#submitlist").listview("refresh");
-		//TODO: 
-		// UEBERGABEPARAMETER FUER submitSightings(), das angibt welches array mit bf-elementen uebertragen werden soll
 		var sightings_toupload = false;
 		// are there older sightings still to upload?:
 		if(this.olderSightings.length) {
 			sightings_toupload = true;
 			// try to submit each sighting:
 			for(var i = 0; i < this.olderSightings.length; i++) {
-				//this.olderSightings[i].uploadMe("old",i);
 				this.olderSightings[i].uploadMe("old");
 			}
 		}
@@ -221,12 +213,10 @@ function submitSightings() {
 			sightings_toupload = true;
 			// try to submit each sighting:
 			for(var i = 0; i < this.basket.length; i++) {
-				//this.basket[i].uploadMe("new",i);
 				this.basket[i].uploadMe("new");
 			}
 		}
 		if(!sightings_toupload) {
-			//$.mobile.hidePageLoadingMsg();
 			throw "nosightings_err";
 		}
 	} catch(e) {
@@ -245,8 +235,8 @@ function checkForOlderSightings() {
 		if(typeof(Storage) !== undefined) {
 			// check the device platform:
 			var platform = device.platform.toLowerCase();
-			alert("detected platform: "+platform);
 			var quitapp = "";
+			// make sure not to display the quit app button on an iOS platform:
 			if(platform == "android") {
 				quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
 			}
@@ -271,7 +261,6 @@ function checkForOlderSightings() {
 							id: sightings[i].id,
 							name: sightings[i].name,
 							positionInStorage: i,
-							// TODO: when a sighting was stored locally, it can't be in basket:
 							positionInBasket: null,
 							positionInOlderSightings: this.olderSightings.length,
 							amount: sightings[i].amount,
@@ -284,13 +273,10 @@ function checkForOlderSightings() {
 							errorCode: {position: sightings[i].errorCode.position,
 								network: sightings[i].errorCode.network,
 								server: sightings[i].errorCode.server},
-							//errorCode: sightings[i].errorCode,
 							serverMessage: sightings[i].serverMessage,
 						};
-						//alert(init_args.name);
 						var bf = new Butterfly(sightings[i].name,sightings[i].id,init_args);
 						if(typeof(bf) === "object") {
-							//bf.addListener("success", this.updateMe());
 							this.olderSightings.push(bf);
 						} else {
 							throw "bfrecover_err";
@@ -301,7 +287,7 @@ function checkForOlderSightings() {
 				$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a></p>"+quitapp);
 				$("#startoptions").trigger("create");
 			}
-		} else {
+		} else {Butterflyapp.prototype.currentPosition.latitude
 			throw "storage_err";
 		}
 	} catch(e) {
@@ -376,14 +362,10 @@ function deleteSighting() {
 					// adjust the position properties of every bf item in olderSightings and localStorage if necessary:
 					if(typeof(Storage) !== "undefined") {
 						var sightings = JSON.parse(window.localStorage.getItem("sightings"));
-
-						//alert("items in olderSightings: "+this.olderSightings.length);
-						//alert("position of current item in olderSightings: "+this.editSighting[0].me.positionInOlderSightings);
 						var diff_length = sightings.length - this.olderSightings.length;
 						var diff_pos = this.editSighting[0].me.positionInStorage - this.editSighting[0].me.positionInOlderSightings;
 						// make sure both arrays and positions of bf item stored in them are equal:
 						if(!diff_length && !diff_pos) {
-							//alert("equal.");
 							if(this.editSighting[0].me.positionInOlderSightings < this.olderSightings.length-1) {
 								adjust_positions = true;
 								var i = this.editSighting[0].me.positionInOlderSightings;
@@ -400,12 +382,10 @@ function deleteSighting() {
 								deletion_ok = true;
 								if(adjust_positions) {
 									for(i; i < this.olderSightings.length; i++) {
-										//alert("index: "+i+", old value of positionInOlderSightings from "+this.olderSightings[i].name+": "+ this.olderSightings[i].positionInOlderSightings);
 										this.olderSightings[i].positionInOlderSightings = i;
 										sightings[i].positionInOlderSightings = i;
 										this.olderSightings[i].positionInStorage = i;
 										sightings[i].positionInStorage = i;
-										//alert("index: "+i+", new value of positionInOlderSightings from "+this.olderSightings[i].name+": "+ this.olderSightings[i].positionInOlderSightings);
 									}
 								}
 							} else {

@@ -10,12 +10,7 @@
 ############# jquery mobile stylesheet ##########
 #################################################
 -->
-<!-- external link 
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
-<!-- TODO: find out if it makes difference if referred to jquery mobile core files via external link or keep a copy locally -->
-<!-- local link -->
 <link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
-<!-- <link rel="stylesheet" href="css/jquery.mobile-1.1.0.css" />
 <!-- ############################################
 ######## customized stylesheet goes here ######## 
 #################################################
@@ -26,17 +21,9 @@
 ############# jquery mobile #####################
 #################################################
 -->
-<!-- external link 
-<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-<!-- local link -->
 <script type="text/javascript" src="js/jquerymobile/jquery-1.7.1.min.js"></script>
 <!-- initialisation of global vars goes here, see: http://jquerymobile.com/demos/1.1.0/docs/api/globalconfig.html -->
 <script type="text/javascript" src="js/mobileinit.js"></script>
-<!-- jquery mobile source code files -->
-<!-- external link 
-<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
-<script type="text/javascript" src="phonegap.js"></script>
-<!-- local link -->
 <script type="text/javascript" src="js/jquerymobile/jquery.mobile-1.1.0.min.js"></script>
 <script type="text/javascript" src="phonegap.js"></script>
 <!--
@@ -51,12 +38,8 @@
 ############# custom javascript #################
 #################################################
 -->
-
 <script type="text/javascript" src="js/butterflyapp.js"></script>
 <script type="text/javascript" src="js/butterfly.js"></script>
-<!--
-<script type="text/javascript" src="js/basket.js"></script>
--->
 <script type="text/javascript">
 
 function init_phonegap() {
@@ -67,18 +50,6 @@ function onDeviceReady() {
 //NOTE: this only works with phonegap on mobile device, uncomment it when running in a browser on desktop:
 
 	try {
-		// get the device properties:
-		/*
-		var deviceinfo = "device name: "+device.name+"\n"+
-				"device platform: "+device.platform+"\n"+
-				"device version: "+device.version+"\n"+
-				"phonegap version: "+device.cordova;
-		 alerts:	name: gt-i9000
-				platform: android
-				version: 2.3.6
-				phonegap version: 1.8.1
-		*/
-		//alert(deviceinfo);
 		var ba = new Butterflyapp();
 		if(typeof(ba) === "object") {
 			// initializing the app:
@@ -97,10 +68,8 @@ function onDeviceReady() {
 			});
 			$(document).delegate("#bfc_map", "pageshow", function() {
 				ba.showMap();
-				//$("map_canvas").gmap("refresh");
 			});
 			$(document).delegate("#bfc_submit", "pageshow", function() {
-				//ba.showBasket("submitlist");
 				ba.submitSightings();
 			});
 		} else {
@@ -123,7 +92,6 @@ function onDeviceReady() {
 		}
 		alert(errormsg);
 	}
-
 }
 </script>
 
@@ -217,13 +185,8 @@ first page: choose start options
 	<!-- content -->
 	<div id="content" data-role="content">	
 		<h2>What do you want to do?</h2>
-		<div id="startoptions">
-			<!--
-			<p><a href="#bfc_choosebutterfly" data-role="button" id="start_sighting">Start sighting session</a><p/>
-			<p><a href="#" data-role="button" id="reset">Reset app</a><p/>
-			<p><a href="#" data-role="button" id="quit_app">Quit app</a><p/>
-			-->
-		</div>
+		<!-- start options -->
+		<div id="startoptions"></div>
 	</div>
 	<!-- footer -->
 	<div data-role="footer" data-position="fixed"></div>
