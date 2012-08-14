@@ -247,10 +247,10 @@ function submitSightings() {
 function checkForOlderSightings() {
 	try {
 		if(typeof(Storage) !== undefined) {
-			if(window.localStorage.key(0)) {
+			if(window.localStorage.key(0) ) {
 				alert("sightings exists, key(0): "+window.localStorage.key(0));
 			} else {
-				alert("sightings doesn't exist");
+				alert("sightings doesn't exist, typeof(key0): "+typeof(window.localStorage.key(0)));
 			}
 			//var storage = window.localStorage.key(0);
 			//if(storage !== null || storage !== undefined) {
