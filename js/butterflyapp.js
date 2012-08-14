@@ -298,6 +298,9 @@ function checkForOlderSightings() {
 						}
 					}
 				}
+			} else {
+				$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a><p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>");
+				$("#startoptions").trigger("create");
 			}
 		} else {
 			throw "storage_err";
