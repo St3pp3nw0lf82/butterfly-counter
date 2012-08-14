@@ -69,14 +69,9 @@ function onDeviceReady() {
 try {
 	var ba = new Butterflyapp();
 	if(typeof(ba) === "object") {
-		// init the position object here:
-		//$("#bfc_startpage").live( 'pageinit',function(event){
+		// initializing the app:
 		ba.init();
-		//$("#quit_app").live("click", function() { ba.closeApp(); });
-			//ba.getPosition();
-		//});
-		//ba.init();
-		//ba.getPosition();
+		$("#quit_app").live("click", function() { ba.closeApp(); });
 		$(document).delegate("#bfc_startpage", "pageshow", function() {
 			ba.checkForOlderSightings();
 			$("#quit_app").bind("click", function() { ba.closeApp(); });

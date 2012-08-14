@@ -112,7 +112,7 @@ function getPosition() {
 
 function createButterflies() {
 	try {
-		alert("creating butterflies");
+		//alert("creating butterflies");
 		for(var i = 0; i < arguments.length; i++) {
 			var bf = new Butterfly(arguments[i],i);
 			if(typeof(bf) === "object") {
@@ -248,26 +248,16 @@ function submitSightings() {
 function checkForOlderSightings() {
 	try {
 		if(typeof(Storage) !== undefined) {
-			if(window.localStorage.key(0) ) {
+			if(window.localStorage.key(0)) {
 				alert("sightings exists, key(0): "+window.localStorage.key(0));
-				var sightings = JSON.parse(window.localStorage.getItem("sightings"));
-			} else {
-				alert("sightings doesn't exist, typeof(key0): "+typeof(window.localStorage.key(0)));
-			}
-			//var storage = window.localStorage.key(0);
-			//if(storage !== null || storage !== undefined) {
-				//alert("in checkForOlderSightings, storage not null.");
 				// first clear olderSightings array:
 				var len = this.olderSightings.length;
 				while(len--) {
 					this.olderSightings.pop();
 				}
-			/*
 				var sightings = JSON.parse(window.localStorage.getItem("sightings"));
-				//alert("in checkForOlderSightings, length of sightings array: "+sightings.length);
 				if(typeof(sightings) === "object" && sightings !== null) {
 					//alert("in checkForOlderSightings, sighting is object");
-					//TODO: attach submit older sightings button to the start page:
 					$("#startoptions").html("");
 					if(sightings.length) {
 						$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a><p/><p><a href='#bfc_summary' data-role='button'>Older sightings</a><p/><p><a href='#' data-role='button' id='reset'>Reset app</a><p/><p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>");
@@ -308,8 +298,7 @@ function checkForOlderSightings() {
 						}
 					}
 				}
-			*/
-			//}
+			}
 		} else {
 			throw "storage_err";
 		}
