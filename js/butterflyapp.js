@@ -404,6 +404,8 @@ function deleteSighting() {
 					window.localStorage.setItem("sightings",JSON.stringify(sightings));
 					alert("Sighting deleted.");
 				}
+				// back to summary page again:
+				$.mobile.changePage("#bfc_summary");
 			}
 		}
 	} catch(e) {
