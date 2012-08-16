@@ -233,6 +233,7 @@ function submitSightings() {
 function checkForOlderSightings() {
 	try {
 		if(typeof(Storage) !== undefined) {
+			//alert("in checkforoldersightings, Storage is defined");
 			// check the device platform:
 			var platform = device.platform.toLowerCase();
 			var quitapp = "";
@@ -240,7 +241,8 @@ function checkForOlderSightings() {
 			if(platform == "android") {
 				quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
 			}
-			if(window.localStorage.key(0)) {
+			if(!window.localStorage.getItem("sightings") === null) {
+				alert("in checkforoldersightings, sightings item: "+window.localStorage.getItem("sightings"));
 				// first clear olderSightings array:
 				var len = this.olderSightings.length;
 				while(len--) {
