@@ -363,7 +363,7 @@ function deleteSighting() {
 				} else {
 					// adjust the position properties of every bf item in olderSightings and localStorage if necessary:
 					if(typeof(Storage) !== undefined) {
-						if(!window.localStorage.getItem("sightings") === null) {
+						if(window.localStorage.getItem("sightings") !== null) {
 							var sightings = JSON.parse(window.localStorage.getItem("sightings"));
 						} else {
 							throw "locstoraccess_err";
