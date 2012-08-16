@@ -346,9 +346,10 @@ function uploadMe(what) {
 
 function storeMe() {
 	try {
-		if(typeof(Storage) !== "undefined") {
-			var storage = window.localStorage.key(0);
-			if(storage === null || storage === undefined) {
+		if(typeof(Storage) !== undefined) {
+			//var storage = window.localStorage.key(0);
+			if(window.localStorage.getItem("sightings") === null) {
+			//if(storage === null || storage === undefined) {
 				var sightings = new Array();
 			} else {
 				var sightings = JSON.parse(window.localStorage.getItem("sightings"));

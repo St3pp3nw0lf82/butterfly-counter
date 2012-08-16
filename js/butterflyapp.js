@@ -362,8 +362,13 @@ function deleteSighting() {
 					this.editSighting[0].me.resetMe();
 				} else {
 					// adjust the position properties of every bf item in olderSightings and localStorage if necessary:
-					if(typeof(Storage) !== "undefined") {
-						var sightings = JSON.parse(window.localStorage.getItem("sightings"));
+					if(typeof(Storage) !== undefined) {
+						if(!window.localStorage.getItem("sightings") === null) {
+							var sightings = JSON.parse(window.localStorage.getItem("sightings"));
+						} else {
+							throw "locstoraccess_err";
+						}
+						
 						var diff_length = sightings.length - this.olderSightings.length;
 						var diff_pos = this.editSighting[0].me.positionInStorage - this.editSighting[0].me.positionInOlderSightings;
 						// make sure both arrays and positions of bf item stored in them are equal:
@@ -421,6 +426,9 @@ function deleteSighting() {
 			break;
 			case "erase_err":
 				errormsg += "Removal was faulty.";
+			break;
+			case "locstoraccess_err":
+				errormsg += "Access to local storage failed.";
 			break;
 			default:
 				errormsg += e.message;
