@@ -232,6 +232,7 @@ function submitSightings() {
 
 function checkForOlderSightings() {
 	try {
+		alert("checking for older sightings ...");
 		if(typeof(Storage) !== undefined) {
 			//alert("in checkforoldersightings, Storage is defined");
 			// check the device platform:
@@ -241,7 +242,7 @@ function checkForOlderSightings() {
 			if(platform == "android") {
 				quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
 			}
-			if(!window.localStorage.getItem("sightings") === null) {
+			if(window.localStorage.getItem("sightings") !== null) {
 				alert("in checkforoldersightings, sightings item: "+window.localStorage.getItem("sightings"));
 				// first clear olderSightings array:
 				var len = this.olderSightings.length;
@@ -289,7 +290,7 @@ function checkForOlderSightings() {
 				$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a></p>"+quitapp);
 				$("#startoptions").trigger("create");
 			}
-		} else {Butterflyapp.prototype.currentPosition.latitude
+		} else {
 			throw "storage_err";
 		}
 	} catch(e) {
