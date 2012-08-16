@@ -241,7 +241,6 @@ function checkForOlderSightings() {
 				quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
 			}
 			if(window.localStorage.getItem("sightings") !== null) {
-				alert("in checkforoldersightings, sightings item: "+window.localStorage.getItem("sightings"));
 				// first clear olderSightings array:
 				var len = this.olderSightings.length;
 				while(len--) {
