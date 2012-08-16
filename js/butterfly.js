@@ -349,11 +349,8 @@ function storeMe() {
 		if(typeof(Storage) !== undefined) {
 			//var storage = window.localStorage.key(0);
 			if(window.localStorage.getItem("sightings") === null) {
-				alert("storeMe, sightings is null");
-			//if(storage === null || storage === undefined) {
 				var sightings = new Array();
 			} else {
-				alert("storeMe, sightings exists already");
 				var sightings = JSON.parse(window.localStorage.getItem("sightings"));
 			}
 			// store the bf items that couldn't be submitted:

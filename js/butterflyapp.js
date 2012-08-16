@@ -77,13 +77,12 @@ function getPosition() {
 		Butterflyapp.prototype.currentPosition.latitude = position.coords.latitude;
 		Butterflyapp.prototype.currentPosition.longitude = position.coords.longitude;
 		Butterflyapp.prototype.validPosition = true;
-		var positions = "Latitude: "+Butterflyapp.prototype.currentPosition.latitude+"\nLongitude: "+Butterflyapp.prototype.currentPosition.longitude;
-		//alert("in getPosition, positions:\n"+positions);
 	};
 	var onError = function(error,validPosition) {
 		Butterflyapp.prototype.currentPosition.latitude = false;
 		Butterflyapp.prototype.currentPosition.longitude = false;
 		Butterflyapp.prototype.validPosition = false;
+		//TODO: maybe its better not to display error messages every time position determining fails because it annoys the user:
 		var errormsg = "Your current position could not be retrieved.\n";
 		switch(error.code) {
 			case "PERMISSION_DENIED":
@@ -234,7 +233,6 @@ function checkForOlderSightings() {
 	try {
 		alert("checking for older sightings ...");
 		if(typeof(Storage) !== undefined) {
-			//alert("in checkforoldersightings, Storage is defined");
 			// check the device platform:
 			var platform = device.platform.toLowerCase();
 			var quitapp = "";
@@ -365,7 +363,6 @@ function deleteSighting() {
 					// adjust the position properties of every bf item in olderSightings and localStorage if necessary:
 					if(typeof(Storage) !== undefined) {
 						if(window.localStorage.getItem("sightings") !== null) {
-							alert("deleteSighting, sightings not null");
 							var sightings = JSON.parse(window.localStorage.getItem("sightings"));
 						} else {
 							throw "locstoraccess_err";
@@ -451,10 +448,8 @@ function comparePositions(array) {
 }
 
 function resetApp() {
-	//alert("in resetapp");
 	var sightings = JSON.parse(window.localStorage.getItem("sightings"));
 	var len = this.olderSightings.length;
-	//alert(len);
 	while(len--) {
 		this.olderSightings.pop();
 	}
