@@ -231,7 +231,6 @@ function submitSightings() {
 
 function checkForOlderSightings() {
 	try {
-		alert("checking for older sightings ...");
 		if(typeof(Storage) !== undefined) {
 			// check the device platform:
 			var platform = device.platform.toLowerCase();
