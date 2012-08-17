@@ -4,6 +4,7 @@ this.init = init;
 this.createButterflies = createButterflies;
 this.printButterflies = printButterflies;
 this.showBasket = showBasket;
+//this.checkUploadProgress = checkUploadProgress;
 this.submitSightings = submitSightings;
 this.checkForOlderSightings = checkForOlderSightings;
 this.showMap = showMap;
@@ -13,6 +14,7 @@ this.closeApp = closeApp;
 return true;
 }
 
+//Butterflyapp.prototype.itemsToUpload = 0;
 Butterflyapp.prototype.editSighting = [];
 Butterflyapp.prototype.getPosition = getPosition;
 Butterflyapp.prototype.checkConnection = checkConnection;
@@ -142,41 +144,59 @@ function printButterflies() {
 }
 
 function showBasket(page) {
-	$("#os_wrapper_old").css("display","none");
-	$("#os_wrapper_new").css("display","none");
-	$("#no_sightings").css("display","none");
+	// basket and older sightings:
 	if(page == "sightingbasket") {
+		$("#"+page).html("");
 		$("#oldersightings").html("");
-	}
-	$("#"+page).html("");
-	var no_sightings = true;
-	if(this.olderSightings.length) {
-		$("#os_wrapper_old").css("display","block");
-		no_sightings = false;
-		for(var i = 0; i < this.olderSightings.length; i++) {
-			if(page == "sightingbasket") {
-				this.olderSightings[i].printMe("oldersightings");
-				$("#oldersightings").listview("refresh");
-			} else {
-				this.olderSightings[i].printMe(page);
+		$("#os_wrapper_old").css("display","none");
+		$("#os_wrapper_new").css("display","none");
+		$("#no_sightings").css("display","none");
+		var no_sightings = true;
+		if(this.olderSightings.length) {
+			$("#os_wrapper_old").css("display","block");
+			no_sightings = false;
+			for(var i = 0; i < this.olderSightings.length; i++) {
+				if(page == "sightingbasket") {
+					this.olderSightings[i].printMe("oldersightings");
+					$("#oldersightings").listview("refresh");
+				} else {
+					this.olderSightings[i].printMe(page);
+					$("#"+page).listview("refresh");
+				}
+			}
+		}
+		if(this.basket.length) {
+			$("#os_wrapper_new").css("display","block");
+			no_sightings = false;
+			for(var i = 0; i < this.basket.length; i++) {
+				this.basket[i].printMe(page);
+				$("#"+page).listview("refresh");
+			}
+		}
+		if(no_sightings) {
+			$("#no_sightings").css("display","block");
+		}
+	// submitlist:
+	} else {
+		if(this.olderSightings.length) {
+			for(var i = 0; i < this.olderSightings.length; i++) {
+				this.olderSightings[i].submitlistItem = i;
+				this.olderSightings[i].printMe("submitlist","old");
+				$("#"+page).listview("refresh");
+			}
+		}
+		if(this.basket.length) {
+			for(var i = 0; i < this.basket.length; i++) {
+				this.basket[i].submitlistItem = i;
+				this.basket[i].printMe("submitlist","new");
 				$("#"+page).listview("refresh");
 			}
 		}
 	}
-	if(this.basket.length) {
-		$("#os_wrapper_new").css("display","block");
-		no_sightings = false;
-		for(var i = 0; i < this.basket.length; i++) {
-			this.basket[i].printMe(page);
-			$("#"+page).listview("refresh");
-		}
-	}
-	if(no_sightings) {
-		$("#no_sightings").css("display","block");
-	}
 }
 
 function checkConnection() {
+	return true;
 	var networkState = navigator.network.connection.type;
 	var states = {};
 	states[Connection.UNKNOWN]  = 'UNKNOWN';
@@ -196,8 +216,6 @@ function checkConnection() {
 
 function submitSightings() {
 	try {
-		$("#submitlist").html("");
-		$("#submitlist").listview("refresh");
 		var sightings_toupload = false;
 		// are there older sightings still to upload?:
 		if(this.olderSightings.length) {
@@ -233,12 +251,12 @@ function checkForOlderSightings() {
 	try {
 		if(typeof(Storage) !== undefined) {
 			// check the device platform:
-			var platform = device.platform.toLowerCase();
+			//var platform = device.platform.toLowerCase();
 			var quitapp = "";
 			// make sure not to display the quit app button on an iOS platform:
-			if(platform == "android") {
-				quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
-			}
+			//if(platform == "android") {
+			//	quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
+			//}
 			if(window.localStorage.getItem("sightings") !== null) {
 				// first clear olderSightings array:
 				var len = this.olderSightings.length;

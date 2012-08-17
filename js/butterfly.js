@@ -1,5 +1,6 @@
 function Butterfly(name,index,optionalArg) {
 this.id = index;
+this.submitlistItem = 0;
 this.name = name;
 if(typeof(optionalArg) === "undefined") {
 	this.positionInStorage = null;
@@ -46,7 +47,7 @@ return true;
 
 Butterfly.prototype = new Butterflyapp;
 
-function printMe(forwhat) {
+function printMe(forwhat,what) {
 	switch(forwhat) {
 		case "butterflylist":
 			var that = this;
@@ -70,7 +71,8 @@ function printMe(forwhat) {
 		case "submitlist":
 			var count = " count";
 			if(this.amount > 1) { count = " counts"; }
-			var output = "<li id='"+this.name+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='servermessage'>"+this.serverMessage+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
+			var output = "<li id='"+what+this.submitlistItem+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><div class='floatingBarsG'><div class='blockG' id='rotateG_01'></div><div class='blockG' id='rotateG_02'></div><div class='blockG' id='rotateG_03'></div><div class='blockG' id='rotateG_04'></div><div class='blockG' id='rotateG_05'></div><div class='blockG' id='rotateG_06'></div><div class='blockG' id='rotateG_07'></div><div class='blockG' id='rotateG_08'></div></div><div class='result'></div><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
+			//var output = "<li id='"+what+this.submitlistItem+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='servermessage'>"+this.serverMessage+"</span><div class='floatingBarsG'><div class='blockG' id='rotateG_01'></div><div class='blockG' id='rotateG_02'></div><div class='blockG' id='rotateG_03'></div><div class='blockG' id='rotateG_04'></div><div class='blockG' id='rotateG_05'></div><div class='blockG' id='rotateG_06'></div><div class='blockG' id='rotateG_07'></div><div class='blockG' id='rotateG_08'></div></div><div class='result'></div><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
 			$("#submitlist").append(output);
 		break;
 		default:
@@ -117,7 +119,9 @@ function countMe() {
 function submitResult(result, that, what) {
 	var response = result.toLowerCase();
 	var adjust_positions = false;
+	var style = "";
 	if(response == "success") {
+		style = "ok";
 		that.serverMessage = "Upload was successfully.";
 		// after upload was successful, remove item from basket/olderSightings and localStorage:
 		if(what == "new") {
@@ -130,6 +134,7 @@ function submitResult(result, that, what) {
 			Butterflyapp.prototype.basket.splice(0,1);
 			var newlength = Butterflyapp.prototype.basket.length;
 			if(newlength < oldlength) {
+				//Butterflyapp.prototype.itemsToUpload--;
 				that.positionInBasket = null;
 				if(adjust_positions) {
 					for(i; i < Butterflyapp.prototype.basket.length; i++) {
@@ -163,6 +168,7 @@ function submitResult(result, that, what) {
 					sightings.splice(that.positionInStorage,1);
 					var newlength_ls = sightings.length;
 					if((newlength_os < oldlength_os) && (newlength_ls < oldlength_ls)) {
+						//Butterflyapp.prototype.itemsToUpload--;
 						if(adjust_positions) {
 							for(i; i < Butterflyapp.prototype.olderSightings.length; i++) {
 								Butterflyapp.prototype.olderSightings[i].positionInOlderSightings = i;
@@ -187,6 +193,7 @@ function submitResult(result, that, what) {
 			}
 		}
 	} else {
+		style = "error";
 		that.errorCode.server = true;
 		that.serverMessage = result;
 		if(what == "new") {
@@ -201,6 +208,7 @@ function submitResult(result, that, what) {
 			var newlength = Butterflyapp.prototype.basket.length;
 
 			if(newlength < oldlength) {
+				//Butterflyapp.prototype.itemsToUpload--;
 				that.positionInBasket = null;
 				if(adjust_positions) {
 					for(i; i < Butterflyapp.prototype.basket.length; i++) {
@@ -219,11 +227,17 @@ function submitResult(result, that, what) {
 				// try to upload next sighting:
 				Butterflyapp.prototype.basket[0].uploadMe("new");
 			} else {
-				$.mobile.hidePageLoadingMsg();
+				//$.mobile.hidePageLoadingMsg();
 			}
+		} else {
+			//Butterflyapp.prototype.itemsToUpload--;
 		}
 	}
-	that.printMe("submitlist");
+	//that.printMe("submitlist");
+	$("#"+what+that.submitlistItem).ajaxStop(function() {
+		$("#"+what+that.submitlistItem+" div.floatingBarsG").css("display","none");
+		$("#"+what+that.submitlistItem+" div.result").css("background-image","url('images/"+style+".png')");
+	});
 	$("#submitlist").listview("refresh");
 }
 
@@ -280,6 +294,7 @@ function uploadMe(what) {
 					Butterflyapp.prototype.basket.splice(0,1);
 					var newlength = Butterflyapp.prototype.basket.length;
 					if(newlength < oldlength) {
+						//Butterflyapp.prototype.itemsToUpload--;
 						this.positionInBasket = null;
 						if(adjust_positions) {
 							for(i; i < Butterflyapp.prototype.basket.length; i++) {
@@ -297,8 +312,12 @@ function uploadMe(what) {
 						// try to upload next sighting:
 						Butterflyapp.prototype.basket[0].uploadMe("new");
 					}
+				} else {
+					//Butterflyapp.prototype.itemsToUpload--;
 				}
-				this.printMe("submitlist");
+				//this.printMe("submitlist");
+				$("#"+what+this.submitlistItem+" div.floatingBarsG").css("display","none");
+				$("#"+what+this.submitlistItem+" div.result").css("background-image","url('images/error.png')");
 				$("#submitlist").listview("refresh");
 			}
 		} else {
@@ -313,6 +332,7 @@ function uploadMe(what) {
 				Butterflyapp.prototype.basket.splice(0,1);
 				var newlength = Butterflyapp.prototype.basket.length;
 				if(newlength < oldlength) {
+					//Butterflyapp.prototype.itemsToUpload--;
 					this.positionInBasket = null;
 					if(adjust_positions) {
 						for(i; i < Butterflyapp.prototype.basket.length; i++) {
@@ -330,9 +350,15 @@ function uploadMe(what) {
 					// try to upload next sighting:
 					Butterflyapp.prototype.basket[0].uploadMe("new");
 				}
+			} else {
+				//Butterflyapp.prototype.itemsToUpload--;
 			}
-			this.printMe("submitlist");
+			$("#"+what+this.submitlistItem+" div.floatingBarsG").css("display","none");
+			$("#"+what+this.submitlistItem+" div.result").css("background-image","url('images/error.png')");
+
 			$("#submitlist").listview("refresh");
+			//this.printMe("submitlist");
+			//$("#submitlist").listview("refresh");
 		}
 		// reset the bf item again for next sighting session:
 		if(what == "new") {

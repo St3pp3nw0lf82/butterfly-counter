@@ -48,6 +48,7 @@ function init_phonegap() {
 function onDeviceReady() {
 //NOTE: this only works with phonegap on mobile device, uncomment it when running in a browser on desktop:
 
+//TODO: reset app entfernen
 	try {
 		var ba = new Butterflyapp();
 		if(typeof(ba) === "object") {
@@ -69,6 +70,8 @@ function onDeviceReady() {
 				ba.showMap();
 			});
 			$(document).delegate("#bfc_submit", "pageshow", function() {
+				$("#submitlist").html("");
+				ba.showBasket("submitlist");
 				ba.submitSightings();
 			});
 		} else {
@@ -119,30 +122,14 @@ try {
 			ba.showMap();
 			//$("map_canvas").gmap("refresh");
 		});
+		//$("#bfc_submit").live("pagecreate", function(event) { $.mobile.showPageLoadingMsg(); });
 		$(document).delegate("#bfc_submit", "pageshow", function() {
-			//ba.showBasket("submitlist");
-			$.mobile.showPageLoadingMsg();
+			$("#submitlist").html("");
+			ba.showBasket("submitlist");
+			//ba.checkUploadProgress();
+			//$.mobile.showPageLoadingMsg();
 			ba.submitSightings();
 		});
-		/*
-		if(typeof(Storage) !== "undefined") {
-			//sessionStorage.setItem("sessionStarted", false);
-			//localStorage.ba = JSON.stringify([]);
-			//var ba_array = JSON.parse(localStorage["ba"]);
-			//ba_array.push(ba);
-			//localStorage["ba"] = JSON.stringify(ba_array);
-			/*
-			if(sessionStorage.length == 2) {
-				$(document).delegate("#bfc_startpage", "pageinit", function() {
-				$("#start_sighting").bind("click", ba.startSession);
-				});
-			} else {
-				throw "sessionstorage_err";
-			}
-		} else {
-			throw "sessupport_err";
-		}
-		*/
 	} else {
 		throw "init_err";
 	}
