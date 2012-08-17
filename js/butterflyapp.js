@@ -4,7 +4,6 @@ this.init = init;
 this.createButterflies = createButterflies;
 this.printButterflies = printButterflies;
 this.showBasket = showBasket;
-//this.checkUploadProgress = checkUploadProgress;
 this.submitSightings = submitSightings;
 this.checkForOlderSightings = checkForOlderSightings;
 this.showMap = showMap;
@@ -14,7 +13,6 @@ this.closeApp = closeApp;
 return true;
 }
 
-//Butterflyapp.prototype.itemsToUpload = 0;
 Butterflyapp.prototype.editSighting = [];
 Butterflyapp.prototype.getPosition = getPosition;
 Butterflyapp.prototype.checkConnection = checkConnection;
@@ -320,32 +318,42 @@ function checkForOlderSightings() {
 }
 
 function showMap() {
-	if(this.basket.length) {		
-		$('#map_canvas').gmap().bind('init', function(ev, map) {
-			if(Butterflyapp.prototype.basket.length >= 2) {
-				for(var i = 0; i < Butterflyapp.prototype.basket.length-1; i++) {
-					/*
-					for(var j =(i+1); j < array.length; j++) {
-						var latdiff = parseInt(array[i].myPosition.latitude) - parseInt(array[j].myPosition.latitude);
-						var longdiff = parseInt(array[i].myPosition.longitude) - parseInt(array[j].myPosition.longitude);
-						if((latdiff == 0) && (longdiff == 0)) {  }
-					}
-					*/
-					// build the info window:
-					var name = Butterflyapp.prototype.basket[i].getName();
-					var amount = Butterflyapp.prototype.basket[i].getAmount();
-					var path = window.location.toString();
-					var index = path.lastIndexOf('/');
-					var pathto = path.slice(0,index);
-					var image = pathto+"/images/"+Butterflyapp.prototype.bf_images[Butterflyapp.prototype.basket[i].getName()];
-					var infowindow = "<div id='iw_wrapper'><img src='"+image+"' class='iw_bfimage'/><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br />Counts: <strong>"+amount+"</strong></p>";
-					// create the marker:
-					$('#map_canvas').gmap('addMarker', {'position': Butterflyapp.prototype.basket[i].getMyPosition(), 'bounds': true}).click(function() {
-							$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
-					});
-				}
+	var showonmap = 0;
+	showonmap = this.basket.length + this.olderSightings.length;
+
+	if(showonmap > 0) {
+		if(this.basket.length) {
+			for(var i = 0; i < this.basket.length; i++) {
+				// build the info window:
+				var name = this.basket[i].getName();
+				var amount = this.basket[i].getAmount();
+				var path = window.location.toString();
+				var index = path.lastIndexOf('/');
+				var pathto = path.slice(0,index);
+				var image = pathto+"/images/"+this.bf_images[this.basket[i].getName()];
+				var infowindow = "<div id='iw_wrapper'><img src='"+image+"' class='iw_bfimage'/><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br />Counts: <strong>"+amount+"</strong></p>";
+				// create the marker:
+				$('#map_canvas').gmap('addMarker', {'position': this.basket[i].getMyPosition(), 'bounds': true}).click(function() {
+						$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
+				});
 			}
-		});
+		}
+		if(this.olderSightings.length) {
+			for(var i = 0; i < this.olderSightings.length; i++) {
+				// build the info window:
+				var name = this.olderSightings[i].getName();
+				var amount = this.olderSightings[i].getAmount();
+				var path = window.location.toString();
+				var index = path.lastIndexOf('/');
+				var pathto = path.slice(0,index);
+				var image = pathto+"/images/"+this.bf_images[this.olderSightings[i].getName()];
+				var infowindow = "<div id='iw_wrapper'><img src='"+image+"' class='iw_bfimage'/><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br />Counts: <strong>"+amount+"</strong></p>";
+				// create the marker:
+				$('#map_canvas').gmap('addMarker', {'position': this.olderSightings[i].getMyPosition(), 'bounds': true}).click(function() {
+						$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
+				});
+			}
+		}
 	}
 }
 
