@@ -417,6 +417,7 @@ function deleteSighting() {
 										sightings[i].positionInStorage = i;
 									}
 								}
+								window.localStorage.setItem("sightings",JSON.stringify(sightings));
 							} else {
 								throw "erase_err";
 							}
@@ -430,7 +431,6 @@ function deleteSighting() {
 				// after editing, delete item from editSighting again:
 				this.editSighting.splice(0,1);
 				if(deletion_ok) {
-					window.localStorage.setItem("sightings",JSON.stringify(sightings));
 					alert("Sighting deleted.");
 				}
 				// back to summary page again:
