@@ -142,9 +142,9 @@ function printButterflies() {
 }
 
 function showBasket(page) {
+	$("#"+page).html("");
 	// basket and older sightings:
 	if(page == "sightingbasket") {
-		$("#"+page).html("");
 		$("#oldersightings").html("");
 		$("#os_wrapper_old").css("display","none");
 		$("#os_wrapper_new").css("display","none");
