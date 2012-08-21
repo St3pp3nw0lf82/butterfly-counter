@@ -182,25 +182,17 @@ function showBasket(page) {
 			for(var i = 0; i < this.olderSightings.length; i++) {
 				this.olderSightings[i].submitlistItem = i;
 				this.olderSightings[i].printMe("submitlist","old");
-				$("#"+page).listview("refresh");
+				//$("#"+page).listview("refresh");
 				this.olderSightings[i].uploadMe("old");
 			}
 		}
 		if(this.basket.length) {
 			var sightings_toupload = true;
-			var submitqueue = new Array();
 			for(var i = 0; i < this.basket.length; i++) {
 				this.basket[i].submitlistItem = i;
-				var tmp = this.basket[i].cloneMe();
-				submitqueue.push(tmp);
-				submitqueue[i].printMe("submitlist","new");
-				//this.basket[i].printMe("submitlist","new");
-				$("#"+page).listview("refresh");
+				this.basket[i].printMe("submitlist","new");
+				//$("#"+page).listview("refresh");
 				this.basket[i].uploadMe("new");
-			}
-			var len = submitqueue.length;
-			while(len--) {
-				submitqueue.pop();
 			}
 		}
 		if(!sightings_toupload) {
