@@ -183,6 +183,9 @@ function showBasket(page) {
 				this.olderSightings[i].submitlistItem = i;
 				this.olderSightings[i].printMe("submitlist","old");
 				$("#"+page).listview("refresh");
+				$("#old"+this.olderSightings[i].submitlistItem).ajaxStart(function() {
+					$("#old"+this.olderSightings[i].submitlistItem+" div.floatingBarsG").css("display","block");
+				});
 				this.olderSightings[i].uploadMe("old");
 				//$("#"+page).listview("refresh");
 			}
@@ -193,6 +196,9 @@ function showBasket(page) {
 				this.basket[i].submitlistItem = i;
 				this.basket[i].printMe("submitlist","new");
 				$("#"+page).listview("refresh");
+				$("#new"+this.basket[i].submitlistItem).ajaxStart(function() {
+					$("#new"+this.basket[i].submitlistItem+" div.floatingBarsG").css("display","block");
+				});
 				this.basket[i].uploadMe("new");
 				//$("#"+page).listview("refresh");
 			}
