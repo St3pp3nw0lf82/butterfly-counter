@@ -1,7 +1,6 @@
 function Butterfly(name,index,optionalArg) {
 this.id = index;
 this.submitlistItem = 0;
-this.spinner = {};
 this.name = name;
 if(typeof(optionalArg) === "undefined") {
 	this.positionInStorage = null;

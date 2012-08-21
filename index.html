@@ -40,7 +40,6 @@
 -->
 <script type="text/javascript" src="js/butterflyapp.js"></script>
 <script type="text/javascript" src="js/butterfly.js"></script>
-<script type="text/javascript" src="js/spin.js"></script>
 <script type="text/javascript">
 
 function init_phonegap() {
@@ -74,7 +73,7 @@ function onDeviceReady() {
 			$(document).delegate("#bfc_submit", "pageshow", function() {
 				//$("#submitlist").html("");
 				ba.showBasket("submitlist");
-				ba.submitSightings();
+				//ba.submitSightings();
 			});
 		} else {
 			throw "init_err";
