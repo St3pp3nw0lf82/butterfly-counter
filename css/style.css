@@ -42,6 +42,7 @@ display:block;
 }
 
 .floatingBarsG {
+display: none;
 position:relative;
 width:30px;
 height:30px;
