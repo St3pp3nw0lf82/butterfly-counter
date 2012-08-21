@@ -61,8 +61,7 @@ function init() {
 		// check for older sightings:
 		this.checkForOlderSightings();
 		// create the butterflies:
-		//this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
-		this.createButterflies("Small White","Large White","Green-veined White");
+		this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
 	} catch(e) {
 		var errormsg = "Initialisation of the app failed.\n" + e.message;
 		alert(errormsg);
@@ -127,7 +126,6 @@ function createButterflies() {
 }
 
 function printButterflies() {
-	alert("in printbutterflies ...");
 	var now = new Date().getTime();
 	var time_diff = ((now - this.currentPosition.lastTaken)*0.001);
 	time_diff = parseInt(Math.round(time_diff));
@@ -136,7 +134,6 @@ function printButterflies() {
 		this.getPosition();
 	}
 	$("#butterflylist").html("");
-	alert("amount of bfs: "+this.butterflies.length);
 	for(var i = 0; i < this.butterflies.length; i++) {
 		this.butterflies[i].printMe("butterflylist");
 		$("#bf_"+i).text(this.butterflies[i].getAmount());
@@ -251,12 +248,12 @@ function checkForOlderSightings() {
 	try {
 		if(typeof(Storage) !== undefined) {
 			// check the device platform:
-			//var platform = device.platform.toLowerCase();
+			var platform = device.platform.toLowerCase();
 			var quitapp = "";
 			// make sure not to display the quit app button on an iOS platform:
-			//if(platform == "android") {
-			//	quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
-			//}
+			if(platform == "android") {
+				quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
+			}
 			if(window.localStorage.getItem("sightings") !== null) {
 				// first clear olderSightings array:
 				var len = this.olderSightings.length;

@@ -351,8 +351,6 @@ function uploadMe(what) {
 					// try to upload next sighting:
 					Butterflyapp.prototype.basket[0].uploadMe("new");
 				}
-			} else {
-				//Butterflyapp.prototype.itemsToUpload--;
 			}
 			$("#"+what+this.submitlistItem+" div.floatingBarsG").css("display","none");
 			$("#"+what+this.submitlistItem+" div.result").css("background-image","url('images/error.png')");
