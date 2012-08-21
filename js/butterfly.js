@@ -48,6 +48,7 @@ return true;
 Butterfly.prototype = new Butterflyapp;
 
 function printMe(forwhat,what) {
+	alert("in printMe, case: "+forwhat);
 	switch(forwhat) {
 		case "butterflylist":
 			var that = this;
