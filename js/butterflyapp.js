@@ -188,11 +188,19 @@ function showBasket(page) {
 		}
 		if(this.basket.length) {
 			var sightings_toupload = true;
+			var submitqueue = new Array();
 			for(var i = 0; i < this.basket.length; i++) {
 				this.basket[i].submitlistItem = i;
-				this.basket[i].printMe("submitlist","new");
+				var tmp = this.basket[i].cloneMe();
+				submitqueue.push(tmp);
+				submitqueue[i].printMe("submitlist","new");
+				//this.basket[i].printMe("submitlist","new");
 				$("#"+page).listview("refresh");
 				this.basket[i].uploadMe("new");
+			}
+			var len = submitqueue.length;
+			while(len--) {
+				submitqueue.pop();
 			}
 		}
 		if(!sightings_toupload) {
