@@ -69,6 +69,7 @@ function printMe(forwhat,what) {
 			$("#oldersightings").append(output);
 		break;
 		case "submitlist":
+			alert("in printMe, forwhat: "+forwhat);
 			var count = " count";
 			if(this.amount > 1) { count = " counts"; }
 			var output = "<li id='"+what+this.submitlistItem+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><div class='floatingBarsG'><div class='blockG' id='rotateG_01'></div><div class='blockG' id='rotateG_02'></div><div class='blockG' id='rotateG_03'></div><div class='blockG' id='rotateG_04'></div><div class='blockG' id='rotateG_05'></div><div class='blockG' id='rotateG_06'></div><div class='blockG' id='rotateG_07'></div><div class='blockG' id='rotateG_08'></div></div><div class='result'></div><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
