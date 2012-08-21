@@ -1,6 +1,7 @@
 function Butterfly(name,index,optionalArg) {
 this.id = index;
 this.submitlistItem = 0;
+this.spinner = {};
 this.name = name;
 if(typeof(optionalArg) === "undefined") {
 	this.positionInStorage = null;
@@ -72,8 +73,8 @@ function printMe(forwhat,what) {
 			//alert("in printMe, forwhat: "+forwhat);
 			var count = " count";
 			if(this.amount > 1) { count = " counts"; }
-			var output = "<li id='"+what+this.submitlistItem+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><div class='floatingBarsG'><div class='blockG' id='rotateG_01'></div><div class='blockG' id='rotateG_02'></div><div class='blockG' id='rotateG_03'></div><div class='blockG' id='rotateG_04'></div><div class='blockG' id='rotateG_05'></div><div class='blockG' id='rotateG_06'></div><div class='blockG' id='rotateG_07'></div><div class='blockG' id='rotateG_08'></div></div><div class='result'></div><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
-			//var output = "<li id='"+what+this.submitlistItem+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><div class='result'></div><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
+			//var output = "<li id='"+what+this.submitlistItem+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><div class='floatingBarsG'><div class='blockG' id='rotateG_01'></div><div class='blockG' id='rotateG_02'></div><div class='blockG' id='rotateG_03'></div><div class='blockG' id='rotateG_04'></div><div class='blockG' id='rotateG_05'></div><div class='blockG' id='rotateG_06'></div><div class='blockG' id='rotateG_07'></div><div class='blockG' id='rotateG_08'></div></div><div class='result'></div><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
+			var output = "<li id='"+what+this.submitlistItem+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><div class='result'></div><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
 			$("#submitlist").append(output);
 		break;
 		default:
@@ -236,7 +237,8 @@ function submitResult(result, that, what) {
 	}
 	//that.printMe("submitlist");
 	$("#"+what+that.submitlistItem).ajaxStop(function() {
-		$("#"+what+that.submitlistItem+" div.floatingBarsG").css("display","none");
+		that.spinner.stop();
+		//$("#"+what+that.submitlistItem+" div.floatingBarsG").css("display","none");
 		$("#"+what+that.submitlistItem+" div.result").css("background-image","url('images/"+style+".png')");
 	});
 	$("#submitlist").listview("refresh");
