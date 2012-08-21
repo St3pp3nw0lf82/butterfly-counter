@@ -182,9 +182,9 @@ function showBasket(page) {
 			for(var i = 0; i < this.olderSightings.length; i++) {
 				this.olderSightings[i].submitlistItem = i;
 				this.olderSightings[i].printMe("submitlist","old");
-				//$("#"+page).listview("refresh");
-				this.olderSightings[i].uploadMe("old");
 				$("#"+page).listview("refresh");
+				this.olderSightings[i].uploadMe("old");
+				//$("#"+page).listview("refresh");
 			}
 		}
 		if(this.basket.length) {
@@ -192,9 +192,9 @@ function showBasket(page) {
 			for(var i = 0; i < this.basket.length; i++) {
 				this.basket[i].submitlistItem = i;
 				this.basket[i].printMe("submitlist","new");
-				//$("#"+page).listview("refresh");
-				this.basket[i].uploadMe("new");
 				$("#"+page).listview("refresh");
+				this.basket[i].uploadMe("new");
+				//$("#"+page).listview("refresh");
 			}
 		}
 		if(!sightings_toupload) {
@@ -204,7 +204,7 @@ function showBasket(page) {
 }
 
 function checkConnection() {
-	return true;
+	//return true;
 	var networkState = navigator.network.connection.type;
 	var states = {};
 	states[Connection.UNKNOWN]  = 'UNKNOWN';
