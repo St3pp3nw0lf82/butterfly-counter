@@ -259,12 +259,12 @@ function checkForOlderSightings() {
 	try {
 		if(typeof(Storage) !== undefined) {
 			// cthis.olderSightings[i]heck the device platform:
-			//var platform = device.platform.toLowerCase();
+			var platform = device.platform.toLowerCase();
 			var quitapp = "";
 			// make sure not to display the quit app button on an iOS platform:
-			//if(platform == "android") {
-			//	quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
-			//}
+			if(platform == "android") {
+				quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
+			}
 			if(window.localStorage.getItem("sightings") !== null) {
 				// first clear olderSightings array:
 				var len = this.olderSightings.length;

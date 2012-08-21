@@ -235,18 +235,18 @@ function submitResult(result, that, what) {
 		}
 	}
 	//that.printMe("submitlist");
-	$("#"+what+that.submitlistItem).ajaxStop(function() {
+	//$("#"+what+that.submitlistItem).ajaxStop(function() {
 		$("#"+what+that.submitlistItem+" div.floatingBarsG").css("display","none");
 		$("#"+what+that.submitlistItem+" div.result").css("background-image","url('images/"+style+".png')");
 		$("#submitlist").listview("refresh");
-	});
+	//});
 }
 
 function upload(data, callback, that, what) {
 	$.ajax({
 		url: 'http://192.168.1.29/bfsighting.php',
 		type: 'POST',
-		//async: false,
+		async: false,
 		data: data,
 		complete: function(jqXHR, textStatus) {
 			callback(textStatus, that, what);
