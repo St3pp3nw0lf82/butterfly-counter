@@ -41,12 +41,13 @@ overflow:hidden;
 display:block;
 }
 
-.floatingBarsG{
+.floatingBarsG {
 position:relative;
 width:30px;
-height:30px}
+height:30px;
+}
 
-.blockG{
+.blockG {
 position:absolute;
 background-color:#FFFFFF;
 width:5px;
@@ -76,7 +77,7 @@ border-radius:4px 4px 0 0;
 -ms-animation-direction:linear;
 }
 
-#rotateG_01{
+#rotateG_01 {
 left:0;
 top:11px;
 -webkit-animation-delay:0.39s;
@@ -89,7 +90,7 @@ top:11px;
 -ms-transform:rotate(-90deg);
 }
 
-#rotateG_02{
+#rotateG_02 {
 left:4px;
 top:4px;
 -webkit-animation-delay:0.52s;
@@ -102,7 +103,7 @@ top:4px;
 -ms-transform:rotate(-45deg);
 }
 
-#rotateG_03{
+#rotateG_03 {
 left:13px;
 top:1px;
 -webkit-animation-delay:0.65s;
@@ -115,7 +116,7 @@ top:1px;
 -ms-transform:rotate(0deg);
 }
 
-#rotateG_04{
+#rotateG_04 {
 right:4px;
 top:4px;
 -webkit-animation-delay:0.78s;
@@ -128,7 +129,7 @@ top:4px;
 -ms-transform:rotate(45deg);
 }
 
-#rotateG_05{
+#rotateG_05 {
 right:0;
 top:11px;
 -webkit-animation-delay:0.9099999999999999s;
@@ -141,7 +142,7 @@ top:11px;
 -ms-transform:rotate(90deg);
 }
 
-#rotateG_06{
+#rotateG_06 {
 right:4px;
 bottom:3px;
 -webkit-animation-delay:1.04s;
@@ -154,7 +155,7 @@ bottom:3px;
 -ms-transform:rotate(135deg);
 }
 
-#rotateG_07{
+#rotateG_07 {
 bottom:0;
 left:13px;
 -webkit-animation-delay:1.1700000000000002s;
@@ -167,7 +168,7 @@ left:13px;
 -ms-transform:rotate(180deg);
 }
 
-#rotateG_08{
+#rotateG_08 {
 left:4px;
 bottom:3px;
 -webkit-animation-delay:1.3s;
@@ -180,7 +181,7 @@ bottom:3px;
 -ms-transform:rotate(-135deg);
 }
 
-@-webkit-keyframes fadeG{
+@-webkit-keyframes fadeG {
 0%{
 background-color:#000000}
 
