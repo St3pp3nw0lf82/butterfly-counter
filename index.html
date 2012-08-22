@@ -73,7 +73,7 @@ function onDeviceReady() {
 			$(document).delegate("#bfc_submit", "pageshow", function() {
 				//$("#submitlist").html("");
 				ba.showBasket("submitlist");
-				//ba.submitSightings();
+				ba.submitSightings();
 			});
 		} else {
 			throw "init_err";
@@ -95,7 +95,6 @@ function onDeviceReady() {
 		}
 		alert(errormsg);
 	}
-
 }
 </script>
 

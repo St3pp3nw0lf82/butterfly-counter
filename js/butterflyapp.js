@@ -176,36 +176,32 @@ function showBasket(page) {
 		}
 	// submitlist:
 	} else {
-		var sightings_toupload = false;
+		//var sightings_toupload = false;
 		if(this.olderSightings.length) {
-			var sightings_toupload = true;
+			//var sightings_toupload = true;
 			for(var i = 0; i < this.olderSightings.length; i++) {
 				this.olderSightings[i].submitlistItem = i;
 				this.olderSightings[i].printMe("submitlist","old");
 				$("#"+page).listview("refresh");
-				$("#old"+this.olderSightings[i].submitlistItem).ajaxStart(function() {
-					$("#old"+i+" div.floatingBarsG").css("display","block");
-				});
-				this.olderSightings[i].uploadMe("old");
+				//this.olderSightings[i].uploadMe("old");
 				//$("#"+page).listview("refresh");
 			}
 		}
 		if(this.basket.length) {
-			var sightings_toupload = true;
+			//var sightings_toupload = true;
 			for(var i = 0; i < this.basket.length; i++) {
 				this.basket[i].submitlistItem = i;
 				this.basket[i].printMe("submitlist","new");
 				$("#"+page).listview("refresh");
-				$("#new"+this.basket[i].submitlistItem).ajaxStart(function() {
-					$("#new"+i+" div.floatingBarsG").css("display","block");
-				});
-				this.basket[i].uploadMe("new");
+				//this.basket[i].uploadMe("new");
 				//$("#"+page).listview("refresh");
 			}
 		}
+		/*
 		if(!sightings_toupload) {
 			alert("There are no sightings to submit.");
 		}
+		*/
 	}
 }
 

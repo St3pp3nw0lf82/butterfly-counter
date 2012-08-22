@@ -227,19 +227,15 @@ function submitResult(result, that, what) {
 			if(Butterflyapp.prototype.basket.length) {
 				// try to upload next sighting:
 				Butterflyapp.prototype.basket[0].uploadMe("new");
-			} else {
-				//$.mobile.hidePageLoadingMsg();
 			}
-		} else {
-			//Butterflyapp.prototype.itemsToUpload--;
 		}
 	}
 	//that.printMe("submitlist");
-	$("#"+what+that.submitlistItem).ajaxStop(function() {
+	//$("#"+what+that.submitlistItem).ajaxStop(function() {
 		$("#"+what+that.submitlistItem+" div.floatingBarsG").css("display","none");
 		$("#"+what+that.submitlistItem+" div.result").css("background-image","url('images/"+style+".png')");
 		$("#submitlist").listview("refresh");
-	});
+	//});
 }
 
 function upload(data, callback, that, what) {
