@@ -233,6 +233,7 @@ function submitResult(result, that, what) {
 	//that.printMe("submitlist");
 	//$("#"+what+that.submitlistItem).ajaxStop(function() {
 		//$("#"+what+that.submitlistItem+" div.floatingBarsG").css("display","none");
+		$("#"+what+that.submitlistItem+" div.result").empty();
 		$("#"+what+that.submitlistItem+" div.result").css("background-image","url('images/"+style+".png')");
 		$("#submitlist").listview("refresh");
 	//});
@@ -314,6 +315,7 @@ function uploadMe(what) {
 				}
 				//this.printMe("submitlist");
 				//$("#"+what+this.submitlistItem+" div.floatingBarsG").css("display","none");
+				$("#"+what+this.submitlistItem+" div.result").empty();
 				$("#"+what+this.submitlistItem+" div.result").css("background-image","url('images/error.png')");
 				$("#submitlist").listview("refresh");
 			}
@@ -349,6 +351,7 @@ function uploadMe(what) {
 				}
 			}
 			//$("#"+what+this.submitlistItem+" div.floatingBarsG").css("display","none");
+			$("#"+what+this.submitlistItem+" div.result").empty();
 			$("#"+what+this.submitlistItem+" div.result").css("background-image","url('images/error.png')");
 			$("#submitlist").listview("refresh");
 			//this.printMe("submitlist");

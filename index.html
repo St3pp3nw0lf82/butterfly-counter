@@ -70,7 +70,7 @@ function onDeviceReady() {
 			$(document).delegate("#bfc_map", "pageshow", function() {
 				ba.showMap();
 			});
-			$("#bfc_submit").live( 'pageinit',function(event){
+			$("#bfc_submit").live( 'pagebeforeshow',function(event,data){
 				ba.showBasket("submitlist");
 			});
 			$(document).delegate("#bfc_submit", "pageshow", function() {
