@@ -243,7 +243,7 @@ function upload(data, callback, that, what) {
 	$.ajax({
 		url: 'http://192.168.1.29/bfsighting.php',
 		type: 'POST',
-		async: true,
+		async: false,
 		data: data,
 		complete: function(jqXHR, textStatus) {
 			callback(textStatus, that, what);
