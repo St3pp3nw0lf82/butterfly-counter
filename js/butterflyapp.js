@@ -230,9 +230,9 @@ function submitSightings() {
 		// are there older sightings still to upload?:
 		if(this.olderSightings.length) {
 			sightings_toupload = true;
-			$("#old0").ajaxStart(function() {
+			//$("#old0").ajaxStart(function() {
 				this.olderSightings[0].uploadMe("old");
-			});
+			//});
 			// try to submit each sighting:
 			/*
 			for(var i = 0; i < this.olderSightings.length; i++) {
@@ -248,9 +248,9 @@ function submitSightings() {
 		// check basket is not empty:
 		if(this.basket.length) {
 			sightings_toupload = true;
-			$("#new0").ajaxStart(function() {
+			//$("#new0").ajaxStart(function() {
 				this.basket[0].uploadMe("new");
-			});
+			//});
 			// try to submit each sighting:
 			/*
 			for(var i = 0; i < this.basket.length; i++) {
