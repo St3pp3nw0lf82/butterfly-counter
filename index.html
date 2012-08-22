@@ -47,7 +47,7 @@ function init_phonegap() {
 }
 
 function onDeviceReady() {
-//NOTE: this only works with phonegap on mobile device, uncomment it when running in a browser on desktop:
+//NOTE: this only works with phonegap on mobile device, comment it out when running in a browser on desktop:
 
 //TODO: reset app entfernen
 	try {
@@ -70,9 +70,12 @@ function onDeviceReady() {
 			$(document).delegate("#bfc_map", "pageshow", function() {
 				ba.showMap();
 			});
+			$("#bfc_submit").live( 'pageinit',function(event){
+				ba.showBasket("submitlist");
+			});
 			$(document).delegate("#bfc_submit", "pageshow", function() {
 				//$("#submitlist").html("");
-				ba.showBasket("submitlist");
+				//ba.showBasket("submitlist");
 				ba.submitSightings();
 			});
 		} else {
@@ -138,7 +141,9 @@ try {
 	var errormsg = "";
 	switch(e) {
 		case "sessionstorage_err":
-			errormsg += "Butterflyapp object could not be stored.";
+			errormsg += "Butterflyapp object could n$( '#aboutPage' ).live( 'pageinit',function(event){
+  alert( 'This page was just enhanced by jQuery Mobile!' );
+});ot be stored.";
 		break;
 		case "sessupport_err":
 			errormsg += "Local storage is not supported on your device.";
