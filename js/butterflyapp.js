@@ -232,6 +232,11 @@ function submitSightings() {
 			sightings_toupload = true;
 			// try to submit each sighting:
 			for(var i = 0; i < this.olderSightings.length; i++) {
+				$("#old"+i).ajaxStart(function() {
+					$("#old"+i+" div.floatingBarsG").css("display","block");
+					//$("#"+what+that.submitlistItem+" div.result").css("background-image","url('images/"+style+".png')");
+					$("#submitlist").listview("refresh");
+				});
 				this.olderSightings[i].uploadMe("old");
 			}
 		}
@@ -240,6 +245,11 @@ function submitSightings() {
 			sightings_toupload = true;
 			// try to submit each sighting:
 			for(var i = 0; i < this.basket.length; i++) {
+				$("#new"+i).ajaxStart(function() {
+					$("#new"+i+" div.floatingBarsG").css("display","block");
+					//$("#"+what+that.submitlistItem+" div.result").css("background-image","url('images/"+style+".png')");
+					$("#submitlist").listview("refresh");
+				});
 				this.basket[i].uploadMe("new");
 			}
 		}

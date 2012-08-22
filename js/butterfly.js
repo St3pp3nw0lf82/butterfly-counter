@@ -231,11 +231,11 @@ function submitResult(result, that, what) {
 		}
 	}
 	//that.printMe("submitlist");
-	//$("#"+what+that.submitlistItem).ajaxStop(function() {
+	$("#"+what+that.submitlistItem).ajaxStop(function() {
 		$("#"+what+that.submitlistItem+" div.floatingBarsG").css("display","none");
 		$("#"+what+that.submitlistItem+" div.result").css("background-image","url('images/"+style+".png')");
 		$("#submitlist").listview("refresh");
-	//});
+	});
 }
 
 function upload(data, callback, that, what) {
