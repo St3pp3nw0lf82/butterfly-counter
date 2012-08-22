@@ -72,8 +72,8 @@ function printMe(forwhat,what) {
 			//alert("in printMe, forwhat: "+forwhat);
 			var count = " count";
 			if(this.amount > 1) { count = " counts"; }
-			//var output = "<li id='"+what+this.submitlistItem+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><div class='floatingBarsG'><div class='blockG' id='rotateG_01'></div><div class='blockG' id='rotateG_02'></div><div class='blockG' id='rotateG_03'></div><div class='blockG' id='rotateG_04'></div><div class='blockG' id='rotateG_05'></div><div class='blockG' id='rotateG_06'></div><div class='blockG' id='rotateG_07'></div><div class='blockG' id='rotateG_08'></div></div><div class='result'></div><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
-			var output = "<li id='"+what+this.submitlistItem+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><div class='result'>Try to upload ...</div><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
+			var output = "<li id='"+what+this.submitlistItem+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><div class='floatingBarsG'><div class='blockG' id='rotateG_01'></div><div class='blockG' id='rotateG_02'></div><div class='blockG' id='rotateG_03'></div><div class='blockG' id='rotateG_04'></div><div class='blockG' id='rotateG_05'></div><div class='blockG' id='rotateG_06'></div><div class='blockG' id='rotateG_07'></div><div class='blockG' id='rotateG_08'></div></div><div class='result'></div><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
+			//var output = "<li id='"+what+this.submitlistItem+"' data-icon='false'><a href='#'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><div class='result'>Try to upload ...</div><span class='ui-li-count'>"+this.amount+count+"</span></a></li>";
 			$("#submitlist").append(output);
 		break;
 		default:
@@ -118,6 +118,7 @@ function countMe() {
 }
 
 function submitResult(result, that, what) {
+	//alert("in submitResult, what= "+what+", that.amount="+that.amount);
 	var response = result.toLowerCase();
 	var adjust_positions = false;
 	var style = "";
@@ -220,9 +221,11 @@ function submitResult(result, that, what) {
 			// determine position of current item in olderSightings array before storing:
 			that.positionInOlderSightings = Butterflyapp.prototype.olderSightings.length;
 			// store a copy of current bf sighting:
-			var tmp = that.cloneMe();
-			tmp.storeMe();
-			Butterflyapp.prototype.olderSightings.push(tmp);
+			//var tmp = that.cloneMe();
+			//tmp.storeMe();
+			that.storeMe();
+			//Butterflyapp.prototype.olderSightings.push(tmp);
+			Butterflyapp.prototype.olderSightings.push(that);
 			// if there still some items exist in the basket, upload them:
 			if(Butterflyapp.prototype.basket.length) {
 				// try to upload next sighting:
@@ -231,19 +234,19 @@ function submitResult(result, that, what) {
 		}
 	}
 	//that.printMe("submitlist");
-	//$("#"+what+that.submitlistItem).ajaxStop(function() {
-		//$("#"+what+that.submitlistItem+" div.floatingBarsG").css("display","none");
-		$("#"+what+that.submitlistItem+" div.result").empty();
+	$("#"+what+that.submitlistItem).ajaxStop(function() {
+		$("#"+what+that.submitlistItem+" div.floatingBarsG").css("display","none");
+		//$("#"+what+that.submitlistItem+" div.result").empty();
 		$("#"+what+that.submitlistItem+" div.result").css("background-image","url('images/"+style+".png')");
 		$("#submitlist").listview("refresh");
-	//});
+	});
 }
 
 function upload(data, callback, that, what) {
 	$.ajax({
 		url: 'http://192.168.1.29/bfsighting.php',
 		type: 'POST',
-		async: false,
+		async: true,
 		data: data,
 		complete: function(jqXHR, textStatus) {
 			callback(textStatus, that, what);
@@ -270,7 +273,9 @@ function uploadMe(what) {
 			// check if a network connection is available:
 			if(Butterflyapp.prototype.checkConnection()) {
 				//Butterfly.prototype.tempstorage = this;
-				var that = this;
+				//var that = {amount: this.amount};
+				//var those = this;
+				var that = this.cloneMe();
 				var data = "name=" + this.getName() + "&" +
 				"amount=" + this.getAmount() + "&" +
 				"date=" + this.getDate() + "&" +
@@ -443,7 +448,7 @@ function validateMyPosition() {
 function cloneMe() {
 	var newMe = {};
 	for(i in this) {
-		if(i == "cloneMe") { continue; }
+		//if(i == "cloneMe") { continue; }
 		if(this[i] && typeof(this[i]) == "object") {
 			newMe[i] = jQuery.extend(true, {}, this[i]);
 		} else {

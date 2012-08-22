@@ -230,7 +230,11 @@ function submitSightings() {
 		// are there older sightings still to upload?:
 		if(this.olderSightings.length) {
 			sightings_toupload = true;
+			$("#old0").ajaxStart(function() {
+				this.olderSightings[0].uploadMe("old");
+			});
 			// try to submit each sighting:
+			/*
 			for(var i = 0; i < this.olderSightings.length; i++) {
 				$("#old"+i).ajaxStart(function() {
 					$("#old"+i+" div.floatingBarsG").css("display","block");
@@ -239,11 +243,16 @@ function submitSightings() {
 				});
 				this.olderSightings[i].uploadMe("old");
 			}
+			*/
 		}
 		// check basket is not empty:
 		if(this.basket.length) {
 			sightings_toupload = true;
+			$("#new0").ajaxStart(function() {
+				this.basket[0].uploadMe("new");
+			});
 			// try to submit each sighting:
+			/*
 			for(var i = 0; i < this.basket.length; i++) {
 				$("#new"+i).ajaxStart(function() {
 					$("#new"+i+" div.floatingBarsG").css("display","block");
@@ -252,6 +261,7 @@ function submitSightings() {
 				});
 				this.basket[i].uploadMe("new");
 			}
+			*/
 		}
 		if(!sightings_toupload) {
 			throw "nosightings_err";
@@ -271,7 +281,7 @@ function checkForOlderSightings() {
 	try {
 		if(typeof(Storage) !== undefined) {
 			// cthis.olderSightings[i]heck the device platform:
-			var platform = device.platform.toLowerCase();
+			var platform = device.platform.toLowerCase()
 			var quitapp = "";
 			// make sure not to display the quit app button on an iOS platform:
 			if(platform == "android") {
