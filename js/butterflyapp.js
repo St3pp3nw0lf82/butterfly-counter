@@ -176,32 +176,20 @@ function showBasket(page) {
 		}
 	// submitlist:
 	} else {
-		//var sightings_toupload = false;
 		if(this.olderSightings.length) {
-			//var sightings_toupload = true;
 			for(var i = 0; i < this.olderSightings.length; i++) {
 				this.olderSightings[i].submitlistItem = i;
 				this.olderSightings[i].printMe("submitlist","old");
 				$("#"+page).listview("refresh");
-				//this.olderSightings[i].uploadMe("old");
-				//$("#"+page).listview("refresh");
 			}
 		}
 		if(this.basket.length) {
-			//var sightings_toupload = true;
 			for(var i = 0; i < this.basket.length; i++) {
 				this.basket[i].submitlistItem = i;
 				this.basket[i].printMe("submitlist","new");
 				$("#"+page).listview("refresh");
-				//this.basket[i].uploadMe("new");
-				//$("#"+page).listview("refresh");
 			}
 		}
-		/*
-		if(!sightings_toupload) {
-			alert("There are no sightings to submit.");
-		}
-		*/
 	}
 }
 
@@ -230,38 +218,14 @@ function submitSightings() {
 		// are there older sightings still to upload?:
 		if(this.olderSightings.length) {
 			sightings_toupload = true;
-			//$("#old0").ajaxStart(function() {
-				this.olderSightings[0].uploadMe("old");
-			//});
-			// try to submit each sighting:
-			/*
-			for(var i = 0; i < this.olderSightings.length; i++) {
-				$("#old"+i).ajaxStart(function() {
-					$("#old"+i+" div.floatingBarsG").css("display","block");
-					//$("#"+what+that.submitlistItem+" div.result").css("background-image","url('images/"+style+".png')");
-					$("#submitlist").listview("refresh");
-				});
-				this.olderSightings[i].uploadMe("old");
-			}
-			*/
+			// start upload process with first item:
+			this.olderSightings[0].uploadMe("old");
 		}
 		// check basket is not empty:
 		if(this.basket.length) {
 			sightings_toupload = true;
-			//$("#new0").ajaxStart(function() {
-				this.basket[0].uploadMe("new");
-			//});
-			// try to submit each sighting:
-			/*
-			for(var i = 0; i < this.basket.length; i++) {
-				$("#new"+i).ajaxStart(function() {
-					$("#new"+i+" div.floatingBarsG").css("display","block");
-					//$("#"+what+that.submitlistItem+" div.result").css("background-image","url('images/"+style+".png')");
-					$("#submitlist").listview("refresh");
-				});
-				this.basket[i].uploadMe("new");
-			}
-			*/
+			// start upload process with first item:
+			this.basket[0].uploadMe("new");
 		}
 		if(!sightings_toupload) {
 			throw "nosightings_err";
@@ -280,7 +244,7 @@ function submitSightings() {
 function checkForOlderSightings() {
 	try {
 		if(typeof(Storage) !== undefined) {
-			// cthis.olderSightings[i]heck the device platform:
+			// check the device platform:
 			var platform = device.platform.toLowerCase()
 			var quitapp = "";
 			// make sure not to display the quit app button on an iOS platform:

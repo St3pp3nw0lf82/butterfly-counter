@@ -70,12 +70,14 @@ function onDeviceReady() {
 			$(document).delegate("#bfc_map", "pageshow", function() {
 				ba.showMap();
 			});
+			/*
 			$("#bfc_submit").live( 'pagebeforeshow',function(event,data){
 				ba.showBasket("submitlist");
 			});
+			*/
 			$(document).delegate("#bfc_submit", "pageshow", function() {
 				//$("#submitlist").html("");
-				//ba.showBasket("submitlist");
+				ba.showBasket("submitlist");
 				ba.submitSightings();
 			});
 		} else {
@@ -126,6 +128,9 @@ try {
 			ba.showMap();
 			//$("map_canvas").gmap("refresh");
 		});
+		$("#bfc_submit").live( 'pagebeforeshow',function(event,data){
+			ba.showBasket("submitlist");
+		});
 		//$("#bfc_submit").live("pagecreate", function(event) { $.mobile.showPageLoadingMsg(); });
 		$(document).delegate("#bfc_submit", "pageshow", function() {
 			//$("#submitlist").html("");
@@ -141,9 +146,7 @@ try {
 	var errormsg = "";
 	switch(e) {
 		case "sessionstorage_err":
-			errormsg += "Butterflyapp object could n$( '#aboutPage' ).live( 'pageinit',function(event){
-  alert( 'This page was just enhanced by jQuery Mobile!' );
-});ot be stored.";
+			errormsg += "Butterflyapp object could not be stored.";
 		break;
 		case "sessupport_err":
 			errormsg += "Local storage is not supported on your device.";

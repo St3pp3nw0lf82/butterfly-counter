@@ -118,7 +118,6 @@ function countMe() {
 }
 
 function submitResult(result, that, what) {
-	//alert("in submitResult, what= "+what+", that.amount="+that.amount);
 	var response = result.toLowerCase();
 	var adjust_positions = false;
 	var style = "";
@@ -233,13 +232,9 @@ function submitResult(result, that, what) {
 			}
 		}
 	}
-	//that.printMe("submitlist");
-	//$("#"+what+that.submitlistItem).ajaxStop(function() {
-		$("#"+what+that.submitlistItem+" div.floatingBarsG").css("display","none");
-		//$("#"+what+that.submitlistItem+" div.result").empty();
-		$("#"+what+that.submitlistItem+" div.result").css("background-image","url('images/"+style+".png')");
-		$("#submitlist").listview("refresh");
-	//});
+	$("#"+what+that.submitlistItem+" div.floatingBarsG").css("display","none");
+	$("#"+what+that.submitlistItem+" div.result").css("background-image","url('images/"+style+".png')");
+	$("#submitlist").listview("refresh");
 }
 
 function upload(data, callback, that, what) {
@@ -315,12 +310,8 @@ function uploadMe(what) {
 						// try to upload next sighting:
 						Butterflyapp.prototype.basket[0].uploadMe("new");
 					}
-				} else {
-					//Butterflyapp.prototype.itemsToUpload--;
 				}
-				//this.printMe("submitlist");
 				$("#"+what+this.submitlistItem+" div.floatingBarsG").css("display","none");
-				//$("#"+what+this.submitlistItem+" div.result").empty();
 				$("#"+what+this.submitlistItem+" div.result").css("background-image","url('images/error.png')");
 				$("#submitlist").listview("refresh");
 			}
@@ -336,7 +327,6 @@ function uploadMe(what) {
 				Butterflyapp.prototype.basket.splice(0,1);
 				var newlength = Butterflyapp.prototype.basket.length;
 				if(newlength < oldlength) {
-					//Butterflyapp.prototype.itemsToUpload--;
 					this.positionInBasket = null;
 					if(adjust_positions) {
 						for(i; i < Butterflyapp.prototype.basket.length; i++) {
@@ -356,11 +346,8 @@ function uploadMe(what) {
 				}
 			}
 			$("#"+what+this.submitlistItem+" div.floatingBarsG").css("display","none");
-			//$("#"+what+this.submitlistItem+" div.result").empty();
 			$("#"+what+this.submitlistItem+" div.result").css("background-image","url('images/error.png')");
 			$("#submitlist").listview("refresh");
-			//this.printMe("submitlist");
-			//$("#submitlist").listview("refresh");
 		}
 		// reset the bf item again for next sighting session:
 		if(what == "new") {
