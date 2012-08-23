@@ -74,14 +74,14 @@ function onDeviceReady() {
 					var script = document.createElement("script");
 					script.type = "text/javascript";
 					script.src = "js/jquerymobile/jquery.ui.map.full.min.js";
-					$("map_wrapper").append(script);
+					$("#map_wrapper").append(script);
 					var script = document.createElement("script");
 					script.type = "text/javascript";
 					script.src = "js/jquerymobile/jquery.ui.map.extensions.js";
-					$("map_wrapper").append(script);
+					$("#map_wrapper").append(script);
 				} else {
-					$("map_canvas").remove();
-					$("map_wrapper").html("<p>Currently no network connection available.</p>");
+					$("#map_canvas").remove();
+					$("#map_wrapper").html("<p>Currently no network connection available.</p>");
 				}
 			});
 			$(document).delegate("#bfc_map", "pageshow", function() {
