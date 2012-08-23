@@ -67,6 +67,23 @@ function onDeviceReady() {
 			$(document).delegate("#bfc_edit", "pageshow", function() {
 				$("#delete_sighting").bind("click", function() { ba.deleteSighting(); });
 			});
+			$("#bfc_map").live( 'pagebeforeshow',function(event,data){
+				if(ba.checkConnection()) {
+					// get google maps api:
+					$.getScript("http://maps.google.com/maps/api/js?sensor=true");
+					var script = document.createElement("script");
+					script.type = "text/javascript";
+					script.src = "js/jquerymobile/jquery.ui.map.full.min.js";
+					$("map_wrapper").append(script);
+					var script = document.createElement("script");
+					script.type = "text/javascript";
+					script.src = "js/jquerymobile/jquery.ui.map.extensions.js";
+					$("map_wrapper").append(script);
+				} else {
+					$("map_canvas").remove();
+					$("map_wrapper").html("<p>Currently no network connection available.</p>");
+				}
+			});
 			$(document).delegate("#bfc_map", "pageshow", function() {
 				ba.showMap();
 			});
@@ -124,13 +141,29 @@ try {
 		$(document).delegate("#bfc_edit", "pageshow", function() {
 			$("#delete_sighting").bind("click", function() { ba.deleteSighting(); });
 		});
+		$("#bfc_map").live( 'pagebeforeshow',function(event,data){
+			if(ba.checkConnection()) {
+				// get google maps api:
+				$.getScript("http://maps.google.com/maps/api/js?sensor=true");
+				var script = document.createElement("script");
+				script.type = "text/javascript";
+				script.src = "js/jquerymobile/jquery.ui.map.full.min.js";
+				$("map_wrapper").append(script);
+				var script = document.createElement("script");
+				script.type = "text/javascript";
+				script.src = "js/jquerymobile/jquery.ui.map.extensions.js";
+				$("map_wrapper").append(script);
+			}
+		});
 		$(document).delegate("#bfc_map", "pageshow", function() {
 			ba.showMap();
 			//$("map_canvas").gmap("refresh");
 		});
+		/*
 		$("#bfc_submit").live( 'pagebeforeshow',function(event,data){
 			ba.showBasket("submitlist");
 		});
+		*/
 		//$("#bfc_submit").live("pagecreate", function(event) { $.mobile.showPageLoadingMsg(); });
 		$(document).delegate("#bfc_submit", "pageshow", function() {
 			//$("#submitlist").html("");

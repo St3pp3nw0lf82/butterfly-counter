@@ -315,42 +315,57 @@ function checkForOlderSightings() {
 }
 
 function showMap() {
-	var showonmap = 0;
-	showonmap = this.basket.length + this.olderSightings.length;
+	try {
+		var showonmap = 0;
+		showonmap = this.basket.length + this.olderSightings.length;
 
-	if(showonmap > 0) {
-		if(this.basket.length) {
-			for(var i = 0; i < this.basket.length; i++) {
-				// build the info window:
-				var name = this.basket[i].getName();
-				var amount = this.basket[i].getAmount();
-				var path = window.location.toString();
-				var index = path.lastIndexOf('/');
-				var pathto = path.slice(0,index);
-				var image = pathto+"/images/"+this.bf_images[this.basket[i].getName()];
-				var infowindow = "<div id='iw_wrapper'><img src='"+image+"' class='iw_bfimage'/><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br />Counts: <strong>"+amount+"</strong></p>";
-				// create the marker:
-				$('#map_canvas').gmap('addMarker', {'position': this.basket[i].getMyPosition(), 'bounds': true}).click(function() {
-						$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
-				});
+		if(showonmap > 0) {
+			if(this.basket.length) {
+				for(var i = 0; i < this.basket.length; i++) {
+					// build the info window:
+					var name = this.basket[i].getName();
+					var amount = this.basket[i].getAmount();
+					var path = window.location.toString();
+					var index = path.lastIndexOf('/');
+					var pathto = path.slice(0,index);
+					var image = pathto+"/images/"+this.bf_images[this.basket[i].getName()];
+					var infowindow = "<div id='iw_wrapper'><img src='"+image+"' class='iw_bfimage'/><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br />Counts: <strong>"+amount+"</strong></p>";
+					// create the marker:
+					$('#map_canvas').gmap('addMarker', {'position': this.basket[i].getMyPosition(), 'bounds': true}).click(function() {
+							$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
+					});
+				}
 			}
-		}
-		if(this.olderSightings.length) {
-			for(var i = 0; i < this.olderSightings.length; i++) {
-				// build the info window:
-				var name = this.olderSightings[i].getName();
-				var amount = this.olderSightings[i].getAmount();
-				var path = window.location.toString();
-				var index = path.lastIndexOf('/');
-				var pathto = path.slice(0,index);
-				var image = pathto+"/images/"+this.bf_images[this.olderSightings[i].getName()];
-				var infowindow = "<div id='iw_wrapper'><img src='"+image+"' class='iw_bfimage'/><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br />Counts: <strong>"+amount+"</strong></p>";
-				// create the marker:
-				$('#map_canvas').gmap('addMarker', {'position': this.olderSightings[i].getMyPosition(), 'bounds': true}).click(function() {
-						$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
-				});
+			if(this.olderSightings.length) {
+				for(var i = 0; i < this.olderSightings.length; i++) {
+					// build the info window:
+					var name = this.olderSightings[i].getName();
+					var amount = this.olderSightings[i].getAmount();
+					var path = window.location.toString();
+					var index = path.lastIndexOf('/');
+					var pathto = path.slice(0,index);
+					var image = pathto+"/images/"+this.bf_images[this.olderSightings[i].getName()];
+					var infowindow = "<div id='iw_wrapper'><img src='"+image+"' class='iw_bfimage'/><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br />Counts: <strong>"+amount+"</strong></p>";
+					// create the marker:
+					$('#map_canvas').gmap('addMarker', {'position': this.olderSightings[i].getMyPosition(), 'bounds': true}).click(function() {
+							$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
+					});
+				}
 			}
+		} else {
+			throw "nosightings_err";
 		}
+	} catch(e) {
+		var errormsg = "Display of the map failed.\n";
+		switch(e) {
+			case "nosightings_err":
+				errormsg += "No sightings found.";
+			break;
+			default:
+				errormsg += e.message;
+			break;
+		}
+		alert(errormsg);
 	}
 }
 
