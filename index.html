@@ -29,7 +29,7 @@
 #################################################
 ###### google maps plugin for jquery mobile #####
 #################################################
--->
+
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
 <!--
 <script type="text/javascript" src="js/jquerymobile/jquery.ui.map.full.min.js"></script>
@@ -295,6 +295,13 @@ fourth page: show sightings on map
 		<h1>Mobile butterfly counter</h1>
 	</div>
 	<!-- content -->
+	<script type="text/javascript">
+		function pagePreLoad_CS(page) {
+			if(ba.checkConnection()) {
+				jQuery.getScript("http://maps.google.com/maps/api/js?sensor=true");
+			}
+		}
+	</script>
 	<div id="content" data-role="content" data-ajax="false">	
 		<h2>Your sightings on the map</h2>
 		<div id="maps_script"></div>
@@ -302,9 +309,6 @@ fourth page: show sightings on map
 			<div id="map_canvas"></div>
 		</div>
 	</div>
-	<script type="text/javascript">
-		function pagePreLoad_CS(page) { alert("map page loaded"); }
-	</script>
 	<!-- footer -->
 	<div data-role="footer" data-position="fixed">
 		<div data-role="navbar">
