@@ -1,6 +1,7 @@
 function Butterflyapp() {
 this.butterflies = [];
 this.init = init;
+this.timer_id = 0;
 this.createButterflies = createButterflies;
 this.printButterflies = printButterflies;
 this.showBasket = showBasket;
@@ -58,6 +59,8 @@ function init() {
 		Butterflyapp.prototype.date = today;
 		// determine current position:
 		this.getPosition();
+		// repeat determining the position every 2 minutes (120000 milliseconds): 
+		this.timer_id = setInterval(function() { this.getPosition(); },120000);
 		// check for older sightings:
 		this.checkForOlderSightings();
 		// create the butterflies:
@@ -70,8 +73,10 @@ function init() {
 
 function getPosition() {
 	// get timestamp:
+	/*
 	var d = new Date();
 	this.currentPosition.lastTaken = d.getTime();
+	*/
 	// try getting position:
 	var onSuccess = function(position,validPosition) {
 		Butterflyapp.prototype.currentPosition.latitude = position.coords.latitude;
@@ -83,6 +88,7 @@ function getPosition() {
 		Butterflyapp.prototype.currentPosition.longitude = false;
 		Butterflyapp.prototype.validPosition = false;
 		//TODO: maybe its better not to display error messages every time position determining fails because it annoys the user:
+		/*
 		var errormsg = "Your current position could not be retrieved.\n";
 		switch(error.code) {
 			case "PERMISSION_DENIED":
@@ -99,6 +105,7 @@ function getPosition() {
 				errormsg += error.message;
 		}
 		alert(errormsg);
+		*/
 	};
 
 	navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true});
@@ -126,6 +133,7 @@ function createButterflies() {
 }
 
 function printButterflies() {
+	/*
 	var now = new Date().getTime();
 	var time_diff = ((now - this.currentPosition.lastTaken)*0.001);
 	time_diff = parseInt(Math.round(time_diff));
@@ -133,6 +141,7 @@ function printButterflies() {
 	if(time_diff > 120) {
 		this.getPosition();
 	}
+	*/
 	$("#butterflylist").html("");
 	for(var i = 0; i < this.butterflies.length; i++) {
 		this.butterflies[i].printMe("butterflylist");
@@ -506,6 +515,7 @@ function resetApp() {
 }
 
 function closeApp() {
+	clearInterval(this.timer_id);
 	// note: force app to close for example in iOS is stromgly recommended NOT TO DO on Apple devices!
 	// see: http://stackoverflow.com/questions/3154491/quit-app-when-pressing-home
 	navigator.app.exitApp();
