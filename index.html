@@ -29,7 +29,7 @@
 #################################################
 ###### google maps plugin for jquery mobile #####
 #################################################
-
+-->
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
 <!--
 <script type="text/javascript" src="js/jquerymobile/jquery.ui.map.full.min.js"></script>
@@ -68,14 +68,14 @@ function onDeviceReady() {
 			$(document).delegate("#bfc_edit", "pageshow", function() {
 				$("#delete_sighting").bind("click", function() { ba.deleteSighting(); });
 			});
-			// testing:
+			/*
 			$("#bfc_map").live("pagebeforeshow", function (event, ui) {
     				var f = $(event.target).attr("beforePageShow");
     				if (window[f] != undefined) {
 					window[f](event.target);
 				}
 			});
-			//
+			*/
 			$("#bfc_map").live( 'pagebeforeshow',function(event,data){
 
 				$("#maps_script").html("");
@@ -129,7 +129,7 @@ function onDeviceReady() {
 }
 </script>
 
-<!-- add click event to button after dom is ready
+<!-- add click event to button after dom is ready 
 <script type="text/javascript">
 //NOTE: use this when running in a browser on desktop:
 
@@ -150,6 +150,14 @@ try {
 		$(document).delegate("#bfc_edit", "pageshow", function() {
 			$("#delete_sighting").bind("click", function() { ba.deleteSighting(); });
 		});
+			// testing:
+			$("#bfc_map").live("pagebeforeshow", function (event, ui) {
+    				var f = $(event.target).attr("beforePageShow");
+    				if (window[f] != undefined) {
+					window[f](event.target);
+				}
+			});
+			//
 		$("#bfc_map").live( 'pagebeforeshow',function(event,data){
 			$("#map_canvas").html("");
 			$("#maps_script").html("");
@@ -295,13 +303,20 @@ fourth page: show sightings on map
 		<h1>Mobile butterfly counter</h1>
 	</div>
 	<!-- content -->
+	<!--
 	<script type="text/javascript">
 		function pagePreLoad_CS(page) {
 			if(ba.checkConnection()) {
-				jQuery.getScript("http://maps.google.com/maps/api/js?sensor=true");
+					alert("connection available");
+					var googlescript = document.createElement("script");
+					googlescript.type = "text/javascript";
+					googlescript.src = "http://maps.google.com/maps/api/js?sensor=true";
+					$("#maps_script").append(googlescript);
+				//jQuery.getScript("http://maps.google.com/maps/api/js?sensor=true");
 			}
 		}
 	</script>
+	-->
 	<div id="content" data-role="content" data-ajax="false">	
 		<h2>Your sightings on the map</h2>
 		<div id="maps_script"></div>
