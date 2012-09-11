@@ -79,7 +79,7 @@ function onDeviceReady() {
 			$("#bfc_map").live( 'pagebeforeshow',function(event,data){
 
 				$("#maps_script").html("");
-				$("#map_canvas").html("");
+				//$("#map_canvas").html("");
 				if(ba.checkConnection()) {
 					var script = document.createElement("script");
 					script.type = "text/javascript";
@@ -252,7 +252,7 @@ second page: choose butterflies
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#bfc_startpage" data-role="button">Back</a></li>
-				<li><a href="#bfc_summary" data-role="button">Summary</a></li>
+				<li><a href="#bfc_summary" data-role="button">Next</a></li>
 			</ul>
 		</div>
 	</div>
