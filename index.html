@@ -49,7 +49,7 @@ function init_phonegap() {
 
 function onDeviceReady() {
 //NOTE: this only works with phonegap on mobile device, comment it out when running in a browser on desktop:
-
+/*
 //TODO: reset app entfernen
 	try {
 		var ba = new Butterflyapp();
@@ -117,10 +117,11 @@ function onDeviceReady() {
 		}
 		alert(errormsg);
 	}
+*/
 }
 </script>
 
-<!-- add click event to button after dom is ready 
+<!-- add click event to button after dom is ready -->
 <script type="text/javascript">
 //NOTE: use this when running in a browser on desktop:
 
@@ -269,8 +270,8 @@ third page: sighting summary
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#bfc_choosebutterfly" data-role="button">Back</a></li>
-				<li><a href="#bfc_submit" data-role="button">Submit sightings</a></li>
-				<li><a href="#bfc_map" data-role="button">Map</a></li>
+				<li id="submit_option"><a href="#bfc_submit" data-role="button">Submit sightings</a></li>
+				<li id="map_option"><a href="#bfc_map" data-role="button">Map</a></li>
 			</ul>
 		</div>
 	</div>

@@ -173,6 +173,16 @@ function showBasket(page) {
 		}
 		if(no_sightings) {
 			$("#no_sightings").css("display","block");
+			$("#submit_option").addClass("ui-disabled");
+			$("#submit_option").trigger("create");
+			$("#map_option").addClass("ui-disabled");
+			$("#map_option").trigger("create");
+		} else {
+			$("#submit_option").removeClass("ui-disabled");
+			$("#submit_option").trigger("create");
+			$("#map_option").removeClass("ui-disabled");
+			$("#map_option").trigger("create");
+			//$("#summary_footer ul").append("<li id='map_option'><a href='#bfc_map' data-role='button'>Map</a></li>");
 		}
 	// submitlist:
 	} else {
