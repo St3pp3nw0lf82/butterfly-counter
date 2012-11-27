@@ -258,7 +258,7 @@ function checkForOlderSightings() {
 			var platform = device.platform.toLowerCase()
 			var quitapp = "";
 			// make sure not to display the quit app button on an iOS platform:
-			if!(platform == "iphone" || platform == "ipad" || platform == "ios") {
+			if(platform != "iphone" && platform != "ipad" && platform != "ios") {
 			//if(platform == "android") {
 				quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
 			}
