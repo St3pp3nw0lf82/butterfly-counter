@@ -336,7 +336,7 @@ function showMap() {
 		if(showonmap > 0) {
 			if(this.basket.length) {
 				for(var i = 0; i < this.basket.length; i++) {
-					alert{"my position: "+this.basket[i].getMyPosition()};
+					alert("my position: "+this.basket[i].getMyPosition());
 					// build the info window:
 					var name = this.basket[i].getName();
 					var amount = this.basket[i].getAmount();
