@@ -72,13 +72,16 @@ function init() {
 }
 
 function getPosition() {
+	alert("in getposition");
 	// try getting position:
 	var onSuccess = function(position,validPosition) {
+		alert("success");
 		Butterflyapp.prototype.currentPosition.latitude = position.coords.latitude;
 		Butterflyapp.prototype.currentPosition.longitude = position.coords.longitude;
 		Butterflyapp.prototype.validPosition = true;
 	};
 	var onError = function(error,validPosition) {
+		alert("error");
 		Butterflyapp.prototype.currentPosition.latitude = false;
 		Butterflyapp.prototype.currentPosition.longitude = false;
 		Butterflyapp.prototype.validPosition = false;
@@ -186,7 +189,6 @@ function showBasket(page) {
 			$("#submit_option").trigger("create");
 			$("#map_option").removeClass("ui-disabled");
 			$("#map_option").trigger("create");
-			//$("#summary_footer ul").append("<li id='map_option'><a href='#bfc_map' data-role='button'>Map</a></li>");
 		}
 	// submitlist:
 	} else {

@@ -401,7 +401,7 @@ function resetMe() {
 	this.time = false;
 	this.myPosition = {"latitude":false,"longitude":false,"isSet":false};
 	this.inBasket = false;
-	this.errorCode = {"position":false,"network":false,"server":false}; /* 0 = no error, 1 = invalid position, 2 = no network connection, 3 = server error */
+	this.errorCode = {"position":false,"network":false,"server":false};
 	this.serverMessage = false;
 }
 
@@ -430,7 +430,6 @@ function validateMyPosition() {
 function cloneMe() {
 	var newMe = {};
 	for(i in this) {
-		//if(i == "cloneMe") { continue; }
 		if(this[i] && typeof(this[i]) == "object") {
 			newMe[i] = jQuery.extend(true, {}, this[i]);
 		} else {
