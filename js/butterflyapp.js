@@ -17,7 +17,6 @@ return true;
 Butterflyapp.prototype.editSighting = [];
 Butterflyapp.prototype.getPosition = getPosition;
 Butterflyapp.prototype.checkConnection = checkConnection;
-Butterflyapp.prototype.validPosition = false;
 Butterflyapp.prototype.date = false;
 Butterflyapp.prototype.basket = [];
 Butterflyapp.prototype.olderSightings = [];
@@ -72,19 +71,14 @@ function init() {
 }
 
 function getPosition() {
-	alert("in getposition");
 	// try getting position:
 	var onSuccess = function(position,validPosition) {
-		alert("success");
 		Butterflyapp.prototype.currentPosition.latitude = position.coords.latitude;
 		Butterflyapp.prototype.currentPosition.longitude = position.coords.longitude;
-		Butterflyapp.prototype.validPosition = true;
 	};
 	var onError = function(error,validPosition) {
-		alert("error");
 		Butterflyapp.prototype.currentPosition.latitude = false;
 		Butterflyapp.prototype.currentPosition.longitude = false;
-		Butterflyapp.prototype.validPosition = false;
 		//TODO: maybe its better not to display error messages every time position determining fails because it annoys the user:
 		/*
 		var errormsg = "Your current position could not be retrieved.\n";
@@ -264,7 +258,8 @@ function checkForOlderSightings() {
 			var platform = device.platform.toLowerCase()
 			var quitapp = "";
 			// make sure not to display the quit app button on an iOS platform:
-			if(platform == "android") {
+			if!(platform == "iphone" || platform == "ipad" || platform == "ios") {
+			//if(platform == "android") {
 				quitapp = "<p><a href='#' data-role='button' id='quit_app'>Quit app</a><p/>";
 			}
 			if(window.localStorage.getItem("sightings") !== null) {
@@ -338,7 +333,6 @@ function showMap() {
 		if(showonmap > 0) {
 			if(this.basket.length) {
 				for(var i = 0; i < this.basket.length; i++) {
-					alert("my position: "+this.basket[i].getMyPosition());
 					// build the info window:
 					var name = this.basket[i].getName();
 					var amount = this.basket[i].getAmount();
