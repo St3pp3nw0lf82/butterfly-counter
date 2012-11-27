@@ -43,7 +43,7 @@ Butterflyapp.prototype.bf_images = {"Brimstone": "brimstone_small.jpg",
 		"Speckled Wood": "speckledwood_small.jpg",
 		"Wall": "wall_small.jpg"};
 Butterflyapp.prototype.addToBasket = function(sighting) { return this.basket.push(sighting); };
-Butterflyapp.prototype.currentPosition = {"latitude":false,"longitude":false,"lastTaken":false};
+Butterflyapp.prototype.currentPosition = {"latitude":false,"longitude":false};
 
 function init() {
 	try {
@@ -72,11 +72,6 @@ function init() {
 }
 
 function getPosition() {
-	// get timestamp:
-	/*
-	var d = new Date();
-	this.currentPosition.lastTaken = d.getTime();
-	*/
 	// try getting position:
 	var onSuccess = function(position,validPosition) {
 		Butterflyapp.prototype.currentPosition.latitude = position.coords.latitude;
@@ -341,6 +336,7 @@ function showMap() {
 		if(showonmap > 0) {
 			if(this.basket.length) {
 				for(var i = 0; i < this.basket.length; i++) {
+					alert{"my position: "+this.basket[i].getMyPosition()};
 					// build the info window:
 					var name = this.basket[i].getName();
 					var amount = this.basket[i].getAmount();
