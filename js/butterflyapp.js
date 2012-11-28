@@ -48,7 +48,8 @@ Butterflyapp.prototype.addToBasket = function(sighting) {
 		} else {
 			var maps = JSON.parse(window.sessionStorage.getItem("maps"));
 		}
-		maps.push(sighting);	
+		maps.push(sighting);
+		window.sessionStorage.setItem("maps",JSON.stringify(maps));	
 	}
 	return this.basket.push(sighting);
 };
