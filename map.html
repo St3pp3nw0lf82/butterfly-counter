@@ -48,15 +48,15 @@ try {
 			if(maps.length) {
 				for(var i = 0; i < maps.length; i++) {
 					// is the position valid?:
-					if(maps[i].validateMyPosition()) {
-						var position = maps[i].getMyPosition();
+					if(maps[i].myPosition.latitude != false && maps[i].myPosition.longitude != false) {
+						var position = maps[i].myPosition.latitude+","+maps[i].myPosition.longitude;
 					} else {
 						// use default value:
 						var position = "51.042271,-1.588427";
 					}
 					// build the info window:
-					var name = maps[i].getName();
-					var amount = maps[i].getAmount();
+					var name = maps[i].name;
+					var amount = maps[i].amount;
 					var path = window.location.toString();
 					var index = path.lastIndexOf('/');
 					var pathto = path.slice(0,index);
