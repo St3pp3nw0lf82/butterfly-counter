@@ -42,58 +42,43 @@
 -->
 <script type="text/javascript">
 try {
-	var networkState = navigator.network.connection.type;
-	var states = {};
-	states[Connection.UNKNOWN]  = 'UNKNOWN';
-	states[Connection.ETHERNET] = 'ETHERNET';
-	states[Connection.WIFI]     = 'WIFI';
-	states[Connection.CELL_2G]  = '2G';
-	states[Connection.CELL_3G]  = '3G';
-	states[Connection.CELL_4G]  = '4G';
-	states[Connection.NONE]     = 'NONE';
-
-	if(states[networkState] != "UNKNOWN" && states[networkState] != "NONE") {
-		if(typeof(Storage) !== undefined) {
-			if(window.sessionStorage.getItem("maps") !== null ) {
-				var maps = JSON.parse(window.sessionStorage.getItem("maps"));
-				if(maps.length) {
-					for(var i = 0; i < maps.length; i++) {
-						// is the position valid?:
-						if(maps[i].validateMyPosition()) {
-							var position = maps[i].getMyPosition();
-						} else {
-							// use default value:
-							var position = "51.042271,-1.588427";
-						}
-						// build the info window:
-						var name = maps[i].getName();
-						var amount = maps[i].getAmount();
-						var path = window.location.toString();
-						var index = path.lastIndexOf('/');
-						var pathto = path.slice(0,index);
-						//var image = pathto+"/images/"+this.bf_images[this.basket[i].getName()];
-						var infowindow = "<div id='iw_wrapper'><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br></br>Counts: <strong>"+amount+"</strong></p>";
-						// create the marker:
-						$('#map_canvas').gmap('addMarker', {'position': position, 'bounds': true}).click(function() {
-								$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
-						});
+	if(typeof(Storage) !== undefined) {
+		if(window.sessionStorage.getItem("maps") !== null ) {
+			var maps = JSON.parse(window.sessionStorage.getItem("maps"));
+			if(maps.length) {
+				for(var i = 0; i < maps.length; i++) {
+					// is the position valid?:
+					if(maps[i].validateMyPosition()) {
+						var position = maps[i].getMyPosition();
+					} else {
+						// use default value:
+						var position = "51.042271,-1.588427";
 					}
-					while(maps.length--) {
-						maps.pop();
-					}
-				} else {
-					$("#map_canvas").remove();
-					$("#map_wrapper").html("<p>No sightings available.</p>");
+					// build the info window:
+					var name = maps[i].getName();
+					var amount = maps[i].getAmount();
+					var path = window.location.toString();
+					var index = path.lastIndexOf('/');
+					var pathto = path.slice(0,index);
+					//var image = pathto+"/images/"+this.bf_images[this.basket[i].getName()];
+					var infowindow = "<div id='iw_wrapper'><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br></br>Counts: <strong>"+amount+"</strong></p>";
+					// create the marker:
+					$('#map_canvas').gmap('addMarker', {'position': position, 'bounds': true}).click(function() {
+							$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
+					});
+				}
+				while(maps.length--) {
+					maps.pop();
 				}
 			} else {
-				throw "nomaps_err";
+				$("#map_canvas").remove();
+				$("#map_wrapper").html("<p>No sightings available.</p>");
 			}
 		} else {
-			throw "sess_storage_err";
+			throw "nomaps_err";
 		}
 	} else {
-		$("#map_canvas").remove();
-		$("#map_wrapper").html("<p>No network connection available.</p>");
+		throw "sess_storage_err";
 	}
 } catch(e) {
 	var errormsg = "Display of the map failed.\n";
@@ -136,7 +121,7 @@ show sightings on map
 	<div data-role="footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#bfc_summary" data-role="button">Back</a></li>
+				<li><a href="index.html#bfc_summary" data-role="button">Back</a></li>
 			</ul>
 		</div>
 	</div>
