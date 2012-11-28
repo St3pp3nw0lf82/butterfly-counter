@@ -41,18 +41,7 @@ Butterflyapp.prototype.bf_images = {"Brimstone": "brimstone_small.jpg",
 		"Small White": "smallwhite_small.jpg",
 		"Speckled Wood": "speckledwood_small.jpg",
 		"Wall": "wall_small.jpg"};
-Butterflyapp.prototype.addToBasket = function(sighting) {
-	if(typeof(Storage) !== undefined) {
-		if(window.sessionStorage.getItem("maps") === null) {
-			var maps = new Array();
-		} else {
-			var maps = JSON.parse(window.sessionStorage.getItem("maps"));
-		}
-		maps.push(sighting);
-		window.sessionStorage.setItem("maps",JSON.stringify(maps));	
-	}
-	return this.basket.push(sighting);
-};
+Butterflyapp.prototype.addToBasket = function(sighting) { return this.basket.push(sighting); };
 Butterflyapp.prototype.currentPosition = {"latitude":false,"longitude":false};
 
 function init() {
@@ -136,15 +125,6 @@ function createButterflies() {
 }
 
 function printButterflies() {
-	/*
-	var now = new Date().getTime();
-	var time_diff = ((now - this.currentPosition.lastTaken)*0.001);
-	time_diff = parseInt(Math.round(time_diff));
-	// make new sighting after 2 mins?: 
-	if(time_diff > 120) {
-		this.getPosition();
-	}
-	*/
 	$("#butterflylist").html("");
 	for(var i = 0; i < this.butterflies.length; i++) {
 		this.butterflies[i].printMe("butterflylist");
@@ -183,7 +163,7 @@ function showBasket(page) {
 				$("#"+page).listview("refresh");
 			}
 		}
-		if(no_sightings) {
+		if(no_sightings && !this.checkConnection()) {
 			$("#no_sightings").css("display","block");
 			$("#submit_option").addClass("ui-disabled");
 			$("#submit_option").trigger("create");
