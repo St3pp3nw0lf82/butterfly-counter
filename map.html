@@ -1,0 +1,145 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<title>The butterfly counter - Sightings on the map</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" charset=UTF-8">
+
+<!-- ############################################
+############# jquery mobile stylesheet ##########
+#################################################
+-->
+<link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
+<!-- ############################################
+######## customized stylesheet goes here ######## 
+#################################################
+-->
+<link rel="stylesheet" href="css/style.css" />
+<!--
+#################################################
+############# jquery mobile #####################
+#################################################
+-->
+<script type="text/javascript" src="js/jquerymobile/jquery-1.7.1.min.js"></script>
+<!-- initialisation of global vars goes here, see: http://jquerymobile.com/demos/1.1.0/docs/api/globalconfig.html -->
+<script type="text/javascript" src="js/mobileinit.js"></script>
+<!-- jquery mobile source code files -->
+<script type="text/javascript" src="js/jquerymobile/jquery.mobile-1.1.0.min.js"></script>
+<script type="text/javascript" src="phonegap.js"></script>
+
+<!--
+#################################################
+###### google maps plugin for jquery mobile #####
+#################################################
+-->
+<script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+<script type="text/javascript" src="js/jquerymobile/jquery.ui.map.full.min.js"></script>
+<script type="text/javascript" src="js/jquerymobile/jquery.ui.map.extensions.js"></script>
+
+<!--
+#################################################
+############# custom javascript #################
+#################################################
+-->
+<script type="text/javascript">
+try {
+	var networkState = navigator.network.connection.type;
+	var states = {};
+	states[Connection.UNKNOWN]  = 'UNKNOWN';
+	states[Connection.ETHERNET] = 'ETHERNET';
+	states[Connection.WIFI]     = 'WIFI';
+	states[Connection.CELL_2G]  = '2G';
+	states[Connection.CELL_3G]  = '3G';
+	states[Connection.CELL_4G]  = '4G';
+	states[Connection.NONE]     = 'NONE';
+
+	if(states[networkState] != "UNKNOWN" && states[networkState] != "NONE") {
+		if(typeof(Storage) !== undefined) {
+			if(window.sessionStorage.getItem("maps") !== null ) {
+				var maps = JSON.parse(window.sessionStorage.getItem("maps"));
+				if(maps.length) {
+					for(var i = 0; i < maps.length; i++) {
+						// is the position valid?:
+						if(maps[i].validateMyPosition()) {
+							var position = maps[i].getMyPosition();
+						} else {
+							// use default value:
+							var position = "51.042271,-1.588427";
+						}
+						// build the info window:
+						var name = maps[i].getName();
+						var amount = maps[i].getAmount();
+						var path = window.location.toString();
+						var index = path.lastIndexOf('/');
+						var pathto = path.slice(0,index);
+						//var image = pathto+"/images/"+this.bf_images[this.basket[i].getName()];
+						var infowindow = "<div id='iw_wrapper'><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br></br>Counts: <strong>"+amount+"</strong></p>";
+						// create the marker:
+						$('#map_canvas').gmap('addMarker', {'position': position, 'bounds': true}).click(function() {
+								$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
+						});
+					}
+					while(maps.length--) {
+						maps.pop();
+					}
+				} else {
+					$("#map_canvas").remove();
+					$("#map_wrapper").html("<p>No sightings available.</p>");
+				}
+			} else {
+				throw "nomaps_err";
+			}
+		} else {
+			throw "sess_storage_err";
+		}
+	} else {
+		$("#map_canvas").remove();
+		$("#map_wrapper").html("<p>No network connection available.</p>");
+	}
+} catch(e) {
+	var errormsg = "Display of the map failed.\n";
+	switch(e) {
+		case "nomaps_err":
+			errormsg += "No sightings found.";
+		break;
+		case "sess_storage_err":
+			errormsg += "Storage not supported.";
+		break;
+		default:
+			errormsg += e.message;
+		break;
+	}
+	alert(errormsg);
+}
+		
+</script>
+
+</head> 
+<body>
+<!--
+#################################################
+show sightings on map
+#################################################
+-->
+<div data-role="page" id="bfc_map" data-title="The butterfly counter - Maps">
+	<!-- header -->
+	<div data-role="header" data-position="fixed">
+		<h1>Mobile butterfly counter</h1>
+	</div>
+	<!-- content -->
+	<div id="content" data-role="content" data-ajax="false">	
+		<h2>Your sightings on the map</h2>
+		<div id="map_wrapper">
+			<div id="map_canvas"></div>
+		</div>
+	</div>
+	<!-- footer -->
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#bfc_summary" data-role="button">Back</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+</body>
+</html>

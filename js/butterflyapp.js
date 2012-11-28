@@ -41,7 +41,17 @@ Butterflyapp.prototype.bf_images = {"Brimstone": "brimstone_small.jpg",
 		"Small White": "smallwhite_small.jpg",
 		"Speckled Wood": "speckledwood_small.jpg",
 		"Wall": "wall_small.jpg"};
-Butterflyapp.prototype.addToBasket = function(sighting) { return this.basket.push(sighting); };
+Butterflyapp.prototype.addToBasket = function(sighting) {
+	if(typeof(Storage) !== undefined) {
+		if(window.sessionStorage.getItem("maps") === null) {
+			var maps = new Array();
+		} else {
+			var maps = JSON.parse(window.sessionStorage.getItem("maps"));
+		}
+		maps.push(sighting);	
+	}
+	return this.basket.push(sighting);
+};
 Butterflyapp.prototype.currentPosition = {"latitude":false,"longitude":false};
 
 function init() {
