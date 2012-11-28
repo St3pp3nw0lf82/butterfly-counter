@@ -204,13 +204,10 @@ try {
 	alert(errormsg);
 }	
 	//use this approach to bind special scripts to certain pages, e.g. the page with id='myPage'
-	//TODO: at each call of the startpage check for older sightingobjects here:
 </script>
 -->
 </head> 
 <body onload="init_phonegap();">
-<!-- TODO: use data-rel="dialog", data-transition="pop" to produce popup-dialog for the found old sightings
-process -->
 <!--
 #################################################
 first page: choose start options
@@ -269,11 +266,11 @@ third page: sighting summary
 	<!-- content -->
 	<div id="content" data-role="content">
 		<div id="os_wrapper_old">
-			<h3>Older sightings</h3>
+			<h3>Old sightings</h3>
 			<ul data-role="listview" id="oldersightings"></ul>
 		</div>
 		<div id="os_wrapper_new">
-			<h3>Your sightings</h3>
+			<h3>New sightings</h3>
 			<ul data-role="listview" id="sightingbasket"></ul>
 		</div>
 		<div id="no_sightings">
@@ -313,7 +310,7 @@ fourth page: show sightings on map
 	<div data-role="footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#bfc_choosebutterfly" data-role="button">Back</a></li>
+				<li><a href="#bfc_summary" data-role="button">Back</a></li>
 			</ul>
 		</div>
 	</div>

@@ -272,7 +272,7 @@ function checkForOlderSightings() {
 				if(typeof(sightings) === "object" && sightings !== null) {
 					$("#startoptions").html("");
 					if(sightings.length) {
-						$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a><p/><p><a href='#bfc_summary' data-role='button'>Older sightings</a><p/><p><a href='#' data-role='button' id='reset'>Reset app</a><p/>"+quitapp);
+						$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a><p/><p><a href='#bfc_summary' data-role='button'>Older sightings</a><p/>"+quitapp);
 						
 					} else {
 						$("#startoptions").html("<p><a href='#bfc_choosebutterfly' data-role='button' id='start_sighting'>Start sighting session</a></p>"+quitapp);
