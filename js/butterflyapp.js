@@ -329,10 +329,17 @@ function showMap() {
 	try {
 		var showonmap = 0;
 		showonmap = this.basket.length + this.olderSightings.length;
-
+		
 		if(showonmap > 0) {
 			if(this.basket.length) {
 				for(var i = 0; i < this.basket.length; i++) {
+					// is the position valid?:
+					if(this.basket[i].validateMyPosition()) {
+						var position = this.basket[i].getMyPosition();
+					} else {
+						// use default value:
+						var position = "51.042271,-1.588427";
+					}
 					// build the info window:
 					var name = this.basket[i].getName();
 					var amount = this.basket[i].getAmount();
@@ -342,13 +349,20 @@ function showMap() {
 					var image = pathto+"/images/"+this.bf_images[this.basket[i].getName()];
 					var infowindow = "<div id='iw_wrapper'><img src='"+image+"' class='iw_bfimage'/><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br />Counts: <strong>"+amount+"</strong></p>";
 					// create the marker:
-					$('#map_canvas').gmap('addMarker', {'position': this.basket[i].getMyPosition(), 'bounds': true}).click(function() {
+					$('#map_canvas').gmap('addMarker', {'position': position, 'bounds': true}).click(function() {
 							$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
 					});
 				}
 			}
 			if(this.olderSightings.length) {
 				for(var i = 0; i < this.olderSightings.length; i++) {
+					// is the position valid?:
+					if(this.olderSightings[i].validateMyPosition()) {
+						var position = this.olderSightings[i].getMyPosition();
+					} else {
+						// use default value:
+						var position = "51.042271,-1.588427";
+					}
 					// build the info window:
 					var name = this.olderSightings[i].getName();
 					var amount = this.olderSightings[i].getAmount();
@@ -358,7 +372,7 @@ function showMap() {
 					var image = pathto+"/images/"+this.bf_images[this.olderSightings[i].getName()];
 					var infowindow = "<div id='iw_wrapper'><img src='"+image+"' class='iw_bfimage'/><p class='iw_bffacts'>Name: <strong>"+name+"</strong><br />Counts: <strong>"+amount+"</strong></p>";
 					// create the marker:
-					$('#map_canvas').gmap('addMarker', {'position': this.olderSightings[i].getMyPosition(), 'bounds': true}).click(function() {
+					$('#map_canvas').gmap('addMarker', {'position': position, 'bounds': true}).click(function() {
 							$('#map_canvas').gmap('openInfoWindow', {'content': infowindow}, this);
 					});
 				}
