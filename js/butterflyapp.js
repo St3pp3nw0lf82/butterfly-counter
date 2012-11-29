@@ -63,7 +63,8 @@ function init() {
 		// check for older sightings:
 		this.checkForOlderSightings();
 		// create the butterflies:
-		this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
+		//this.createButterflies("Small White","Large White","Green-veined White","Brimstone","Large Skipper","Six-spot Burnet","Silver Y","Common Blue","Holly Blue","Small Copper","Ringlet","Meadow Brown","Gatekeeper","Wall","Speckled Wood","Marbled White","Peacock","Small Tortoiseshell","Painted Lady","Comma","Red Admiral");
+		this.createButterflies("Small White","Large White");
 	} catch(e) {
 		var errormsg = "Initialisation of the app failed.\n" + e.message;
 		alert(errormsg);
