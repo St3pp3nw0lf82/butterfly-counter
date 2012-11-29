@@ -199,6 +199,7 @@ function showBasket(page) {
 function checkConnection() {
 	//return true;
 	var networkState = navigator.network.connection.type;
+	alert("networkstate: "+networkState);
 	var states = {};
 	states[Connection.UNKNOWN]  = 'UNKNOWN';
 	states[Connection.ETHERNET] = 'ETHERNET';
