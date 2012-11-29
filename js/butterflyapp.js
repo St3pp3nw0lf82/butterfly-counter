@@ -130,7 +130,7 @@ function printButterflies() {
 	$("#butterflylist").html("");
 	for(var i = 0; i < this.butterflies.length; i++) {
 		this.butterflies[i].printMe("butterflylist");
-		$("#bf_"+i).text(this.butterflies[i].getAmount());
+		//$("#bf_"+i).text(this.butterflies[i].getAmount());
 		alert("doing refresh...");
 		$("#butterflylist").listview("refresh");
 	}
