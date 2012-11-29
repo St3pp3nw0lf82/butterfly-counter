@@ -126,7 +126,6 @@ function createButterflies() {
 }
 
 function printButterflies() {
-	alert("in printbutterflies...");
 	$("#butterflylist").html("");
 	for(var i = 0; i < this.butterflies.length; i++) {
 		this.butterflies[i].printMe("butterflylist");
