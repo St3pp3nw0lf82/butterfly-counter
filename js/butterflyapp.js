@@ -210,6 +210,7 @@ function checkConnection() {
 	states[Connection.CELL_3G]  = '3G';
 	states[Connection.CELL_4G]  = '4G';
 	states[Connection.NONE]     = 'NONE';
+	alert("networkstate with states object: "+states[networkState]);
 
 	if(states[networkState] == "UNKNOWN" || states[networkState] == "NONE") {
 		return false;
