@@ -130,7 +130,6 @@ function printButterflies() {
 	for(var i = 0; i < this.butterflies.length; i++) {
 		this.butterflies[i].printMe("butterflylist");
 		$("#bf_"+i).text(this.butterflies[i].getAmount());
-		alert("doing refresh...");
 		$("#butterflylist").listview("refresh");
 	}
 }
@@ -201,7 +200,6 @@ function showBasket(page) {
 function checkConnection() {
 	//return true;
 	var networkState = navigator.network.connection.type;
-	alert("networkstate: "+networkState);
 	var states = {};
 	states[Connection.UNKNOWN]  = 'UNKNOWN';
 	states[Connection.ETHERNET] = 'ETHERNET';
@@ -210,7 +208,6 @@ function checkConnection() {
 	states[Connection.CELL_3G]  = '3G';
 	states[Connection.CELL_4G]  = '4G';
 	states[Connection.NONE]     = 'NONE';
-	alert("networkstate with states object: "+states[networkState]);
 
 	if(states[networkState] == "UNKNOWN" || states[networkState] == "NONE") {
 		return false;
