@@ -163,7 +163,7 @@ function showBasket(page) {
 				$("#"+page).listview("refresh");
 			}
 		}
-		if(no_sightings && !this.checkConnection()) {
+		if(no_sightings || (this.checkConnection()==false)) {
 			$("#no_sightings").css("display","block");
 			$("#submit_option").addClass("ui-disabled");
 			$("#submit_option").trigger("create");

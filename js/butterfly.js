@@ -237,7 +237,7 @@ function submitResult(result, that, what) {
 
 function upload(data, callback, that, what) {
 	$.ajax({
-		url: 'http://192.168.43.177/bfsighting.php',
+		url: 'http://192.168.1.22/bfsighting.php',
 		type: 'POST',
 		async: true,
 		data: data,
