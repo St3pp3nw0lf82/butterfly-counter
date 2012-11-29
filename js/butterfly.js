@@ -51,7 +51,6 @@ function printMe(forwhat,what) {
 	switch(forwhat) {
 		case "butterflylist":
 			var that = this;
-			//var output = $("<li data-icon='false' data-shadow='false'><a href='#bfc_choosebutterfly'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><div class='bf_infowrapper'><span class='bf_info'>"+this.name+"</span><span id='bf_"+this.id+"' class='bf_currentamount'></span></div></a></li>").click(function() { that.countMe(); });
 			var output = $("<li data-icon='false' data-shadow='false'><a href='#bfc_choosebutterfly'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><div class='bf_infowrapper'><span class='bf_info'>"+this.name+"</span><span id='bf_"+this.id+"' class='bf_currentamount'></span></div></a></li>").on("click", function() { that.countMe(); });
 			$("#butterflylist").append(output);
 		break;
@@ -60,7 +59,6 @@ function printMe(forwhat,what) {
 			var count = " count";
 			if(this.amount > 1) { count = " counts"; }
 			var output = $("<li id='"+this.name+"' data-icon='false'><a href='#bfc_edit'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>").on("click", function() { that.editMe("new"); });
-			//var output = $("<li id='"+this.name+"' data-icon='false'><a href='#bfc_edit'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>").click(function() { that.editMe("new"); });
 			$("#sightingbasket").append(output);
 		break;
 		case "oldersightings":
@@ -68,7 +66,6 @@ function printMe(forwhat,what) {
 			var count = " count";
 			if(this.amount > 1) { count = " counts"; }
 			var output = $("<li id='"+this.name+"' data-icon='false'><a href='#bfc_edit'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='servermessage'>"+this.serverMessage+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>").on("click", function() { that.editMe("old"); });
-			//var output = $("<li id='"+this.name+"' data-icon='false'><a href='#bfc_edit'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='servermessage'>"+this.serverMessage+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>").click(function() { that.editMe("old"); });
 			$("#oldersightings").append(output);
 		break;
 		case "submitlist":
