@@ -163,8 +163,13 @@ function showBasket(page) {
 				$("#"+page).listview("refresh");
 			}
 		}
-		if(no_sightings || (this.checkConnection()==false)) {
+		if(no_sightings) {
 			$("#no_sightings").css("display","block");
+			$("#submit_option").addClass("ui-disabled");
+			$("#submit_option").trigger("create");
+			$("#map_option").addClass("ui-disabled");
+			$("#map_option").trigger("create");
+		} else if (this.checkConnection()==false) {
 			$("#submit_option").addClass("ui-disabled");
 			$("#submit_option").trigger("create");
 			$("#map_option").addClass("ui-disabled");
