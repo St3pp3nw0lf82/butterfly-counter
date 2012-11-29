@@ -62,14 +62,16 @@ function printMe(forwhat,what) {
 			var that = this;
 			var count = " count";
 			if(this.amount > 1) { count = " counts"; }
-			var output = $("<li id='"+this.name+"' data-icon='false'><a href='#bfc_edit'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>").click(function() { that.editMe("new"); });
+			var output = $("<li id='"+this.name+"' data-icon='false'><a href='#bfc_edit'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>").on("click", function() { that.editMe("new"); });
+			//var output = $("<li id='"+this.name+"' data-icon='false'><a href='#bfc_edit'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>").click(function() { that.editMe("new"); });
 			$("#sightingbasket").append(output);
 		break;
 		case "oldersightings":
 			var that = this;
 			var count = " count";
 			if(this.amount > 1) { count = " counts"; }
-			var output = $("<li id='"+this.name+"' data-icon='false'><a href='#bfc_edit'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='servermessage'>"+this.serverMessage+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>").click(function() { that.editMe("old"); });
+			var output = $("<li id='"+this.name+"' data-icon='false'><a href='#bfc_edit'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='servermessage'>"+this.serverMessage+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>").on("click", function() { that.editMe("old"); });
+			//var output = $("<li id='"+this.name+"' data-icon='false'><a href='#bfc_edit'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><span class='bf_info'>"+this.name+"</span><span class='servermessage'>"+this.serverMessage+"</span><span class='ui-li-count'>"+this.amount+count+"</span></a></li>").click(function() { that.editMe("old"); });
 			$("#oldersightings").append(output);
 		break;
 		case "submitlist":
