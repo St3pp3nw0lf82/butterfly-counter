@@ -48,12 +48,13 @@ return true;
 Butterfly.prototype = new Butterflyapp;
 
 function printMe(forwhat,what) {
-	alert("in printme...");
 	switch(forwhat) {
 		case "butterflylist":
 			var that = this;
 			var output = $("<li data-icon='false' data-shadow='false'><a href='#bfc_choosebutterfly'><img class='bf_image' src='images/"+this.bf_images[this.name]+"'/><div class='bf_infowrapper'><span class='bf_info'>"+this.name+"</span><span id='bf_"+this.id+"' class='bf_currentamount'></span></div></a></li>");
+			alert("in printme, case butterflylist...");
 			$("#butterflylist").append(output.click(function() { that.countMe(); }));
+			alert("item appended");
 		break;
 		case "sightingbasket":
 			var that = this;
