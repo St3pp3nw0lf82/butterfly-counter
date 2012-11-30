@@ -290,7 +290,6 @@ function uploadMe(what) {
 					Butterflyapp.prototype.basket.splice(0,1);
 					var newlength = Butterflyapp.prototype.basket.length;
 					if(newlength < oldlength) {
-						//Butterflyapp.prototype.itemsToUpload--;
 						this.positionInBasket = null;
 						if(adjust_positions) {
 							for(i; i < Butterflyapp.prototype.basket.length; i++) {
@@ -376,7 +375,6 @@ function uploadMe(what) {
 function storeMe() {
 	try {
 		if(typeof(Storage) !== undefined) {
-			//var storage = window.localStorage.key(0);
 			if(window.localStorage.getItem("sightings") === null) {
 				var sightings = new Array();
 			} else {
