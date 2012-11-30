@@ -225,7 +225,7 @@ function submitResult(result, that, what) {
 			}
 		// changelog 30/11/12: also try to upload the next sightings from older sightings:
 		} else {
-			if(that.positionInOlderSightings < Butterflyapp.prototype.olderSightings.length) {
+			if(that.positionInOlderSightings < Butterflyapp.prototype.olderSightings.length-1) {
 				// try to upload next old item:
 				var i = that.positionInOlderSightings;
 				i++;
@@ -310,7 +310,7 @@ function uploadMe(what) {
 					}
 				// changelog 30/11/12: also try to upload the next sightings from older sightings:
 				} else {
-					if(this.positionInOlderSightings < Butterflyapp.prototype.olderSightings.length) {
+					if(this.positionInOlderSightings < Butterflyapp.prototype.olderSightings.length-1) {
 						// try to upload next old item:
 						var i = this.positionInOlderSightings;
 						i++;
@@ -352,7 +352,7 @@ function uploadMe(what) {
 				}
 			// changelog 30/11/12: also try to upload the next sightings from older sightings:
 			} else {
-				if(this.positionInOlderSightings < Butterflyapp.prototype.olderSightings.length) {
+				if(this.positionInOlderSightings < Butterflyapp.prototype.olderSightings.length-1) {
 					// try to upload next old item:
 					var i = this.positionInOlderSightings;
 					i++;
