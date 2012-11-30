@@ -227,7 +227,8 @@ function submitResult(result, that, what) {
 		} else {
 			if(that.positionInOlderSightings < Butterflyapp.prototype.olderSightings.length) {
 				// try to upload next old item:
-				var i = that.positionInOlderSightings++;
+				var i = that.positionInOlderSightings;
+				i++;
 				Butterflyapp.prototype.olderSightings[i].uploadMe("old");
 			}
 		}
@@ -311,7 +312,8 @@ function uploadMe(what) {
 				} else {
 					if(this.positionInOlderSightings < Butterflyapp.prototype.olderSightings.length) {
 						// try to upload next old item:
-						var i = this.positionInOlderSightings++;
+						var i = this.positionInOlderSightings;
+						i++;
 						Butterflyapp.prototype.olderSightings[i].uploadMe("old");
 					}
 				}
@@ -352,7 +354,8 @@ function uploadMe(what) {
 			} else {
 				if(this.positionInOlderSightings < Butterflyapp.prototype.olderSightings.length) {
 					// try to upload next old item:
-					var i = this.positionInOlderSightings++;
+					var i = this.positionInOlderSightings;
+					i++;
 					Butterflyapp.prototype.olderSightings[i].uploadMe("old");
 				}
 			}
