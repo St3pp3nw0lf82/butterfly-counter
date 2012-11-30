@@ -19,7 +19,7 @@ var error = function(error) {
 
 function checkforbasket() {
 	try {
-		if(window.localStorage) {
+		if(typeof(Storage) !== "undefined") {
 			if(window.localStorage.bf_basket) {
 				// .trigger('create') is needed in addition to .append() to apply the mobile styles to the new button:
 				if(!$("#delete_basket").length) {
@@ -43,10 +43,10 @@ function checkforbasket() {
 
 function create_sightingbasket() {
 	try {
-		// create the butterfly basket: 
-		if(window.localStorage) {
+		if(typeof(Storage) !== "undefined") {
 			if(!window.localStorage.bf_basket) {
-				window.localStorage.bf_basket = JSON.stringify([]);
+				var bf_basket = new Basket();
+				window.localStorage.bf_basket = JSON.stringify(bf_basket);
 				if(window.localStorage.length == 0) { throw "basketcreate_err"; }
 				// .trigger('create') is needed in addition to .append() to apply the mobile styles to the new button:
 				$("#startoptions").append("<p id='delete_basket'><a href='#' data-role='button' onclick='javascript:delete_basket();'>Delete basket</a><p/>").trigger('create');
@@ -66,49 +66,66 @@ function create_sightingbasket() {
 		alert(errormsg);
 	}
 }
-
+/*
 function create_sightingobject() {
 	try {
-		var sighting = {
-			id: "",
-			bf_name: "",
-			bf_amount: 0,
-			bf_location: ""
-		};
-		if(typeof(sighting) == "object") {
-			var d = new Date();
-			var id = d.getFullYear()+"_"+d.getMonth()+"_"+d.getDay()+"_"+d.getHours()+"_"+d.getMinutes()+"_"+d.getSeconds();
-			sighting.id = id;
-			sighting.bf_name = $(this).text();
-			sighting.bf_amount++;
-			if(window.localStorage.bf_basket) {
-				var basket = JSON.parse(window.localStorage["bf_basket"]);
-				if(typeof(basket) == "object") {
-					basket.push(sighting);
-					window.localStorage["bf_basket"] = JSON.stringify(basket);
+		var sighting = new Sighting($(this).text());
+		current_sightings.push(sighting);
+/*
+		if(window.localStorage.bf_basket) {
+			var bf_basket = JSON.parse(window.localStorage.bf_basket);
+			if(typeof(bf_basket) == "object") {
+				var sighting = new Sighting($(this).text());
+				if(typeof(sighting) == "object") {
+					bf_basket.insertSighting(sighting);
+					window.localStorage.bf_basket = JSON.stringify(bf_basket);
+				} else {
+					throw "init_err";
 				}
 			}
-			// check if geolocation is supported:
-			//if(Modernizr.geolocation) { alert("geolocation supported"); } else { alert("geolocation not supported"); }
-			/*
-			if(navigator.geolocation.getCurrentPosition(
-				function(position) {
-					sighting.bf_location = position.coords.latitude + "," + position.coords.longitude;
-					alert('Success!');
-					$('#map').html('<p>Latitude: '+ position.coords.latitude +'</p><p>Longitude: '+ position.coords.longitude +'</p>');
-				},
-				function(error) {
-					sighting.bf_location = "Location unknown";
-				};)
-			*/
-			//return sighting;
 		} else {
-			throw "init_err";
+			throw "basket_err";
+		}
+
+	}
+	catch(e) {
+		var errormsg = "An error occurred while creating a sighting object.\n";
+		if(e == "init_err") { 
+			errormsg += "Initialisation of sighting object failed.";
+		} else if(e == "basket_err") { 
+			errormsg += "No basket found.";
+		} else {
+			errormsg += "Error message: " + e.message;
+		}
+		alert(errormsg);
+	}
+}
+*/
+function edit_amount() {
+	if(current_sightings.length > 0) {
+	}
+	var amount = 0;
+	
+	try {
+		if(window.localStorage.bf_basket) {
+			var bf_basket = JSON.parse(window.localStorage.bf_basket);
+			if(typeof(bf_basket) == "object") {
+				var items = bf_basket.length;
+				var sighting = bf_basket.sightings[items-1];
+				if(typeof(sighting) == "object") {
+					sighting.increaseAmount();
+					bf_basket.insertSighting(sighting);
+					window.localStorage.bf_basket = JSON.stringify(bf_basket);
+				} else {
+					throw "init_err";
+				}
+			}
+		} else {
+			throw "basket_err";
 		}
 	}
 	catch(e) {
-		if(e == "error") { alert("specific error"); }
-		if(e == "all_err") { alert("initialisation failed!"); }
+
 	}
 }
 

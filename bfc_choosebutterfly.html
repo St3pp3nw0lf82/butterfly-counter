@@ -36,7 +36,6 @@
 <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
 <!-- local link -->
 <script type="text/javascript" src="js/jquerymobile/jquery.mobile-1.1.0.min.js"></script>
-
 <!--
 #################################################
 ###### google maps plugin for jquery mobile #####
@@ -55,12 +54,19 @@
 
 <!-- add click event to button after dom is ready -->
 <script type="text/javascript">
-	/*
-	use this approach to bind special scripts to certain pages, e.g. the page with id='myPage'
-	$( document ).delegate("#myPage", "pageinit", function() {
-	  alert('A page with an ID of "aboutPage" was just created by jQuery Mobile!');
-	});
-	*/
+try {
+	alert("in try block ...");
+	var sessionStarted = sessionStorage.getItem("sessionStarted");
+	alert(sessionStarted);
+	var ba = JSON.parse(sessionStorage.getItem("ba"));
+	ba.printButterflies();
+	if(typeof(ba)=="object") {
+		alert("ba is object");
+	}
+}
+catch(e) {
+	alert(e.message);
+}
 </script>
 
 </head> 
@@ -76,15 +82,11 @@ process -->
 	<!-- content -->
 	<div id="content" data-role="content">	
 		<h2>Which butterflies did you see?</h2>
-		<!-- list of butterflies -->
-		<!--
-				<ul data-role="listview">
-					<li><input type="text" name="bf_species" value="Enter amount" size="10" class="input_amount"/><img class="bf_image" src="images/smallwhite_small.jpg"/><span class="center">Small White</span></li>
-				</ul>
-		-->
-		<ul data-role="listview">
-			<li><a href="#"><img class="bf_image" src="images/smallwhite_small.jpg"/>Small White</a></li>
-			<li><a href="#"><img class="bf_image" src="images/largewhite_small.jpg"/>Large White</a></li>
+		<ul data-role="listview" id="butterflylist">
+		<script type="text/javascript">ba.printButterflies();</script>
+			<!--
+			<li><a href="bfc_amount.html"><img class="bf_image" src="images/smallwhite_small.jpg"/><span class="bf_info">Small White</span></a></li>
+			<li><a href="bfc_amount.html"><img class="bf_image" src="images/largewhite_small.jpg"/><span class="bf_info">Large White</span></a></li>-->
 		</ul>
 
 		<!--
@@ -130,10 +132,12 @@ process -->
 			</ul>
 		</div>
 	</div>
+<script src="js/jquerymobile/jquery.url.js"></script>
 <script type="text/javascript" src="js/modernizr.js"></script>
+<script type="text/javascript" src="js/sighting.js"></script>
 <script type="text/javascript" src="js/createsighting.js"></script>
 <script type="text/javascript">
-$("#content ul li").bind("click", create_sightingobject);
+//$("#content ul li").bind("click", create_sightingobject);
 </script>
 </div>
 </body>
