@@ -133,7 +133,6 @@ function submitResult(result, that, what) {
 			Butterflyapp.prototype.basket.splice(0,1);
 			var newlength = Butterflyapp.prototype.basket.length;
 			if(newlength < oldlength) {
-				//Butterflyapp.prototype.itemsToUpload--;
 				that.positionInBasket = null;
 				if(adjust_positions) {
 					for(i; i < Butterflyapp.prototype.basket.length; i++) {
@@ -167,7 +166,6 @@ function submitResult(result, that, what) {
 					sightings.splice(that.positionInStorage,1);
 					var newlength_ls = sightings.length;
 					if((newlength_os < oldlength_os) && (newlength_ls < oldlength_ls)) {
-						//Butterflyapp.prototype.itemsToUpload--;
 						if(adjust_positions) {
 							for(i; i < Butterflyapp.prototype.olderSightings.length; i++) {
 								Butterflyapp.prototype.olderSightings[i].positionInOlderSightings = i;
@@ -218,15 +216,19 @@ function submitResult(result, that, what) {
 			// determine position of current item in olderSightings array before storing:
 			that.positionInOlderSightings = Butterflyapp.prototype.olderSightings.length;
 			// store a copy of current bf sighting:
-			//var tmp = that.cloneMe();
-			//tmp.storeMe();
 			that.storeMe();
-			//Butterflyapp.prototype.olderSightings.push(tmp);
 			Butterflyapp.prototype.olderSightings.push(that);
 			// if there still some items exist in the basket, upload them:
 			if(Butterflyapp.prototype.basket.length) {
 				// try to upload next sighting:
 				Butterflyapp.prototype.basket[0].uploadMe("new");
+			}
+		// changelog 30/11/12: also try to upload the next sightings from older sightings:
+		} else {
+			if(that.positionInOlderSightings < Butterflyapp.prototype.olderSightings.length) {
+				// try to upload next old item:
+				var i = that.positionInOlderSightings++;
+				Butterflyapp.prototype.olderSightings[i].uploadMe("old");
 			}
 		}
 	}
@@ -305,6 +307,13 @@ function uploadMe(what) {
 						// try to upload next sighting:
 						Butterflyapp.prototype.basket[0].uploadMe("new");
 					}
+				// changelog 30/11/12: also try to upload the next sightings from older sightings:
+				} else {
+					if(this.positionInOlderSightings < Butterflyapp.prototype.olderSightings.length) {
+						// try to upload next old item:
+						var i = this.positionInOlderSightings++;
+						Butterflyapp.prototype.olderSightings[i].uploadMe("old");
+					}
 				}
 				$("#"+what+this.submitlistItem+" div.floatingBarsG").css("display","none");
 				$("#"+what+this.submitlistItem+" div.result").css("background-image","url('images/error.png')");
@@ -338,6 +347,13 @@ function uploadMe(what) {
 				if(Butterflyapp.prototype.basket.length) {
 					// try to upload next sighting:
 					Butterflyapp.prototype.basket[0].uploadMe("new");
+				}
+			// changelog 30/11/12: also try to upload the next sightings from older sightings:
+			} else {
+				if(this.positionInOlderSightings < Butterflyapp.prototype.olderSightings.length) {
+					// try to upload next old item:
+					var i = this.positionInOlderSightings++;
+					Butterflyapp.prototype.olderSightings[i].uploadMe("old");
 				}
 			}
 			$("#"+what+this.submitlistItem+" div.floatingBarsG").css("display","none");
